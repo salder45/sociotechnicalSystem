@@ -10,5 +10,5 @@ package mx.edu.um.dii.labinterfaces.diasetproject.config;
  * @author laboratoriointerface
  */
 public class Constants {
-    
+    public static final String DEFAULT_ENCODING="UTF-8";
 }
