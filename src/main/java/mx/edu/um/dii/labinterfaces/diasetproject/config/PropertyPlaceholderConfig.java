@@ -8,6 +8,7 @@ package mx.edu.um.dii.labinterfaces.diasetproject.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 /**
@@ -15,8 +16,10 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
  * @author laboratoriointerface
  */
 @Configuration
-@PropertySource("file:${user.home}/.diaset.properties")
-public class PropertyPlaceholderConfig {
+@PropertySources({
+    @PropertySource("file:${user.home}/.diaset.properties"),
+    @PropertySource(value = "classpath:resources/.diaset.properties", ignoreResourceNotFound = true)
+})public class PropertyPlaceholderConfig {
     
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer(){

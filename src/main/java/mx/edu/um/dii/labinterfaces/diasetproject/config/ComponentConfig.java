@@ -8,6 +8,7 @@ package mx.edu.um.dii.labinterfaces.diasetproject.config;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 
 /**
  *
@@ -15,7 +16,10 @@ import org.springframework.context.annotation.PropertySource;
  */
 @Configuration
 @ComponentScan(basePackages = "mx.edu.um.dii.labinterfaces.diasetproject")
-@PropertySource("file:${user.home}/.diaset.properties")
+@PropertySources({
+    @PropertySource("file:${user.home}/.diaset.properties"),
+    @PropertySource(value = "classpath:resources/.diaset.properties", ignoreResourceNotFound = true)
+})
 public class ComponentConfig {
-    
+
 }
