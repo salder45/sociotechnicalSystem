@@ -5,10 +5,21 @@
  */
 package mx.edu.um.dii.labinterfaces.diasetproject.config;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+
 /**
  *
  * @author laboratoriointerface
  */
+@Configuration
+@PropertySource("file:${user.home}/.diaset.properties")
 public class PropertyPlaceholderConfig {
     
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer(){
+        return new PropertySourcesPlaceholderConfigurer();
+    }
 }
