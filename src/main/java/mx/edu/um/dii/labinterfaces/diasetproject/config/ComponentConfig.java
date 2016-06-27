@@ -17,8 +17,8 @@ import org.springframework.context.annotation.PropertySources;
 @Configuration
 @ComponentScan(basePackages = "mx.edu.um.dii.labinterfaces.diasetproject")
 @PropertySources({
-    @PropertySource("file:${user.home}/.diaset.properties"),
-    @PropertySource(value = "classpath:resources/.diaset.properties", ignoreResourceNotFound = true)
+    @PropertySource(value = "file:${user.home}/.diaset.properties", ignoreResourceNotFound = true),
+    @PropertySource("classpath:resources/.diaset.properties")
 })
 public class ComponentConfig {
 

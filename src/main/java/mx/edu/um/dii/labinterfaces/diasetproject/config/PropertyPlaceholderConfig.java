@@ -17,9 +17,10 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
  */
 @Configuration
 @PropertySources({
-    @PropertySource("file:${user.home}/.diaset.properties"),
-    @PropertySource(value = "classpath:resources/.diaset.properties", ignoreResourceNotFound = true)
-})public class PropertyPlaceholderConfig {
+    @PropertySource(value = "file:${user.home}/.diaset.properties", ignoreResourceNotFound = true),
+    @PropertySource("classpath:resources/.diaset.properties")
+})
+public class PropertyPlaceholderConfig {
     
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer(){
