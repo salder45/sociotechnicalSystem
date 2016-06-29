@@ -19,9 +19,9 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 @Configuration
 @Import(PropertyPlaceholderConfig.class)
 public class MailConfig {
-    @Value("$(mail.smtp.host)")
+    @Value("${mail.smtp.host}")
     private String mailHost;
-    @Value("$(mail.smtp.port)")
+    @Value("${mail.smtp.port}")
     private String mailPort;
     
     @Bean
