@@ -42,7 +42,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("classpath:messages");
+        messageSource.setBasename("classpath:i18n/messages");
         messageSource.setDefaultEncoding(Constants.DEFAULT_ENCODING);
         return messageSource;
     }
@@ -108,7 +108,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public Validator getValidator() {
         LocalValidatorFactoryBean factory = new LocalValidatorFactoryBean();
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("classpath:messages");
+        messageSource.setBasename("classpath:i18n/messages");
         messageSource.setDefaultEncoding(Constants.DEFAULT_ENCODING);
         factory.setValidationMessageSource(messageSource);
         return factory;
