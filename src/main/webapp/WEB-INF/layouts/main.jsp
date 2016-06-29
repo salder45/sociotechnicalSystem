@@ -17,6 +17,12 @@
         <link rel="stylesheet" href="<s:url value='/css/bootstrap.css' />">
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <div class="navbar navbar-default navbar-fixed-top">
+        </div>
+        <div class="container">
+
+            <sitemesh:write property='body'/>
+
+        </div> <!-- /container -->
     </body>
 </html>
