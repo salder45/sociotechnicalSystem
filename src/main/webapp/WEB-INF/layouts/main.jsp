@@ -14,6 +14,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page2</title>
         <link rel="stylesheet" href="<s:url value='/css/app.css' />">
+        <link rel="stylesheet" href="<s:url value='/css/bootstrap.css' />">
     </head>
     <body>
         <h1>Hello World!</h1>
