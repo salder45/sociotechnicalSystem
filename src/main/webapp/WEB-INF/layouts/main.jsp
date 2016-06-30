@@ -18,11 +18,23 @@
     </head>
     <body>
         <div class="navbar navbar-default navbar-fixed-top">
-        </div>
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="<s:url value='/'/>"><s:message code="title.label"/></a>
+                </div>
+                <!-- header stuff -->
+            </div><!-- /.container-->
+        </div><!-- /.navbar -->
+
         <div class="container">
-
             <sitemesh:write property='body'/>
-
         </div> <!-- /container -->
+
     </body>
 </html>

@@ -7,4 +7,6 @@ and open the template in the editor.
     Created on : Jun 29, 2016, 2:44:44 PM
     Author     : laboratoriointerface
 */
-
+body {
+    padding-top: 80px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
