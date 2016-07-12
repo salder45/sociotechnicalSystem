@@ -8,17 +8,22 @@
                                 http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.1.xsd">
     
     <http pattern="/resources/**" security="none"/>
+    <http pattern="/css/**" security="none"/>
+    <http pattern="/img/**" security="none"/>
+    <http pattern="/js/**" security="none"/>
+    <http pattern="/fonts/**" security="none"/>
     <http pattern="/404.html" security="none"/>
     <http pattern="/405.html" security="none"/>
     <http pattern="/500.html" security="none"/>
     <http pattern="/crossdomain.xml" security="none"/>
     <http pattern="/humans.txt" security="none"/>
     <http pattern="/robots.txt" security="none"/>
-    
+    <http pattern="/login.jsp*" security="none"/>
+     
     <http auto-config="true" access-decision-manager-ref="webAccessDecisionManager" use-expressions="true">
         <intercept-url pattern="/inicializa/**" access="permitAll" />
         <intercept-url pattern="/**" access="isAuthenticated()" />
-        <form-login login-page="/login"
+        <form-login login-page="/login.jsp"
                     login-processing-url="/authenticate"
                     authentication-failure-url="/login?error=1"
                     authentication-success-handler-ref="loginHandler"
