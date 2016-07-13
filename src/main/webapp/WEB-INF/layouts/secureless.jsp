@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title><s:message code="title.label" /></title>
+        <title><s:message code="title.label" /> - <sitemesh:write property="title"/></title>
         <link rel="stylesheet" href="<s:url value='/css/app.css' />">
         <link rel="stylesheet" href="<s:url value='/css/bootstrap.css' />">
     </head>
