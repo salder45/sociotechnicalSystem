@@ -30,6 +30,10 @@
                     username-parameter="username"
                     password-parameter="password"/>
         <logout logout-url="/logout" logout-success-url="/" invalidate-session="true"/>
+        
+        <remember-me key="D14537" authentication-success-handler-ref="loginHandler"
+                     user-service-ref="userDetailsService"/>
+        
     </http>
     
     <beans:bean name="userDetailsService" class="mx.edu.um.dii.labinterfaces.diasetproject.service.impl.UserDetailsServiceImpl"/>
