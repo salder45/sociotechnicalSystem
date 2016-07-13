@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemesh>
     <!--Exclude login-->
-    <mapping path="/inicializa/*" decorator="/WEB-INF/layouts/secureless.jsp"/>
     <mapping path="/login.jsp" exclue="true"/>
+    <mapping path="/inicializa*" decorator="/WEB-INF/layouts/secureless.jsp"/>
     <mapping path="/*" decorator="/WEB-INF/layouts/main.jsp"/>
     <content-processor> 
         <tag-rule-bundle class="mx.edu.um.dii.labinterfaces.diasetproject.utils.ExtraHtmlTagRuleBundle"/> 
