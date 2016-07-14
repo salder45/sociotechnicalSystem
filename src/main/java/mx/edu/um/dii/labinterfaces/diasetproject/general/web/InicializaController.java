@@ -5,8 +5,11 @@
  */
 package mx.edu.um.dii.labinterfaces.diasetproject.general.web;
 
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -20,6 +23,15 @@ public class InicializaController extends BaseController{
     public String inicia(){
         log.debug("Inicia--------");
         return "inicializa/index";
+    }
+    
+    @RequestMapping(method = RequestMethod.POST)
+    public String save(HttpServletRequest request, @RequestParam String username, @RequestParam String password){
+        log.debug("Creating Users...");
+        log.debug("User:{} ", username);
+        log.debug("Password:{} ", password);
+        
+        return "redirect:/";
     }
     
 }

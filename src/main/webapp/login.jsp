@@ -21,8 +21,8 @@
                     <div class="account-wall">
                         <img class="profile-img" src="<s:url value="/img/avatar_2x.png"/>" alt="">
                         <form class="form-signin">
-                            <input type="text" class="form-control" placeholder="<s:message code="user.username.label"/>" required autofocus>
-                            <input type="password" class="form-control" placeholder="<s:message code="user.password.label"/>" required>
+                            <input id="username" type="text" class="form-control" placeholder="<s:message code="user.username.label"/>" required autofocus>
+                            <input id="password" type="password" class="form-control" placeholder="<s:message code="user.password.label"/>" required>
 
                             <button class="btn btn-lg btn-primary btn-block" type="submit">
                                 <s:message code="login.signin.label"/>
