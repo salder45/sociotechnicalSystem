@@ -29,11 +29,19 @@ public class InicializaDaoHibernate extends BaseDao implements InicializaDao{
     public void inicializa(String username, String password) {
         log.debug("Init data......");
         //Create Roles
+        //ADMIN
          Role roleAdmin=roleDao.get(Constants.ROLE_ADMIN);
          log.debug("Role={}",roleAdmin);
          if(roleAdmin==null||roleAdmin.getAuthority()==null||roleAdmin.getAuthority().equals("")){
              roleAdmin=new Role(Constants.ROLE_ADMIN);
              roleDao.save(roleAdmin);
+         }
+         //USER
+         Role roleUser=roleDao.get(Constants.ROLE_USER);
+         log.debug("Role={}",roleUser);
+         if(roleUser==null||roleUser.getAuthority()==null||roleUser.getAuthority().equals("")){
+             roleUser=new Role(Constants.ROLE_USER);
+             roleDao.save(roleUser);
          }
         //Create admin/user user
     }
