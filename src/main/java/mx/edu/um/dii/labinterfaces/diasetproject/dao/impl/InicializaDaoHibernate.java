@@ -5,8 +5,12 @@
  */
 package mx.edu.um.dii.labinterfaces.diasetproject.dao.impl;
 
+import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.BaseDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.InicializaDao;
+import mx.edu.um.dii.labinterfaces.diasetproject.dao.RoleDao;
+import mx.edu.um.dii.labinterfaces.diasetproject.model.Role;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,9 +22,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class InicializaDaoHibernate extends BaseDao implements InicializaDao{
 
+    @Autowired
+    RoleDao roleDao;
+    
     @Override
     public void inicializa(String username, String password) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        log.debug("Init data......");
+        //Create Roles
+         Role roleAdmin=roleDao.get(Constants.ROLE_ADMIN);
+         log.debug("Role={}",roleAdmin);
+         if(roleAdmin==null||roleAdmin.getAuthority()==null||roleAdmin.getAuthority().equals("")){
+             roleAdmin=new Role(Constants.ROLE_ADMIN);
+             roleDao.save(roleAdmin);
+         }
+        //Create admin/user user
     }
 
     @Override

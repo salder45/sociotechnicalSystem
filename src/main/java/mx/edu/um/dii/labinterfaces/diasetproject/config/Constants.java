@@ -13,7 +13,10 @@ public class Constants {
 
     public static final String DEFAULT_ENCODING = "UTF-8";
     public static final String APP_NAME = "Diaset";
-
+    /*
+    ROLE
+    */
+    public static final String ROLE_ADMIN="ROLE_ADMIN";
     /**
      * Valores para el constructor de Locale
      */
