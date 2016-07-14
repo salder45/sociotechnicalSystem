@@ -9,7 +9,9 @@ import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.BaseDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.InicializaDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.RoleDao;
+import mx.edu.um.dii.labinterfaces.diasetproject.dao.UserDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Role;
+import mx.edu.um.dii.labinterfaces.diasetproject.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +25,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class InicializaDaoHibernate extends BaseDao implements InicializaDao{
 
     @Autowired
-    RoleDao roleDao;
+    private UserDao userDao;
+    @Autowired
+    private RoleDao roleDao;
     
     @Override
     public void inicializa(String username, String password) {
@@ -43,7 +47,20 @@ public class InicializaDaoHibernate extends BaseDao implements InicializaDao{
              roleUser=new Role(Constants.ROLE_USER);
              roleDao.save(roleUser);
          }
-        //Create admin/user user
+        //Create admin/user and custom user
+        User userAdmin=userDao.get(Constants.DEFAULT_USER_ADMIN);
+        if(userAdmin==null||userAdmin.getId()==null||userAdmin.getId().equals(0L)){
+            userAdmin=new User(Constants.DEFAULT_USER_ADMIN, "admin", "admin", "admin", "admin");
+            //TODO check encodepassword option
+            userDao.save(userAdmin);
+        }
+        
+         User user=userDao.get(Constants.DEFAULT_USER);
+        if(user==null||userAdmin.getId()==null||userAdmin.getId().equals(0L)){
+            user=new User(Constants.DEFAULT_USER, "user", "user", "user", "user");
+            //TODO check encodepassword option
+            userDao.save(user);
+        }
     }
 
     @Override

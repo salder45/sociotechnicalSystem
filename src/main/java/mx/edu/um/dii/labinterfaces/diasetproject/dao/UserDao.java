@@ -5,10 +5,15 @@
  */
 package mx.edu.um.dii.labinterfaces.diasetproject.dao;
 
+import mx.edu.um.dii.labinterfaces.diasetproject.model.User;
+
 /**
  *
  * @author laboratoriointerface
  */
 public interface UserDao {
+    public User get(Long id);
+    public User get(String username);
+    public User save(User user);
     
 }

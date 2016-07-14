@@ -7,6 +7,10 @@ package mx.edu.um.dii.labinterfaces.diasetproject.dao.impl;
 
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.BaseDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.UserDao;
+import mx.edu.um.dii.labinterfaces.diasetproject.model.User;
+import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,5 +21,28 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public class UserDaoHibernate extends BaseDao implements UserDao{
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Override
+    public User get(Long id) {
+        User user=(User)currentSession().get(User.class, id);
+        return user;
+    }
+
+    @Override
+    public User get(String username) {
+        Query query=currentSession().createQuery("select u from User u where username=:Username");
+        query.setParameter("Username", username);
+        User user=(User)query.uniqueResult();
+        return user;
+    }
+
+    @Override
+    public User save(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        currentSession().save(user);
+        return user;
+    }
     
 }
