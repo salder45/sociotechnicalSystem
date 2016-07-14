@@ -45,7 +45,7 @@ public class User implements Serializable, UserDetails {
     @Column(nullable = false, unique = true)
     private String username;
     private String password;
-    private Boolean enabled;
+    private Boolean enabled=true;
     private Boolean accountExpired = false;
     private Boolean accountLocked = false;
     private Boolean credentialsExpired = false;
