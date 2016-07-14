@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mx.edu.um.dii.labinterfaces.diasetproject.general.web;
+package mx.edu.um.dii.labinterfaces.diasetproject.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

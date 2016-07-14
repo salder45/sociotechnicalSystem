@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mx.edu.um.dii.labinterfaces.diasetproject.general.web;
+package mx.edu.um.dii.labinterfaces.diasetproject.web;
 
 import javax.servlet.http.HttpServletRequest;
+import mx.edu.um.dii.labinterfaces.diasetproject.dao.InicializaDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/inicializa")
 public class InicializaController extends BaseController{
     
+    @Autowired
+    private InicializaDao inicializaDao;   
+    
     @RequestMapping
     public String inicia(){
         log.debug("Inicia--------");
@@ -30,6 +35,8 @@ public class InicializaController extends BaseController{
         log.debug("Creating Users...");
         log.debug("User:{} ", username);
         log.debug("Password:{} ", password);
+        
+        inicializaDao.inicializa(username, password);
         
         return "redirect:/";
     }
