@@ -25,11 +25,11 @@ public class UserDetailsServiceImpl extends BaseService implements UserDetailsSe
     private UserDao userDao;
     
     @Override
-    public UserDetails loadUserByUsername(String string) throws UsernameNotFoundException {
-        log.debug("loadUserByUsername:{}",string);
-        User user=userDao.get(string);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.debug("loadUserByUsername:{}",username);
+        User user=userDao.get(username);
         if(user==null){
-            throw new UsernameNotFoundException("User not found with username : "+string);
+            throw new UsernameNotFoundException("User not found with username : "+username);
         }
         return (UserDetails)user;
     }
