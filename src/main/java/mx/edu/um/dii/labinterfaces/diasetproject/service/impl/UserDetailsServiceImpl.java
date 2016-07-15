@@ -5,8 +5,10 @@
  */
 package mx.edu.um.dii.labinterfaces.diasetproject.service.impl;
 
+import mx.edu.um.dii.labinterfaces.diasetproject.dao.UserDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.User;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.BaseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,10 +21,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailsServiceImpl extends BaseService implements UserDetailsService{
 
+    @Autowired
+    private UserDao userDao;
+    
     @Override
     public UserDetails loadUserByUsername(String string) throws UsernameNotFoundException {
-        //@TODO still implements this
-        return new User();
+        log.debug("loadUserByUsername:{}",string);
+        User user=userDao.get(string);
+        if(user==null){
+            throw new UsernameNotFoundException("User not found with username : "+string);
+        }
+        return (UserDetails)user;
     }
     
 }
