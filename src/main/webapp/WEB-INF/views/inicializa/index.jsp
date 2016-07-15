@@ -8,6 +8,8 @@
 <%@taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="s"   uri="http://www.springframework.org/tags" %>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %> 
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,8 +18,8 @@
     </head>
     <body>
         <h1><s:message code="init.title.label"/></h1>
-        <form action="<c:url value="/inicializa" />" method="post">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <c:url var="action" value="/inicializa" />
+        <form:form action="${action}" method="post">
             <fieldset>
                 <div class="control-group">
                     <input name="username" type="text" class="form-control" placeholder="<s:message code="user.username.label"/>" required autofocus/>
@@ -28,6 +30,6 @@
                     </button>
                 </div>
             </fieldset>
-        </form>        
+        </form:form>        
     </body>
 </html>
