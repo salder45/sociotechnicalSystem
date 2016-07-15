@@ -23,8 +23,8 @@
                         <img class="profile-img" src="<s:url value="/img/avatar_2x.png"/>" alt="">
                         <c:url var="action" value='/authenticate'/>
                         <form:form id="login-form" action="${action}" method="post" class="form-signin" autocomplete="off">
-                            <input id="username" type="text" class="form-control" placeholder="<s:message code="user.username.label"/>" required autofocus>
-                            <input id="password" type="password" class="form-control" placeholder="<s:message code="user.password.label"/>" required>
+                            <input name="username" type="text" class="form-control" placeholder="<s:message code="user.username.label"/>" required autofocus>
+                            <input name="password" type="password" class="form-control" placeholder="<s:message code="user.password.label"/>" required>
 
                             <button class="btn btn-lg btn-primary btn-block" type="submit">
                                 <s:message code="login.signin.label"/>
