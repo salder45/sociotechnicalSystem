@@ -16,35 +16,35 @@
     </head>
     <body>
         <div class="container">
-            <div class="row">
-                <div class="col-sm-6 col-md-4 col-md-offset-4">                    
-                    <h1 class="text-center login-title"><s:message code="login.header.label"/></h1>                   
-                    <div class="account-wall">
-                        <img class="profile-img" src="<s:url value="/img/avatar_2x.png"/>" alt="">
-                        <c:url var="action" value='/authenticate'/>
-                        <form:form id="login-form" action="${action}" method="post" class="form-signin" autocomplete="off">
-                            <input name="username" type="text" class="form-control" placeholder="<s:message code="user.username.label"/>" required autofocus>
-                            <input name="password" type="password" class="form-control" placeholder="<s:message code="user.password.label"/>" required>
+                       
+            <h1 class="text-center login-title">DIASET</h1>    
+                        
+            <form:form id="login-form" action="${action}" method="post" class="form-signin" autocomplete="off">
+                <img class="profile-img" src="<s:url value="/img/avatar_2x.png"/>" alt="">
+                <c:url var="action" value='/authenticate'/>
+                <h1 class="text-center login-title"><s:message code="login.header.label"/></h1>    
+                <input name="username" type="text" class="form-control" placeholder="<s:message code="user.username.label"/>" required autofocus>
+                <input name="password" type="password" class="form-control" placeholder="<s:message code="user.password.label"/>" required>
 
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">
-                                <s:message code="login.signin.label"/>
-                            </button>
-                            <label class="checkbox pull-left">
-                                <input type="checkbox" value="D14537">
-                                <s:message code="login.rememberme.label"/>
-                            </label>
-
-                        </form:form>
-                    </div>
-                    <!--Alerts-->
-                    <c:if test="${not empty param.error}">
-                        <div class="alert alert-danger">
-                            <a class="close" onclick="$('.alert').hide()">×</a>  
-                            <strong><s:message code="error.label"/> : <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.</strong>
-                        </div>
-                    </c:if>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">
+                    <s:message code="login.signin.label"/>
+                </button>
+                <div class="checkbox">
+                    <label>
+                    <input type="checkbox" value="D14537">
+                    <s:message code="login.rememberme.label"/>
+                    </label>
                 </div>
-            </div><!--/.row-->
+            </form:form>
+                            
+                   
+            <!--Alerts-->
+            <c:if test="${not empty param.error}">
+                <div class="alert alert-danger">
+                    <a class="close" onclick="$('.alert').hide()">×</a>  
+                    <strong><s:message code="error.label"/> : <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.</strong>
+                </div>
+            </c:if>        
         </div><!--/.container-->
     </body>
 </html>

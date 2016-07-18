@@ -8,6 +8,12 @@ and open the template in the editor.
     Author     : laboratoriointerface
 */
 
+body{
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #eee;
+}
+
 .form-signin
 {
     max-width: 330px;
@@ -86,4 +92,10 @@ and open the template in the editor.
 .new-account{
     display:block;
     margin-top:10px;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
 }
