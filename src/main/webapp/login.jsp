@@ -16,12 +16,12 @@
     </head>
     <body>
         <div class="container">
-                       
+
             <h1 class="text-center login-title">DIASET</h1>    
-                        
+
+            <c:url var="action" value='/authenticate'/>
             <form:form id="login-form" action="${action}" method="post" class="form-signin" autocomplete="off">
                 <img class="profile-img" src="<s:url value="/img/avatar_2x.png"/>" alt="">
-                <c:url var="action" value='/authenticate'/>
                 <h1 class="text-center login-title"><s:message code="login.header.label"/></h1>    
                 <input name="username" type="text" class="form-control" placeholder="<s:message code="user.username.label"/>" required autofocus>
                 <input name="password" type="password" class="form-control" placeholder="<s:message code="user.password.label"/>" required>
@@ -31,13 +31,13 @@
                 </button>
                 <div class="checkbox">
                     <label>
-                    <input type="checkbox" value="D14537">
-                    <s:message code="login.rememberme.label"/>
+                        <input type="checkbox" value="D14537">
+                        <s:message code="login.rememberme.label"/>
                     </label>
                 </div>
             </form:form>
-                            
-                   
+
+
             <!--Alerts-->
             <c:if test="${not empty param.error}">
                 <div class="alert alert-danger">
