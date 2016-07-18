@@ -8,6 +8,7 @@
 <%@taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="s"   uri="http://www.springframework.org/tags" %>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %> 
 <!DOCTYPE html>
 <html>
     <head>
@@ -27,15 +28,25 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="<s:url value='/'/>"><s:message code="title.label"/></a>
+                    <div class="nav-collapse">
+                        <sitemesh:write property="nav"/>
+
+                        <c:url var="action" value='/logout'/>
+                        <form:form id="logout-form" action="${action}" method="post">
+                            <button class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-log-out"></span> <s:message code="logout.label"/>
+                            </button>
+                        </form:form>                        
+                    </div>
                 </div>
                 <!-- header stuff -->
             </div><!-- /.container-->
         </div><!-- /.navbar -->
 
-        
+
         <div class="container">
             <sitemesh:write property='body'/>
         </div> <!-- /container -->
-            
+
     </body>
 </html>
