@@ -30,20 +30,40 @@
                     <a class="navbar-brand" href="<s:url value='/'/>"><s:message code="title.label"/></a>
                 </div><!--/.navbar-header-->
                 <div id="navbar" class="navbar-collapse collapse">
-                    <sitemesh:write property="nav"/>
-                    <c:url var="action" value='/logout'/>
-                    <form:form id="logout-form" class="navbar-form navbar-right" action="${action}" method="post">
-                        <button class="btn btn-info btn-sm">
-                            <span class="glyphicon glyphicon-log-out"></span> <s:message code="logout.label"/>
-                        </button>
-                    </form:form>
+                    <ul class="nav navbar-nav">
+                        <!--In nav code must be <li></li>-->
+                        <sitemesh:write property="nav"/>                        
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <c:url var="actionProfile" value='/logout'/>
+                            <form:form id="logout-form" class="navbar-form" action="${actionProfile}" method="post">
+                                <button class="btn btn-default">
+                                    <span class="glyphicon glyphicon-user"></span> <s:message code="profile.label"/>
+                                </button>
+                            </form:form>                            
+                        </li>
+                        <li>
+                            <c:url var="action" value='/logout'/>
+                            <form:form id="logout-form" class="navbar-form" action="${action}" method="post">
+                                <button class="btn btn-default">
+                                    <span class="glyphicon glyphicon-log-out"></span> <s:message code="logout.label"/>
+                                </button>
+                            </form:form>                            
+                        </li>
+                    </ul>               
+
                 </div><!--/.navbar-collapse-->
             </div><!--/.container-->            
         </nav>
-                    
+
         <div class="container">
             <sitemesh:write property='body'/>
         </div> <!-- /container -->
+        <script src="<c:url value='/js/jquery-1.9.1.js' />"></script>
+        <script src="<c:url value='/js/bootstrap.min.js' />"></script>
+        <script src="<c:url value='/js/app.js' />"></script>
+    <sitemesh:write property="content"/>
 
-    </body>
+</body>
 </html>
