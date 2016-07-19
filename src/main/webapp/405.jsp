@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Error 404</title>
+        <title>Error 405</title>
         <!--CSS-->
         <link rel="stylesheet" href="<s:url value='/css/error.css' />">
         <link rel="stylesheet" href="<s:url value='/css/bootstrap.css' />">
@@ -20,9 +20,9 @@
         <div class="container">
             <div class="row">
                 <div class="error-template">
-                    <h1>404 Not Found</h1>
+                    <h1>405 Method not allowed</h1>
                     <div class="error-details">
-                        <h4>Ocurrió un error, la página solicitada no ha sido encontrada.</h4>
+                        <h4>Ocurrió un error.</h4>
                     </div>
                     <div class="error-actions">
                         <a href="<s:url value='/' />" class="btn btn-primary btn-lg">Ir a inicio</a>                            
