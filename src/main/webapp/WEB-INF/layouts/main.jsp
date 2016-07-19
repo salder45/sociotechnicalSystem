@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="<s:url value='/css/bootstrap.css' />">
     </head>
     <body>
-        <div class="navbar navbar-default navbar-fixed-top">
+        <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -28,22 +28,19 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="<s:url value='/'/>"><s:message code="title.label"/></a>
-                    <div class="nav-collapse">
-                        <sitemesh:write property="nav"/>
-
-                        <c:url var="action" value='/logout'/>
-                        <form:form id="logout-form" action="${action}" method="post">
-                            <button class="btn btn-info btn-sm">
-                                <span class="glyphicon glyphicon-log-out"></span> <s:message code="logout.label"/>
-                            </button>
-                        </form:form>                        
-                    </div>
-                </div>
-                <!-- header stuff -->
-            </div><!-- /.container-->
-        </div><!-- /.navbar -->
-
-
+                </div><!--/.navbar-header-->
+                <div id="navbar" class="navbar-collapse collapse">
+                    <sitemesh:write property="nav"/>
+                    <c:url var="action" value='/logout'/>
+                    <form:form id="logout-form" class="navbar-form navbar-right" action="${action}" method="post">
+                        <button class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-log-out"></span> <s:message code="logout.label"/>
+                        </button>
+                    </form:form>
+                </div><!--/.navbar-collapse-->
+            </div><!--/.container-->            
+        </nav>
+                    
         <div class="container">
             <sitemesh:write property='body'/>
         </div> <!-- /container -->
