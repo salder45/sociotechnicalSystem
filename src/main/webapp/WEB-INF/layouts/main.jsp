@@ -36,7 +36,7 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <c:url var="actionProfile" value='/logout'/>
+                            <c:url var="actionProfile" value='/user/perfil'/>
                             <form:form id="logout-form" class="navbar-form" action="${actionProfile}" method="post">
                                 <button class="btn btn-default">
                                     <span class="glyphicon glyphicon-user"></span> <s:message code="profile.label"/>
