@@ -13,9 +13,23 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title><s:message code="user.edit.label" /></title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <div class="container">
+            <div class="row">
+                <c:url var="action" value="/user/update"/>
+                <form:form action="${action}" class="form-horizontal">
+                    <fieldset>
+                        <div id="legend"><legend><s:message code="user.edit.label" /></legend></div>
+                        <div class="control-group">
+                            <label class="control-label">ALGO</label>
+                            <input class="input-lg"/>
+                            <p class="help-block"></p>
+                        </div>
+                    </fieldset>
+                </form:form>
+            </div><!--/.row-->
+        </div><!--/.container-->
     </body>
 </html>
