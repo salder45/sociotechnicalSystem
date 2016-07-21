@@ -29,4 +29,8 @@ public class Constants {
     public static final String LOCALE_LANGUAGE = "es";
     public static final String LOCALE_COUNTRY = "MX";
     public static final String LOCALE_VARIANT = "Traditional_WIN";
+    /*
+    * Request names
+    */
+    public static final String USER_UI="user";
 }
