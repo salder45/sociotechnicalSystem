@@ -17,5 +17,11 @@
     </head>
     <body>
         <h1><s:message code="user.show.label"/></h1>
+        <c:if test="${not empty message}">
+            <div class="alert alert-block alert-success fade in" role="status">
+                <a class="close" data-dismiss="alert">×</a>
+                <s:message code="${message}" arguments="${messageAttrs}" />
+            </div>
+        </c:if>
     </body>
 </html>

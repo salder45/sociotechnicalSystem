@@ -57,7 +57,7 @@ public class UserController extends BaseController {
                 new String[]{user.getUsername()});
         //
         log.debug("User is {}", user);
-        return "/";
+        return "redirect:/user/show/"+user.getId();
     }
     
     @RequestMapping("/show/{id}")

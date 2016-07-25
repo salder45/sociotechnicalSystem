@@ -73,8 +73,7 @@
                                 <s:message code="email.label" var="emailLabel"/>
                                 <label for="email" class="control-label col-xs-2">${emailLabel}</label>    
                                 <div class="col-xs-5">
-                                    <form:input path="email" class="form-control" placeholder="${emailLabel}"/>
-                                    <form:errors path="email" cssClass="alert alert-error" />
+                                    <form:input path="email" class="form-control" placeholder="${emailLabel}"/>                                    
                                 </div>                                
                             </div>
                         </s:bind>
