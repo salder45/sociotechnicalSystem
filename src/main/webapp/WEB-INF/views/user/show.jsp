@@ -18,7 +18,8 @@
     <body>
         <h1><s:message code="user.show.label"/></h1>
         <c:if test="${not empty message}">
-            <div class="alert alert-success">
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>
                     <span class="glyphicon glyphicon-send"></span> <s:message code="${message}" arguments="${messageAttrs}" />
                 </strong>

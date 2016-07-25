@@ -26,15 +26,12 @@
                 <form:form modelAttribute="user" method="post" action="${action}" class="form-horizontal">
                     <!-- errors-->
                     <form:errors path="*">
-                        <div class="alert alert-danger alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <span class="glyphicon glyphicon-alert"></span>
-                            <strong>
-                                <c:forEach items="${messages}" var="message">
-                                    <p>${message}</p>
-                                </c:forEach>
-                            </strong>
-                        </div>
+                        <c:forEach items="${messages}" var="message">
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <span class="glyphicon glyphicon-alert"></span> <strong>${message}</strong>
+                            </div>
+                        </c:forEach>                        
                     </form:errors>
                     <!--fields-->
                     <form:hidden path="id" />
