@@ -18,9 +18,10 @@
     <body>
         <h1><s:message code="user.show.label"/></h1>
         <c:if test="${not empty message}">
-            <div class="alert alert-block alert-success fade in" role="status">
-                <a class="close" data-dismiss="alert">×</a>
-                <s:message code="${message}" arguments="${messageAttrs}" />
+            <div class="alert alert-success">
+                <strong>
+                    <span class="glyphicon glyphicon-send"></span> <s:message code="${message}" arguments="${messageAttrs}" />
+                </strong>
             </div>
         </c:if>
     </body>
