@@ -14,6 +14,7 @@ import mx.edu.um.dii.labinterfaces.diasetproject.dao.UserDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Role;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,9 @@ public class InicializaDaoHibernate extends BaseDao implements InicializaDao {
     private UserDao userDao;
     @Autowired
     private RoleDao roleDao;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void inicializa(String username, String password) {
@@ -52,15 +56,15 @@ public class InicializaDaoHibernate extends BaseDao implements InicializaDao {
         //Create admin/user and custom user
         User userAdmin = userDao.get(Constants.DEFAULT_USER_ADMIN);
         if (userAdmin == null || userAdmin.getId() == null || userAdmin.getId().equals(0L)) {
-            userAdmin = new User(Constants.DEFAULT_USER_ADMIN, "admin", "admin", "admin", "admin");
+            userAdmin = new User(Constants.DEFAULT_USER_ADMIN, passwordEncoder.encode("admin"), "admin", "admin", "admin");
             userAdmin.addRole(roleDao.get(Constants.ROLE_ADMIN));
-            //TODO check encodepassword option
+            //TODO             
             userDao.save(userAdmin);
         }
 
         User user = userDao.get(Constants.DEFAULT_USER);
         if (user == null || user.getId() == null || user.getId().equals(0L)) {
-            user = new User(Constants.DEFAULT_USER, "user", "user", "user", "user");
+            user = new User(Constants.DEFAULT_USER, passwordEncoder.encode("user"), "user", "user", "user");
             user.addRole(roleDao.get(Constants.ROLE_USER));
             //TODO check encodepassword option
             userDao.save(user);
@@ -68,7 +72,7 @@ public class InicializaDaoHibernate extends BaseDao implements InicializaDao {
 
         User customUser = userDao.get(username);
         if (customUser == null || customUser.getId() == null || customUser.getId().equals(0L)) {
-            customUser = new User(username, password, "customUser", "customUser", "customUser");
+            customUser = new User(username, passwordEncoder.encode(password), "customUser", "customUser", "customUser");
             customUser.addRole(roleDao.get(Constants.ROLE_USER));
             //TODO check encodepassword option
             userDao.save(customUser);

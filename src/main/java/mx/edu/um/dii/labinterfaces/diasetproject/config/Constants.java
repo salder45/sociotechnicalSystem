@@ -11,6 +11,8 @@ package mx.edu.um.dii.labinterfaces.diasetproject.config;
  */
 public class Constants {
 
+    public static final Integer MAX_SIZE_PASSWORD=20;
+    
     public static final String DEFAULT_ENCODING = "UTF-8";
     public static final String APP_NAME = "Diaset";
     /*

@@ -21,7 +21,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
+import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
@@ -45,7 +47,9 @@ public class User implements Serializable, UserDetails {
     @Column(nullable = false, unique = true)
     private String username;
     private String password;
-    private Boolean enabled=true;
+    @Transient
+    private String confirmPassword;
+    private Boolean enabled = true;
     private Boolean accountExpired = false;
     private Boolean accountLocked = false;
     private Boolean credentialsExpired = false;
@@ -195,7 +199,7 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<GrantedAuthority> authorities=new LinkedHashSet<>();
+        Set<GrantedAuthority> authorities = new LinkedHashSet<>();
         authorities.addAll(getRoles());
         return authorities;
     }
@@ -213,8 +217,8 @@ public class User implements Serializable, UserDetails {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-    
-    public void addRole(Role role){
+
+    public void addRole(Role role) {
         this.roles.add(role);
     }
 
@@ -273,30 +277,44 @@ public class User implements Serializable, UserDetails {
     public void setEmail(String email) {
         this.email = email;
     }
-    
+
+    /**
+     * @return the confirmPassword
+     */
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    /**
+     * @param confirmPassword the confirmPassword to set
+     */
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
     @Override
-    public int hashCode(){
-        int hash=7;
-        hash=11*hash+Objects.hashCode(this.username);
+    public int hashCode() {
+        int hash = 7;
+        hash = 11 * hash + Objects.hashCode(this.username);
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj){
-        if(obj==null){
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        
-        if(getClass()!=obj.getClass()){
+
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        
-        final User other=(User)obj;
+
+        final User other = (User) obj;
         return Objects.equals(this.username, other.username);
     }
-    
+
     @Override
-    public String toString(){
-        return "User{username="+username+",name="+name+",lastName="+lastName+"}";
+    public String toString() {
+        return "User{username=" + username + ",name=" + name + ",lastName=" + lastName + "}";
     }
 }

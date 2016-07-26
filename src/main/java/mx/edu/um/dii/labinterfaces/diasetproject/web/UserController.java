@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.UserDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.User;
+import mx.edu.um.dii.labinterfaces.diasetproject.service.UserService;
 import mx.edu.um.dii.labinterfaces.diasetproject.utils.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,13 +32,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserController extends BaseController {
 
     @Autowired
-    private UserDao userDao;
+    private UserService userService;
     @Autowired
     private Environment enviroment;
 
     @RequestMapping("/perfil")
     public String getPerfil(Model model) {
-        User user = enviroment.getUser();
+        User user = userService.get(enviroment.getUser().getId());
         model.addAttribute(Constants.USER_UI, user);
         return "user/edit";
     }
@@ -50,6 +51,9 @@ public class UserController extends BaseController {
             log.error("Error detected in user form...");
             return "/user/edit";
         }
+        
+        User u=userService.update(user);
+        
         //
         redirectAttributes.addFlashAttribute("message",
                 "user.updated.message");
@@ -63,7 +67,7 @@ public class UserController extends BaseController {
     @RequestMapping("/show/{id}")
     public String show(@PathVariable Long id,Model model){
         log.debug("Showing user {}",id);
-        User user=userDao.get(id);
+        User user=userService.get(id);
         model.addAttribute("usuario", user);
         return "/user/show";
     }

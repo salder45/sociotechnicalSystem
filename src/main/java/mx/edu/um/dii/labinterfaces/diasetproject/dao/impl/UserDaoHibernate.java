@@ -22,8 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UserDaoHibernate extends BaseDao implements UserDao{
     
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    
     @Override
     public User get(Long id) {
         User user=(User)currentSession().get(User.class, id);
@@ -40,8 +39,13 @@ public class UserDaoHibernate extends BaseDao implements UserDao{
 
     @Override
     public User save(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         currentSession().save(user);
+        return user;
+    }
+    
+    @Override
+    public User update(User user){
+        currentSession().update(user);
         return user;
     }
     

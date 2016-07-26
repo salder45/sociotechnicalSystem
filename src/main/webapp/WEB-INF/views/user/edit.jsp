@@ -74,6 +74,26 @@
                                 </div>                                
                             </div>
                         </s:bind>
+                        <!--PASSWORD -->
+                        <s:bind path="user.password">
+                            <div class="form-group">
+                                <s:message code="user.password.label" var="passwordLabel"/>
+                                <label for="password" class="control-label col-xs-2">${passwordLabel}</label>    
+                                <div class="col-xs-5">
+                                    <form:password path="password" showPassword="true" class="form-control" placeholder="${passwordLabel}"/>
+                                </div>
+                            </div>
+                        </s:bind>
+                        <s:bind path="user.confirmPassword">
+                            <div class="form-group">
+                                <s:message code="user.password.confirm.label" var="confirmPasswordLabel"/>
+                                <label for="confirmPassword" class="control-label col-xs-2">${confirmPasswordLabel}</label>    
+                                <div class="col-xs-5">
+                                    <form:password path="confirmPassword" showPassword="true" class="form-control" placeholder="${confirmPasswordLabel}"/>
+                                </div>
+                            </div>
+                        </s:bind>
+
                     </fieldset>  
                     <div class="form-group">
                         <div class="col-xs-offset-2 col-xs-10">
