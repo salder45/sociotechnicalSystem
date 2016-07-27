@@ -36,6 +36,7 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><s:message code="menu.admin.label"/> <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="<c:url value="/user/profile"/>"><s:message code="profile.label"/></a></li>
+                                    <li><a href="<c:url value="/user/list"/>"><s:message code="user.list.label"/></a></li>
                                 </ul>
                             </li>                        
                         </sec:authorize>

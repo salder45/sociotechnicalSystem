@@ -71,5 +71,10 @@ public class UserController extends BaseController {
         model.addAttribute("usuario", user);
         return "/user/show";
     }
+    
+    @RequestMapping("list")
+    public String list(Model model){
+        return "/user/list";
+    }
 
 }
