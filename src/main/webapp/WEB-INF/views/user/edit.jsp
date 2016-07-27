@@ -23,7 +23,7 @@
                 <legend><s:message code="user.edit.label" /></legend>
                 <!-- form-->
                 <c:url var="action" value="/user/update"/>
-                <form:form modelAttribute="user" method="post" action="${action}" class="form-horizontal">
+                <form:form modelAttribute="user" method="post" action="${action}" class="form-horizontal" data-parsley-validate="">
                     <!-- errors-->
                     <form:errors path="*">
                         <c:forEach items="${messages}" var="message">
@@ -89,7 +89,7 @@
                                 <s:message code="user.password.confirm.label" var="confirmPasswordLabel"/>
                                 <label for="confirmPassword" class="control-label col-xs-2">${confirmPasswordLabel}</label>    
                                 <div class="col-xs-5">
-                                    <form:password path="confirmPassword" showPassword="true" class="form-control" placeholder="${confirmPasswordLabel}"/>
+                                    <form:password path="confirmPassword" showPassword="true" class="form-control" placeholder="${confirmPasswordLabel}" data-parsley-equalto="#password"/>
                                 </div>
                             </div>
                         </s:bind>
@@ -100,9 +100,14 @@
                             <form:button id="updateBtn" name="updateBtn" class="btn btn-primary btn-large" value="update">
                                 <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> <s:message code="update.label"/>
                             </form:button>
-                        </form:form>
+                        </div>
                     </div>
-                </div>
+                </form:form>
+                <content>
+                    <script type="text/javascript">
+                        $("#user").parsley();
+                    </script>
+                </content>
             </div><!--/.row-->
         </div><!--/.container-->        
     </body>

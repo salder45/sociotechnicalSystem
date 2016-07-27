@@ -62,6 +62,9 @@
         </div> <!-- /container -->
         <script src="<c:url value='/js/jquery-1.9.1.js' />"></script>
         <script src="<c:url value='/js/bootstrap.min.js' />"></script>
+        <script src="<c:url value='/js/parsley/parsley.js' />"></script>
+        <script src="<c:url value='/js/parsley/i18n/en.js' />"></script>
+        <script src="<c:url value='/js/parsley/i18n/es.js' />"></script>
         <script src="<c:url value='/js/app.js' />"></script>
     <sitemesh:write property="content"/>
 
