@@ -36,7 +36,7 @@ public class UserController extends BaseController {
     @Autowired
     private Environment enviroment;
 
-    @RequestMapping("/perfil")
+    @RequestMapping("/profile")
     public String getPerfil(Model model) {
         User user = userService.get(enviroment.getUser().getId());
         model.addAttribute(Constants.USER_UI, user);
