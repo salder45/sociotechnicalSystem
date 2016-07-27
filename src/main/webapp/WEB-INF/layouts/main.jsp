@@ -31,12 +31,20 @@
                 </div><!--/.navbar-header-->
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
+                        <sec:authorize access="hasRole('ROLE_ADMIN')">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><s:message code="menu.admin.label"/> <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="<c:url value="/user/profile"/>"><s:message code="profile.label"/></a></li>
+                                </ul>
+                            </li>                        
+                        </sec:authorize>
                         <!--In nav code must be <li></li>-->
                         <sitemesh:write property="nav"/>                        
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <c:url var="actionProfile" value='/user/perfil'/>
+                            <c:url var="actionProfile" value='/user/profile'/>
                             <form:form id="logout-form" class="navbar-form" action="${actionProfile}" method="post">
                                 <button class="btn btn-default">
                                     <span class="glyphicon glyphicon-user"></span> <s:message code="profile.label"/>
