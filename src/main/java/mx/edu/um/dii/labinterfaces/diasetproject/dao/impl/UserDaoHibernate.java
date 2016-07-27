@@ -8,6 +8,7 @@ package mx.edu.um.dii.labinterfaces.diasetproject.dao.impl;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.BaseDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.UserDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.User;
+import org.hibernate.NonUniqueObjectException;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,7 +32,7 @@ public class UserDaoHibernate extends BaseDao implements UserDao{
 
     @Override
     public User get(String username) {
-        Query query=currentSession().createQuery("select u from User u where username=:Username");
+        Query query=currentSession().createQuery("select u from User u where u.username=:Username");
         query.setParameter("Username", username);
         User user=(User)query.uniqueResult();
         return user;
@@ -45,7 +46,14 @@ public class UserDaoHibernate extends BaseDao implements UserDao{
     
     @Override
     public User update(User user){
+        try{
         currentSession().update(user);
+        currentSession().flush();
+        }catch(NonUniqueObjectException nuoe){
+            log.warn("Already exist a user with the same Id in session, trying to merge");
+            currentSession().merge(user);
+            currentSession().flush();
+        }
         return user;
     }
     

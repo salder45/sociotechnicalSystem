@@ -80,7 +80,7 @@
                                 <s:message code="user.password.label" var="passwordLabel"/>
                                 <label for="password" class="control-label col-xs-2">${passwordLabel}</label>    
                                 <div class="col-xs-5">
-                                    <form:password path="password" showPassword="true" class="form-control" placeholder="${passwordLabel}"/>
+                                    <form:password path="password" showPassword="true" class="form-control" placeholder="${passwordLabel}" data-parsley-equalto="#confirmPassword"/>
                                 </div>
                             </div>
                         </s:bind>
