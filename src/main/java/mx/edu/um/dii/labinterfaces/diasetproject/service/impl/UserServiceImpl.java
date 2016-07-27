@@ -46,7 +46,7 @@ public class UserServiceImpl extends BaseService implements UserService {
     @Override
     public User update(User user) {
         //check if password is not encoded
-        user.setPassword(user.getPassword());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user = userDao.update(user);
         return user;
     }
