@@ -93,6 +93,15 @@
                                 </div>
                             </div>
                         </s:bind>
+                        <s:bind path="user.roles">
+                            <div class="form-group">
+                                <s:message code="user.roles.label" var="rolesLabel"/>
+                                <label for="roles" class="control-label col-xs-2">${rolesLabel}</label>
+                                <div class="col-xs-5">
+                                    <form:checkboxes path="roles" items="${rolesList}" itemValue="authority" itemLabel="authority" cssClass="" element="div"/>
+                                </div>
+                            </div>
+                        </s:bind>
 
                     </fieldset>  
                     <div class="form-group">
