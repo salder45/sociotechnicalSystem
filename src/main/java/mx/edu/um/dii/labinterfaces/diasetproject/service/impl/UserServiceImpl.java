@@ -5,6 +5,7 @@
  */
 package mx.edu.um.dii.labinterfaces.diasetproject.service.impl;
 
+import java.util.List;
 import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.UserDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.User;
@@ -53,6 +54,11 @@ public class UserServiceImpl extends BaseService implements UserService {
         }
         user = userDao.update(user);
         return user;
+    }
+
+    @Override
+    public List<User> getAll() {
+        return userDao.get();
     }
 
 }

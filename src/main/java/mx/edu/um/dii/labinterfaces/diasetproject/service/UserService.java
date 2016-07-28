@@ -5,6 +5,7 @@
  */
 package mx.edu.um.dii.labinterfaces.diasetproject.service;
 
+import java.util.List;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.User;
 
 /**
@@ -18,4 +19,6 @@ public interface UserService {
     public User save(User user);
     
     public User update(User user);
+    
+    public List<User> getAll();
 }

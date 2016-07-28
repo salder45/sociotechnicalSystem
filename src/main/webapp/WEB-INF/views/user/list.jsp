@@ -16,6 +16,46 @@
         <title><s:message code="user.list.label"/></title>
     </head>
     <body>
-        <h1><s:message code="user.list.label"/></h1>
+        <div class="container">   
+            <div class="row">
+                <legend><s:message code="user.list.label"/></legend>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                <s:message code="user.id.label"/>
+                            </th>
+                            <th>
+                                <s:message code="user.username.label"/>
+                            </th>
+                            <th>
+                                <s:message code="user.name.label"/>
+                            </th>
+                            <th>
+                                <s:message code="user.lastname.label"/>
+                            </th>
+                            <th>
+                                <s:message code="user.mothersmaidenname.label"/>
+                            </th>
+                            <th>
+                                <s:message code="email.label"/>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${usersList}" var="user">
+                            <tr>
+                                <td>${user.id}</td>
+                                <td>${user.username}</td>
+                                <td>${user.name}</td>
+                                <td>${user.lastName}</td>
+                                <td>${user.mothersMaidenName}</td>
+                                <td>${user.email}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>                
+            </div>
+        </div>
     </body>
 </html>

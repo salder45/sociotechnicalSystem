@@ -5,6 +5,7 @@
  */
 package mx.edu.um.dii.labinterfaces.diasetproject.dao.impl;
 
+import java.util.List;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.BaseDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.UserDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.User;
@@ -55,6 +56,13 @@ public class UserDaoHibernate extends BaseDao implements UserDao{
             currentSession().flush();
         }
         return user;
+    }
+
+    @Override
+    public List<User> get() {
+        Query query=currentSession().createQuery("select u from User u");
+        List<User> list=query.getResultList();
+        return list;
     }
     
 }

@@ -81,6 +81,9 @@ public class UserController extends BaseController {
     
     @RequestMapping("list")
     public String list(Model model){
+        log.debug("get User List");
+        List<User> userList=userService.getAll();
+        model.addAttribute(Constants.USER_LIST_UI, userList);
         return "/user/list";
     }
 
