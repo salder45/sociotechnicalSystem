@@ -26,6 +26,12 @@
                     </strong>
                 </div>
             </c:if>
+            <label>
+                <s:message code="user.username.label"/>
+            </label>
+            <label>
+                ${user.username}
+            </label>
         </div>
     </body>
 </html>
