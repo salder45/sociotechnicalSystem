@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mx.edu.um.dii.labinterfaces.diasetproject.dao;
+package mx.edu.um.dii.labinterfaces.diasetproject.service;
 
 import java.util.List;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Role;
@@ -12,13 +12,7 @@ import mx.edu.um.dii.labinterfaces.diasetproject.model.Role;
  *
  * @author laboratoriointerface
  */
-public interface RoleDao {
+public interface RoleService {
+    public List<Role> getAll();
     
-    public Role get(Long id);
-    
-    public Role get(String authority);
-    
-    public Role save(Role role);
-    
-    public List<Role> get();
 }

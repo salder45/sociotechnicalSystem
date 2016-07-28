@@ -5,11 +5,14 @@
  */
 package mx.edu.um.dii.labinterfaces.diasetproject.web;
 
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.UserDao;
+import mx.edu.um.dii.labinterfaces.diasetproject.model.Role;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.User;
+import mx.edu.um.dii.labinterfaces.diasetproject.service.RoleService;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.UserService;
 import mx.edu.um.dii.labinterfaces.diasetproject.utils.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +35,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserController extends BaseController {
 
     @Autowired
+    private RoleService roleService;
+    @Autowired
     private UserService userService;
     @Autowired
     private Environment enviroment;
@@ -40,6 +45,8 @@ public class UserController extends BaseController {
     public String getPerfil(Model model) {
         User user = userService.get(enviroment.getUser().getId());
         model.addAttribute(Constants.USER_UI, user);
+        List<Role> allRoleList=roleService.getAll();
+        model.addAttribute(Constants.ROLE_LIST_UI, allRoleList);
         return "user/edit";
     }
 
@@ -68,7 +75,7 @@ public class UserController extends BaseController {
     public String show(@PathVariable Long id,Model model){
         log.debug("Showing user {}",id);
         User user=userService.get(id);
-        model.addAttribute("usuario", user);
+        model.addAttribute("user", user);
         return "/user/show";
     }
     

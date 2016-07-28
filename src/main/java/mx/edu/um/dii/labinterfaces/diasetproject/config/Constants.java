@@ -35,4 +35,7 @@ public class Constants {
     * Request names
     */
     public static final String USER_UI="user";
+    public static final String USER_LIST_UI="usersList";
+    public static final String ROLE_LIST_UI="rolesList";
+    public static final String ROLE_UI="role";
 }

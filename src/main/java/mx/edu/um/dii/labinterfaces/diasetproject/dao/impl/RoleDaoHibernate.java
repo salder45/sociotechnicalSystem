@@ -5,6 +5,7 @@
  */
 package mx.edu.um.dii.labinterfaces.diasetproject.dao.impl;
 
+import java.util.List;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.BaseDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.RoleDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Role;
@@ -34,7 +35,7 @@ public class RoleDaoHibernate extends BaseDao implements RoleDao{
     @Override
     public Role get(String authority) {
         log.debug("Authority={}",authority);
-        Query query=currentSession().createQuery("select r from Role r where authority=:Role");
+        Query query=currentSession().createQuery("select r from Role r where r.authority=:Role");
         query.setParameter("Role", authority);
         Role role=(Role) query.uniqueResult();
         return role;
@@ -44,6 +45,14 @@ public class RoleDaoHibernate extends BaseDao implements RoleDao{
     public Role save(Role role) {
         currentSession().save(role);
         return role;
+    }
+
+    @Override
+    public List<Role> get() {
+        log.debug("get all roles");
+        Query query=currentSession().createQuery("select r from Role r");
+        List<Role> list=query.getResultList();
+        return list;
     }
     
 }
