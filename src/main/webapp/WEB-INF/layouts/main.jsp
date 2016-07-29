@@ -16,6 +16,7 @@
         <title><s:message code="title.label" /> - <sitemesh:write property="title"/></title>
         <link rel="stylesheet" href="<s:url value='/css/app.css' />">
         <link rel="stylesheet" href="<s:url value='/css/bootstrap.css' />">
+        <link rel="stylesheet" href="<s:url value='/css/dataTables.bootstrap.css' />">
     </head>
     <body>
         <nav class="navbar navbar-default navbar-fixed-top">
@@ -75,6 +76,8 @@
         <script src="<c:url value='/js/parsley/i18n/en.js' />"></script>
         <script src="<c:url value='/js/parsley/i18n/es.js' />"></script>
         <script src="<c:url value='/js/app.js' />"></script>
+        <script src="<c:url value='/js/jquery.dataTables.js' />"></script>
+        <script src="<c:url value='/js/dataTables.bootstrap.js' />"></script>
     <sitemesh:write property="content"/>
 
 </body>

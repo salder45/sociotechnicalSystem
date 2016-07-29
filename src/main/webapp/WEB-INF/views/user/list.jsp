@@ -19,7 +19,7 @@
         <div class="container">   
             <div class="row">
                 <legend><s:message code="user.list.label"/></legend>
-                <table class="table table-striped table-hover">
+                <table id="table-users" class="table table-striped table-hover">
                     <thead>
                         <tr>
                             <th>
@@ -56,6 +56,13 @@
                     </tbody>
                 </table>                
             </div>
-        </div>
+        </div>        
     </body>
+    <content>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#table-users').DataTable();
+            });
+        </script>
+    </content>
 </html>
