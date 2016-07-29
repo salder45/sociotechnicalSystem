@@ -86,5 +86,14 @@ public class UserController extends BaseController {
         model.addAttribute(Constants.USER_LIST_UI, userList);
         return "/user/list";
     }
+    
+    @RequestMapping("/edit/{id}")
+    public String edit(@PathVariable Long id, Model model){
+        User user = userService.get(id);
+        model.addAttribute(Constants.USER_UI, user);
+        List<Role> allRoleList=roleService.getAll();
+        model.addAttribute(Constants.ROLE_LIST_UI, allRoleList);
+        return "user/edit";
+    }
 
 }

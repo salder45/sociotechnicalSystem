@@ -40,17 +40,25 @@
                             <th>
                                 <s:message code="email.label"/>
                             </th>
+                            <th>
+                                <s:message code="edit.label"/> <s:message code="user.label"/>
+                            </th>
+                            <th>
+                                <s:message code="delete.label"/> <s:message code="user.label"/>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach items="${usersList}" var="user">
                             <tr>
-                                <td>${user.id}</td>
+                                <td><a href="<c:url value="/user/show/${user.id}"/>">${user.id}</a></td>
                                 <td>${user.username}</td>
                                 <td>${user.name}</td>
                                 <td>${user.lastName}</td>
                                 <td>${user.mothersMaidenName}</td>
                                 <td>${user.email}</td>
+                                <td>ALGO</td>                                
+                                <td>ALGO2</td>                                
                             </tr>
                         </c:forEach>
                     </tbody>
