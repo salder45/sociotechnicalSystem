@@ -64,5 +64,14 @@ public class UserDaoHibernate extends BaseDao implements UserDao{
         List<User> list=query.getResultList();
         return list;
     }
+
+    @Override
+    public String delete(Long id) {
+        User user=get(id);
+        String username=user.getUsername();
+        currentSession().delete(user);
+        currentSession().flush();
+        return username;
+    }
     
 }

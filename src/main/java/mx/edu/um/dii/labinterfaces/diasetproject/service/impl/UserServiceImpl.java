@@ -61,4 +61,10 @@ public class UserServiceImpl extends BaseService implements UserService {
         return userDao.get();
     }
 
+    @Override
+    public String delete(Long id) {
+        String result=userDao.delete(id);
+        return result;
+    }
+
 }

@@ -38,4 +38,6 @@ public class Constants {
     public static final String USER_LIST_UI="usersList";
     public static final String ROLE_LIST_UI="rolesList";
     public static final String ROLE_UI="role";
+    public static final String MESSAGE_UI="message";
+    public static final String MESSAGE_ATTRS_UI="messageAttrs";
 }

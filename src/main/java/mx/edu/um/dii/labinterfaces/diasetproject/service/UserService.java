@@ -21,4 +21,6 @@ public interface UserService {
     public User update(User user);
     
     public List<User> getAll();
+    
+    public String delete(Long id);
 }

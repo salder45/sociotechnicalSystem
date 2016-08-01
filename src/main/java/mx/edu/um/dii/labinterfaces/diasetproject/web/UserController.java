@@ -62,9 +62,9 @@ public class UserController extends BaseController {
         User u=userService.update(user);
         
         //
-        redirectAttributes.addFlashAttribute("message",
+        redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI,
                 "user.updated.message");
-        redirectAttributes.addFlashAttribute("messageAttrs",
+        redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI,
                 new String[]{user.getUsername()});
         //
         log.debug("User is {}", user);
@@ -89,11 +89,27 @@ public class UserController extends BaseController {
     
     @RequestMapping("/edit/{id}")
     public String edit(@PathVariable Long id, Model model){
+        log.debug("edit User...");
         User user = userService.get(id);
         model.addAttribute(Constants.USER_UI, user);
         List<Role> allRoleList=roleService.getAll();
         model.addAttribute(Constants.ROLE_LIST_UI, allRoleList);
         return "user/edit";
+    }
+    
+    @RequestMapping("/delete/{id}")
+    public String delete(@PathVariable Long id, Model model,RedirectAttributes redirectAttributes){
+        log.debug("delete User...");
+        try{
+        String username=userService.delete(id);
+        redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI,
+                "user.deleted.message");
+        redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI,
+                new String[]{username});
+        log.debug("User: {} deleted",username);
+        }catch(Exception e){
+        }
+        return "redirect:/user/list";
     }
 
 }

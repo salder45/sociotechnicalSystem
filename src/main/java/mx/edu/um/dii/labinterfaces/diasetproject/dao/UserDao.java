@@ -18,5 +18,6 @@ public interface UserDao {
     public User get(String username);
     public User save(User user);
     public User update(User user);
+    public String delete(Long id);
     
 }
