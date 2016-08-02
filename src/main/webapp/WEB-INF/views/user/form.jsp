@@ -10,7 +10,6 @@
         <c:url var="action" value="/user/update"/>        
     </c:otherwise>
 </c:choose>
-
 <form:form modelAttribute="user" method="post" action="${action}" class="form-horizontal" data-parsley-validate="">
     <form:errors path="*">
         <c:forEach items="${messages}" var="message">
@@ -117,6 +116,7 @@
                     <form:button id="saveBtn" name="saveBtn" class="btn btn-primary btn-large" value="save">
                         <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> <s:message code="save.label"/>
                     </form:button>
+                    <a class="btn btn-default" href="<c:url value="/"/>"><s:message code="cancel.label"/> <span class="glyphicon glyphicon-erase"></span></a>
                 </div>
             </div>
         </c:when>
@@ -126,6 +126,8 @@
                     <form:button id="updateBtn" name="updateBtn" class="btn btn-primary btn-large" value="update">
                         <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> <s:message code="update.label"/>
                     </form:button>
+                    <a class="btn btn-danger" href="<c:url value="/user/delete/${user.id}"/>" onclick="return confirm('<s:message code="confirm.delete.message" />');" ><s:message code="delete.label"/> <span class="glyphicon glyphicon-trash"></span></a>
+                    <a class="btn btn-default" href="<c:url value="/"/>"><s:message code="cancel.label"/> <span class="glyphicon glyphicon-erase"></span></a>
                 </div>
             </div>
         </c:otherwise>
