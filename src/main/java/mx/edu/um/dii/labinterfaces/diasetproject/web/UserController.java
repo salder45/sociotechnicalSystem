@@ -9,7 +9,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
-import mx.edu.um.dii.labinterfaces.diasetproject.dao.UserDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Role;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.User;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.RoleService;
@@ -41,26 +40,56 @@ public class UserController extends BaseController {
     @Autowired
     private Environment enviroment;
 
+    @RequestMapping("/new")
+    public String newUser(Model model) {
+        log.debug("Load User...");
+        User user = new User();
+        model.addAttribute(Constants.USER_UI, user);
+        List<Role> allRoleList = roleService.getAll();
+        model.addAttribute(Constants.ROLE_LIST_UI, allRoleList);
+        return "/user/new";
+    }
+
+    @RequestMapping("/create")
+    public String create(HttpServletRequest request, @Valid User user, BindingResult bindingResult, Errors errors, Model model, RedirectAttributes redirectAttributes) {
+        log.debug("Create User...");
+        if (bindingResult.hasErrors()) {
+            log.error("Error detected in user form...");
+            List<Role> allRoleList = roleService.getAll();
+            model.addAttribute(Constants.ROLE_LIST_UI, allRoleList);
+            return "/user/edit";
+        }
+        User u = userService.save(user);
+
+        redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI,
+                "user.created.message");
+        redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI,
+                new String[]{user.getUsername()});
+
+        return "redirect:/user/list";
+    }
+
     @RequestMapping("/profile")
     public String getPerfil(Model model) {
+        log.debug("Profile User...");
         User user = userService.get(enviroment.getUser().getId());
         model.addAttribute(Constants.USER_UI, user);
-        List<Role> allRoleList=roleService.getAll();
+        List<Role> allRoleList = roleService.getAll();
         model.addAttribute(Constants.ROLE_LIST_UI, allRoleList);
         return "user/edit";
     }
 
     @Transactional
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String update(HttpServletRequest request, @Valid User user, BindingResult bindingResult, Errors errors, Model modelo, RedirectAttributes redirectAttributes) {
+    public String update(HttpServletRequest request, @Valid User user, BindingResult bindingResult, Errors errors, Model model, RedirectAttributes redirectAttributes) {
         log.debug("Update user...");
         if (bindingResult.hasErrors()) {
             log.error("Error detected in user form...");
             return "/user/edit";
         }
-        
-        User u=userService.update(user);
-        
+
+        User u = userService.update(user);
+
         //
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI,
                 "user.updated.message");
@@ -68,46 +97,46 @@ public class UserController extends BaseController {
                 new String[]{user.getUsername()});
         //
         log.debug("User is {}", user);
-        return "redirect:/user/show/"+user.getId();
+        return "redirect:/user/show/" + user.getId();
     }
-    
+
     @RequestMapping("/show/{id}")
-    public String show(@PathVariable Long id,Model model){
-        log.debug("Showing user {}",id);
-        User user=userService.get(id);
+    public String show(@PathVariable Long id, Model model) {
+        log.debug("Showing user {}", id);
+        User user = userService.get(id);
         model.addAttribute("user", user);
         return "/user/show";
     }
-    
+
     @RequestMapping("list")
-    public String list(Model model){
+    public String list(Model model) {
         log.debug("get User List");
-        List<User> userList=userService.getAll();
+        List<User> userList = userService.getAll();
         model.addAttribute(Constants.USER_LIST_UI, userList);
         return "/user/list";
     }
-    
+
     @RequestMapping("/edit/{id}")
-    public String edit(@PathVariable Long id, Model model){
+    public String edit(@PathVariable Long id, Model model) {
         log.debug("edit User...");
         User user = userService.get(id);
         model.addAttribute(Constants.USER_UI, user);
-        List<Role> allRoleList=roleService.getAll();
+        List<Role> allRoleList = roleService.getAll();
         model.addAttribute(Constants.ROLE_LIST_UI, allRoleList);
         return "user/edit";
     }
-    
+
     @RequestMapping("/delete/{id}")
-    public String delete(@PathVariable Long id, Model model,RedirectAttributes redirectAttributes){
+    public String delete(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
         log.debug("delete User...");
-        try{
-        String username=userService.delete(id);
-        redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI,
-                "user.deleted.message");
-        redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI,
-                new String[]{username});
-        log.debug("User: {} deleted",username);
-        }catch(Exception e){
+        try {
+            String username = userService.delete(id);
+            redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI,
+                    "user.deleted.message");
+            redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI,
+                    new String[]{username});
+            log.debug("User: {} deleted", username);
+        } catch (Exception e) {
         }
         return "redirect:/user/list";
     }
