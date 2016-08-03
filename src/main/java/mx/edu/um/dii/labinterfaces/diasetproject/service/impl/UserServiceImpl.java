@@ -7,10 +7,14 @@ package mx.edu.um.dii.labinterfaces.diasetproject.service.impl;
 
 import java.util.List;
 import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
+import mx.edu.um.dii.labinterfaces.diasetproject.dao.CredentialDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.UserDao;
+import mx.edu.um.dii.labinterfaces.diasetproject.model.Credential;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.User;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.BaseService;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.UserService;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.jasypt.util.text.BasicTextEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,6 +26,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl extends BaseService implements UserService {
 
+    @Autowired
+    private CredentialDao credentialDao;
     @Autowired
     private UserDao userDao;
 
@@ -39,8 +45,16 @@ public class UserServiceImpl extends BaseService implements UserService {
 
     @Override
     public User save(User user) {
+        String tmp = RandomStringUtils.randomNumeric(10);
+        String data="Credentials{username:" + user.getUsername() + ",password:" + user.getPassword() + "}";
+        Credential credential = new Credential(tmp,data );
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user = userDao.save(user);
+        //
+        credential.setUser(user);
+        credentialDao.save(credential);
+        user.setCredential(credential);
+        //
         return user;
     }
 
@@ -63,7 +77,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 
     @Override
     public String delete(Long id) {
-        String result=userDao.delete(id);
+        String result = userDao.delete(id);
         return result;
     }
 

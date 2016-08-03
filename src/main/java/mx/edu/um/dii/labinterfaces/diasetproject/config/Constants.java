@@ -40,4 +40,8 @@ public class Constants {
     public static final String ROLE_UI="role";
     public static final String MESSAGE_UI="message";
     public static final String MESSAGE_ATTRS_UI="messageAttrs";
+    /*
+    Password
+    */
+    public static final String PASSWORD_JASYPT="D14537";
 }

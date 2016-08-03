@@ -66,7 +66,7 @@ public class User implements Serializable, UserDetails {
         @JoinColumn(name = "user_id")}, inverseJoinColumns
             = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user",fetch = FetchType.EAGER)
     private Credential credential;
 
     //default constructor

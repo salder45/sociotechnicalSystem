@@ -14,8 +14,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.Size;
+import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
+import org.jasypt.util.text.BasicTextEncryptor;
 
 /**
  *
@@ -24,7 +27,6 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "credentials")
 public class Credential {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
@@ -37,15 +39,24 @@ public class Credential {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    public Credential() {
+    @Transient
+    BasicTextEncryptor bte;
+    
+    public Credential(){
+        bte=new BasicTextEncryptor();
+        bte.setPassword(Constants.PASSWORD_JASYPT);
     }
-
-    public Credential(String barcode, String data) {
-        this.barcodeValue = barcode;
-        this.credentialData = data;
+    
+    public Credential(String barcode,String data){
+        this.barcodeValue=barcode;
+        if(bte==null){
+            bte=new BasicTextEncryptor();            
+        }
+        bte.setPassword(Constants.PASSWORD_JASYPT);
+        //
+        this.credentialData=bte.encrypt(data);
     }
-
+    
     /**
      * @return the Id
      */
@@ -92,17 +103,19 @@ public class Credential {
      * @return the credentialData
      */
     public String getCredentialData() {
-        return credentialData;
+        //Decrypt        
+        return bte.decrypt(credentialData);
     }
 
     /**
      * @param credentialData the credentialData to set
      */
     public void setCredentialData(String credentialData) {
-        this.credentialData = credentialData;
+        //Encrypt        
+        this.credentialData = bte.encrypt(credentialData);
     }
-
-    /**
+    
+     /**
      * @return the user
      */
     public User getUser() {
@@ -115,30 +128,31 @@ public class Credential {
     public void setUser(User user) {
         this.user = user;
     }
-
+    
+    
     @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 11 * hash + Objects.hash(this.Id, this.barcodeValue, this.credentialData);
+    public int hashCode(){
+        int hash=7;
+        hash=11*hash+Objects.hash(this.Id,this.barcodeValue,this.credentialData);
         return hash;
     }
-
+    
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals(Object obj){
+        if(obj==null){
             return false;
         }
-
+        
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Credential other = (Credential) obj;
-        return Objects.equals(this.Id, other.Id) & Objects.equals(this.barcodeValue, other.barcodeValue) & Objects.equals(this.credentialData, other.credentialData);
+        final Credential other=(Credential)obj;
+        return Objects.equals(this.Id, other.Id)&Objects.equals(this.barcodeValue, other.barcodeValue)&Objects.equals(this.credentialData, other.credentialData);
     }
-
+    
     @Override
     public String toString() {
-        return "{Credential{Id=" + this.Id + ",barcode=" + this.barcodeValue + ",credentialData=" + this.credentialData + "}}";
+        return "{Credential{Id="+this.Id+",barcode="+this.barcodeValue+",credentialData="+this.credentialData+"}}";
     }
-
+   
 }
