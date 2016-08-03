@@ -24,6 +24,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "credentials")
 public class Credential {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
@@ -36,14 +37,15 @@ public class Credential {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
-    public Credential(){
+
+    public Credential() {
     }
-    
-    public Credential(String barcode,String data){
-        this.barcodeValue=barcode;
-        this.credentialData=data;
+
+    public Credential(String barcode, String data) {
+        this.barcodeValue = barcode;
+        this.credentialData = data;
     }
-    
+
     /**
      * @return the Id
      */
@@ -99,30 +101,44 @@ public class Credential {
     public void setCredentialData(String credentialData) {
         this.credentialData = credentialData;
     }
-    
+
+    /**
+     * @return the user
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * @param user the user to set
+     */
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
-    public int hashCode(){
-        int hash=7;
-        hash=11*hash+Objects.hash(this.Id,this.barcodeValue,this.credentialData);
+    public int hashCode() {
+        int hash = 7;
+        hash = 11 * hash + Objects.hash(this.Id, this.barcodeValue, this.credentialData);
         return hash;
     }
-    
+
     @Override
-    public boolean equals(Object obj){
-        if(obj==null){
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        
+
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Credential other=(Credential)obj;
-        return Objects.equals(this.Id, other.Id)&Objects.equals(this.barcodeValue, other.barcodeValue)&Objects.equals(this.credentialData, other.credentialData);
+        final Credential other = (Credential) obj;
+        return Objects.equals(this.Id, other.Id) & Objects.equals(this.barcodeValue, other.barcodeValue) & Objects.equals(this.credentialData, other.credentialData);
     }
-    
+
     @Override
     public String toString() {
-        return "{Credential{Id="+this.Id+",barcode="+this.barcodeValue+",credentialData="+this.credentialData+"}}";
+        return "{Credential{Id=" + this.Id + ",barcode=" + this.barcodeValue + ",credentialData=" + this.credentialData + "}}";
     }
-    
+
 }

@@ -68,6 +68,7 @@ public class User implements Serializable, UserDetails {
     private Set<Role> roles = new HashSet<>();
     @OneToOne(mappedBy = "user")
     private Credential credential;
+
     //default constructor
     public User() {
     }
@@ -323,6 +324,20 @@ public class User implements Serializable, UserDetails {
      */
     public Boolean getCredentialsExpired() {
         return credentialsExpired;
+    }
+
+    /**
+     * @return the credential
+     */
+    public Credential getCredential() {
+        return credential;
+    }
+
+    /**
+     * @param credential the credential to set
+     */
+    public void setCredential(Credential credential) {
+        this.credential = credential;
     }
 
     @Override
