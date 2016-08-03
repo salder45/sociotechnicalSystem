@@ -72,19 +72,19 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label"><s:message code="user.account.expired.label"/>:</label> 
                         <div class="col-sm-10">
-                            <p class="form-control-static">${user.isAccountNonExpired()==true?active:inactive}</p>
+                            <p class="form-control-static">${user.accountExpired==true?active:inactive}</p>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label"><s:message code="user.account.locked.label"/>:</label> 
                         <div class="col-sm-10">
-                            <p class="form-control-static">${user.isAccountNonLocked()==true?active:inactive}</p>
+                            <p class="form-control-static">${user.accountLocked==true?active:inactive}</p>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label"><s:message code="user.credentials.expired.label"/>:</label> 
                         <div class="col-sm-10">
-                            <p class="form-control-static">${user.isCredentialsNonExpired()==true?active:inactive}</p>
+                            <p class="form-control-static">${user.credentialsExpired==true?active:inactive}</p>
                         </div>
                     </div>
                     <div class="form-group">

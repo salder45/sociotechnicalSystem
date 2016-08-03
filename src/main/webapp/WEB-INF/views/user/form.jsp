@@ -98,6 +98,26 @@
                 </div>
             </div>
         </s:bind>
+        <s:bind path="user.enabled">
+            <div class="form-group">
+                <s:message code="user.enabled.label" var="enabledLabel"/>
+                <label for="enabled" class="control-label col-xs-2">${enabledLabel}</label>  
+                <div class="col-xs-5">
+                    <form:checkbox path="enabled"/>
+                </div>
+            </div>
+        </s:bind>
+        <s:bind path="user.accountLocked">
+            <div class="form-group">
+                <s:message code="user.account.locked.label" var="lockedLabel"/>
+                <label for="accountLocked" class="control-label col-xs-2">${lockedLabel}</label>
+                <div class="col-xs-5">
+                    <form:checkbox path="accountLocked"/>
+                </div>
+            </div>
+        </s:bind>
+
+
         <s:bind path="user.roles">
             <div class="form-group">
                 <s:message code="user.roles.label" var="rolesLabel"/>

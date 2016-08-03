@@ -142,7 +142,7 @@ public class User implements Serializable, UserDetails {
      */
     @Override
     public boolean isEnabled() {
-        return enabled;
+        return getEnabled();
     }
 
     /**
@@ -157,7 +157,7 @@ public class User implements Serializable, UserDetails {
      */
     @Override
     public boolean isAccountNonExpired() {
-        return !accountExpired;
+        return !getAccountExpired();
     }
 
     /**
@@ -172,7 +172,7 @@ public class User implements Serializable, UserDetails {
      */
     @Override
     public boolean isAccountNonLocked() {
-        return !accountLocked;
+        return !getAccountLocked();
     }
 
     /**
@@ -187,7 +187,7 @@ public class User implements Serializable, UserDetails {
      */
     @Override
     public boolean isCredentialsNonExpired() {
-        return !credentialsExpired;
+        return !getCredentialsExpired();
     }
 
     /**
@@ -290,6 +290,37 @@ public class User implements Serializable, UserDetails {
      */
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    /*
+    GETTERS    
+     */
+    /**
+     * @return the enabled
+     */
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    /**
+     * @return the accountExpired
+     */
+    public Boolean getAccountExpired() {
+        return accountExpired;
+    }
+
+    /**
+     * @return the accountLocked
+     */
+    public Boolean getAccountLocked() {
+        return accountLocked;
+    }
+
+    /**
+     * @return the credentialsExpired
+     */
+    public Boolean getCredentialsExpired() {
+        return credentialsExpired;
     }
 
     @Override
