@@ -20,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
@@ -65,7 +66,8 @@ public class User implements Serializable, UserDetails {
         @JoinColumn(name = "user_id")}, inverseJoinColumns
             = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
-
+    @OneToOne(mappedBy = "user")
+    private Credential credential;
     //default constructor
     public User() {
     }
