@@ -12,6 +12,9 @@ import mx.edu.um.dii.labinterfaces.diasetproject.model.Credential;
  * @author laboratoriointerface
  */
 public interface CredentialDao {
+    public Credential get(Long id);
+    public Credential get(String barcode);
     public Credential save(Credential credential);
     public Credential update(Credential credential);
+    public String delete(Long id);
 }

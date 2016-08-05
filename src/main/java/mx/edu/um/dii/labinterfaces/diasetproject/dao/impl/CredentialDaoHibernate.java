@@ -9,6 +9,7 @@ import mx.edu.um.dii.labinterfaces.diasetproject.dao.BaseDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.CredentialDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Credential;
 import org.hibernate.NonUniqueObjectException;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public class CredentialDaoHibernate extends BaseDao implements CredentialDao {
+
+    @Override
+    public Credential get(Long id) {
+        Credential credential = (Credential) currentSession().get(Credential.class, id);
+        return credential;
+    }
+
+    @Override
+    public Credential get(String barcode) {
+        Query query=currentSession().createQuery("select c from Credential c where c.barcodeValue=:Barcode");
+        query.setParameter("Barcode", barcode);
+        Credential credential=(Credential)query.uniqueResult();
+        return credential;
+    }
 
     @Override
     public Credential save(Credential credential) {
@@ -37,6 +52,15 @@ public class CredentialDaoHibernate extends BaseDao implements CredentialDao {
             currentSession().flush();
         }
         return credential;
+    }
+
+    @Override
+    public String delete(Long id) {
+        Credential credential=get(id);
+        String barcode=credential.getBarcodeValue();
+        currentSession().delete(credential);
+        currentSession().flush();        
+        return barcode;
     }
 
 }
