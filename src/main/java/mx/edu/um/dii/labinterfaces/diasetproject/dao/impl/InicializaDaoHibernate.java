@@ -8,11 +8,14 @@ package mx.edu.um.dii.labinterfaces.diasetproject.dao.impl;
 import java.util.HashSet;
 import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.BaseDao;
+import mx.edu.um.dii.labinterfaces.diasetproject.dao.CredentialDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.InicializaDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.RoleDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.UserDao;
+import mx.edu.um.dii.labinterfaces.diasetproject.model.Credential;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Role;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.User;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
@@ -27,10 +30,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class InicializaDaoHibernate extends BaseDao implements InicializaDao {
 
     @Autowired
+    private CredentialDao credentialDao;
+    @Autowired
     private UserDao userDao;
     @Autowired
     private RoleDao roleDao;
-    
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -38,7 +43,7 @@ public class InicializaDaoHibernate extends BaseDao implements InicializaDao {
     public void inicializa(String username, String password) {
         log.debug("Init data......");
         //Create Roles
-        HashSet roles=new HashSet();
+        HashSet roles = new HashSet();
         //ADMIN
         Role roleAdmin = roleDao.get(Constants.ROLE_ADMIN);
         log.debug("Role={}", roleAdmin);
@@ -56,18 +61,30 @@ public class InicializaDaoHibernate extends BaseDao implements InicializaDao {
         //Create admin/user and custom user
         User userAdmin = userDao.get(Constants.DEFAULT_USER_ADMIN);
         if (userAdmin == null || userAdmin.getId() == null || userAdmin.getId().equals(0L)) {
-            userAdmin = new User(Constants.DEFAULT_USER_ADMIN, passwordEncoder.encode("admin"), "admin", "admin", "admin");
+            String pwd = "admin";
+            userAdmin = new User(Constants.DEFAULT_USER_ADMIN, passwordEncoder.encode(pwd), "admin", "admin", "admin");
             userAdmin.addRole(roleDao.get(Constants.ROLE_ADMIN));
             //TODO             
             userDao.save(userAdmin);
+            String tmp = RandomStringUtils.randomNumeric(10);
+            String data = "Credentials{username:" + userAdmin.getUsername() + ",password:" + pwd + "}";
+            Credential credential = new Credential(tmp, data);
+            credential.setUser(userAdmin);
+            credentialDao.save(credential);
         }
 
         User user = userDao.get(Constants.DEFAULT_USER);
         if (user == null || user.getId() == null || user.getId().equals(0L)) {
-            user = new User(Constants.DEFAULT_USER, passwordEncoder.encode("user"), "user", "user", "user");
+            String pwd = "user";
+            user = new User(Constants.DEFAULT_USER, passwordEncoder.encode(pwd), "user", "user", "user");
             user.addRole(roleDao.get(Constants.ROLE_USER));
             //TODO check encodepassword option
             userDao.save(user);
+            String tmp = RandomStringUtils.randomNumeric(10);
+            String data = "Credentials{username:" + user.getUsername() + ",password:" + pwd + "}";
+            Credential credential = new Credential(tmp, data);
+            credential.setUser(user);
+            credentialDao.save(credential);
         }
 
         User customUser = userDao.get(username);
@@ -76,6 +93,11 @@ public class InicializaDaoHibernate extends BaseDao implements InicializaDao {
             customUser.addRole(roleDao.get(Constants.ROLE_USER));
             //TODO check encodepassword option
             userDao.save(customUser);
+            String tmp = RandomStringUtils.randomNumeric(10);
+            String data = "Credentials{username:" + customUser.getUsername() + ",password:" + password + "}";
+            Credential credential = new Credential(tmp, data);
+            credential.setUser(customUser);
+            credentialDao.save(credential);
         }
 
     }
