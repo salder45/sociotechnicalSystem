@@ -5,8 +5,13 @@
  */
 package mx.edu.um.dii.labinterfaces.diasetproject.web;
 
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Role;
@@ -14,6 +19,15 @@ import mx.edu.um.dii.labinterfaces.diasetproject.model.User;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.RoleService;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.UserService;
 import mx.edu.um.dii.labinterfaces.diasetproject.utils.Environment;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.type.WhenNoDataTypeEnum;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -139,6 +153,39 @@ public class UserController extends BaseController {
         } catch (Exception e) {
         }
         return "redirect:/user/list";
+    }
+
+    @RequestMapping("/credential/{id}")
+    public void pdfCredential(@PathVariable Long id, HttpServletResponse response) throws JRException, IOException {
+        log.debug("pdfCredential...");
+
+        Map<String, Object> params = new HashMap<>();
+        //get user
+        User user = userService.get(id);
+        params.put("fullName", user.getFullName());
+        params.put("barcode", user.getCredential().getBarcodeValue());
+        log.debug("params... :)");
+        //
+        JasperDesign jd = JRXmlLoader.load(this.getClass().getResourceAsStream("/reports/Credential.jrxml"));
+        log.debug("load jrml... :)");
+        JasperReport jr = JasperCompileManager.compileReport(jd);
+        log.debug("compile... :)");
+        jr.setWhenNoDataType(WhenNoDataTypeEnum.ALL_SECTIONS_NO_DETAIL);
+        log.debug("set print config... :)");
+        JasperPrint jp = JasperFillManager.fillReport(jr, params);
+        log.debug("fill... :)");
+        byte[] bytes = JasperExportManager.exportReportToPdf(jp);
+        log.debug("export... :)");
+
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-Disposition", String.format("inline; filename=\""+user.getCredential().getBarcodeValue()+".pdf\""));
+        response.setContentLength(bytes.length);
+        try (BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream())) {
+            bos.write(bytes);
+            bos.flush();
+        }
+
+        //return bytes;
     }
 
 }

@@ -54,6 +54,9 @@
                             <th>
                                 <s:message code="delete.label"/> <s:message code="user.label"/>
                             </th>
+                            <th>
+                                <s:message code="credential.label"/>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,6 +70,7 @@
                                 <td>${user.email}</td>
                                 <td><a class="btn btn-default" href="<c:url value="/user/edit/${user.id}"/>"><s:message code="edit.label"/> <span class="glyphicon glyphicon-edit"></span></a></td>                                
                                 <td><a class="btn btn-default" href="<c:url value="/user/delete/${user.id}"/>" onclick="return confirm('<s:message code="confirm.delete.message" />');" ><s:message code="delete.label"/> <span class="glyphicon glyphicon-trash"></span></a></td>                                
+                                <td><a class="btn btn-default" href="<c:url value="/user/credential/${user.id}"/>"><s:message code="credential.label"/> <span class="glyphicon glyphicon-barcode"></span></a></td>                                
                             </tr>
                         </c:forEach>
                     </tbody>

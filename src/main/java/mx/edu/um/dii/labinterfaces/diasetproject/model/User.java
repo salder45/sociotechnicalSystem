@@ -340,6 +340,10 @@ public class User implements Serializable, UserDetails {
         this.credential = credential;
     }
 
+    public String getFullName(){
+        return this.name+" "+this.lastName+" "+this.mothersMaidenName;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;
