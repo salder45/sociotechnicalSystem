@@ -5,11 +5,13 @@
  */
 package mx.edu.um.dii.labinterfaces.diasetproject.web;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -19,6 +21,7 @@ import mx.edu.um.dii.labinterfaces.diasetproject.model.User;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.RoleService;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.UserService;
 import mx.edu.um.dii.labinterfaces.diasetproject.utils.Environment;
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -164,21 +167,21 @@ public class UserController extends BaseController {
         User user = userService.get(id);
         params.put("fullName", user.getFullName());
         params.put("barcode", user.getCredential().getBarcodeValue());
-        log.debug("params... :)");
+        //Load logo
+        BufferedImage bf = ImageIO.read(getClass().getResource(Constants.LOGO_PATH));
+        params.put("logo", bf);
+        //Load profile pic
+        //paramName=profilePic
+        BufferedImage bfProfile = ImageIO.read(getClass().getResource(Constants.DEFAULT_PHOTO_PATH));
+        params.put("profilePic", bfProfile);
         //
         JasperDesign jd = JRXmlLoader.load(this.getClass().getResourceAsStream("/reports/Credential.jrxml"));
-        log.debug("load jrml... :)");
         JasperReport jr = JasperCompileManager.compileReport(jd);
-        log.debug("compile... :)");
-        jr.setWhenNoDataType(WhenNoDataTypeEnum.ALL_SECTIONS_NO_DETAIL);
-        log.debug("set print config... :)");
-        JasperPrint jp = JasperFillManager.fillReport(jr, params);
-        log.debug("fill... :)");
+        JasperPrint jp = JasperFillManager.fillReport(jr, params, new JREmptyDataSource());
         byte[] bytes = JasperExportManager.exportReportToPdf(jp);
-        log.debug("export... :)");
 
         response.setContentType("application/octet-stream");
-        response.setHeader("Content-Disposition", String.format("inline; filename=\""+user.getCredential().getBarcodeValue()+".pdf\""));
+        response.setHeader("Content-Disposition", String.format("inline; filename=\"" + user.getCredential().getBarcodeValue() + ".pdf\""));
         response.setContentLength(bytes.length);
         try (BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream())) {
             bos.write(bytes);

@@ -15,6 +15,8 @@ public class Constants {
     
     public static final String DEFAULT_ENCODING = "UTF-8";
     public static final String APP_NAME = "Diaset";
+    public static final String LOGO_PATH = "/reports/Diaset.png";
+    public static final String DEFAULT_PHOTO_PATH = "/reports/Default_Avatar.png";
     /*
     ROLE
     */
