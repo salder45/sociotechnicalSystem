@@ -63,8 +63,8 @@ public class Credential implements Serializable{
         bte.setPassword(Constants.PASSWORD_JASYPT);
     }
     
-    public Credential(String barcode,String data){
-        this.barcodeValue=barcode;
+    public Credential(Long userId,String data){
+        this.barcodeValue=calculateBarcode(userId);
         if(bte==null){
             bte=new BasicTextEncryptor();            
         }
@@ -185,4 +185,9 @@ public class Credential implements Serializable{
         this.imageDataBase64 = imageDataBase64;
     }
    
+    private String calculateBarcode(Long userId){
+        String idStr=userId.toString();
+        String rtn=Constants.DEFAULT_STRING_BARCODE.substring(0, Constants.DEFAULT_STRING_BARCODE.length()-idStr.length())+idStr;
+        return rtn;
+    }
 }

@@ -45,12 +45,11 @@ public class UserServiceImpl extends BaseService implements UserService {
 
     @Override
     public User save(User user) {
-        String tmp = RandomStringUtils.randomNumeric(10);
         String data = "Credentials{username:" + user.getUsername() + ",password:" + user.getPassword() + "}";
-        Credential credential = new Credential(tmp, data);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user = userDao.save(user);
         //
+        Credential credential = new Credential(user.getId(), data);
         credential.setUser(user);
         credentialDao.save(credential);
         user.setCredential(credential);

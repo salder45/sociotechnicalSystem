@@ -66,9 +66,8 @@ public class InicializaDaoHibernate extends BaseDao implements InicializaDao {
             userAdmin.addRole(roleDao.get(Constants.ROLE_ADMIN));
             //TODO             
             userDao.save(userAdmin);
-            String tmp = RandomStringUtils.randomNumeric(10);
             String data = "Credentials{username:" + userAdmin.getUsername() + ",password:" + pwd + "}";
-            Credential credential = new Credential(tmp, data);
+            Credential credential = new Credential(userAdmin.getId(), data);
             credential.setUser(userAdmin);
             credentialDao.save(credential);
         }
@@ -80,9 +79,8 @@ public class InicializaDaoHibernate extends BaseDao implements InicializaDao {
             user.addRole(roleDao.get(Constants.ROLE_USER));
             //TODO check encodepassword option
             userDao.save(user);
-            String tmp = RandomStringUtils.randomNumeric(10);
             String data = "Credentials{username:" + user.getUsername() + ",password:" + pwd + "}";
-            Credential credential = new Credential(tmp, data);
+            Credential credential = new Credential(user.getId(), data);
             credential.setUser(user);
             credentialDao.save(credential);
         }
@@ -93,9 +91,8 @@ public class InicializaDaoHibernate extends BaseDao implements InicializaDao {
             customUser.addRole(roleDao.get(Constants.ROLE_USER));
             //TODO check encodepassword option
             userDao.save(customUser);
-            String tmp = RandomStringUtils.randomNumeric(10);
             String data = "Credentials{username:" + customUser.getUsername() + ",password:" + password + "}";
-            Credential credential = new Credential(tmp, data);
+            Credential credential = new Credential(customUser.getId(), data);
             credential.setUser(customUser);
             credentialDao.save(credential);
         }
