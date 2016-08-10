@@ -25,6 +25,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -55,9 +56,9 @@ public class Credential implements Serializable{
     private User user;
     @Transient
     private BasicTextEncryptor bte;
-    //Temporary stuff
-    @Transient 
-    private String imageDataBase64;
+    //Save id image
+    @Lob
+    private byte[] picture;
     public Credential(){
         bte=new BasicTextEncryptor();
         bte.setPassword(Constants.PASSWORD_JASYPT);
@@ -144,6 +145,20 @@ public class Credential implements Serializable{
     public void setUser(User user) {
         this.user = user;
     }
+
+    /**
+     * @return the picture
+     */
+    public byte[] getPicture() {
+        return picture;
+    }
+
+    /**
+     * @param picture the picture to set
+     */
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
+    }
     
     
     @Override
@@ -169,20 +184,6 @@ public class Credential implements Serializable{
     @Override
     public String toString() {
         return "{Credential{Id="+this.Id+",barcode="+this.barcodeValue+",credentialData="+this.credentialData+"}}";
-    }
-
-    /**
-     * @return the imageDataBase64
-     */
-    public String getImageDataBase64() {
-        return imageDataBase64;
-    }
-
-    /**
-     * @param imageDataBase64 the imageDataBase64 to set
-     */
-    public void setImageDataBase64(String imageDataBase64) {
-        this.imageDataBase64 = imageDataBase64;
     }
    
     private String calculateBarcode(Long userId){
