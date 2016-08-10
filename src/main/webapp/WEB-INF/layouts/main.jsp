@@ -17,6 +17,7 @@
         <link rel="stylesheet" href="<s:url value='/css/app.css' />">
         <link rel="stylesheet" href="<s:url value='/css/bootstrap.css' />">
         <link rel="stylesheet" href="<s:url value='/css/dataTables.bootstrap.css' />">
+        <link rel="stylesheet" href="<s:url value='/css/fileinput.min.css' />">
     </head>
     <body>
         <nav class="navbar navbar-default navbar-fixed-top">
@@ -79,6 +80,7 @@
         <script src="<c:url value='/js/app.js' />"></script>
         <script src="<c:url value='/js/jquery.dataTables.js' />"></script>
         <script src="<c:url value='/js/dataTables.bootstrap.js' />"></script>
+        <script src="<c:url value='/js/fileinput.min.js' />"></script>
     <sitemesh:write property="content"/>
 
 </body>
