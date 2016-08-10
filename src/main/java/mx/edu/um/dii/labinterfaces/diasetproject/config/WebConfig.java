@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Locale;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -34,6 +35,7 @@ import org.springframework.web.servlet.view.JstlView;
  */
 @Configuration
 @EnableWebMvc
+@ComponentScan(basePackages = "mx.edu.um.dii.labinterfaces.diasetproject.web")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     /*
