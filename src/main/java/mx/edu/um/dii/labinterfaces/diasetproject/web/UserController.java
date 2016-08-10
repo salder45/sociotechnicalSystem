@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
+import mx.edu.um.dii.labinterfaces.diasetproject.model.Credential;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Role;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.User;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.RoleService;
@@ -61,6 +62,7 @@ public class UserController extends BaseController {
     public String newUser(Model model) {
         log.debug("Load User...");
         User user = new User();
+        user.setCredential(new Credential());
         model.addAttribute(Constants.USER_UI, user);
         List<Role> allRoleList = roleService.getAll();
         model.addAttribute(Constants.ROLE_LIST_UI, allRoleList);
