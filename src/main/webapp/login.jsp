@@ -77,6 +77,15 @@
                                 }
                             }
                         });
+                        
+                        $('#barcode').change(function(e){
+                            if($('#barcode').val().length<10){
+                                $('#submitButton').prop('disabled', true);
+                            }else{
+                                $('#submitButton').prop('disabled', false);
+                            }
+                        });
+
         </script>
 
     </body>
