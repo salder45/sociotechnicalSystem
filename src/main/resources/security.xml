@@ -22,6 +22,7 @@
     <http auto-config="true" access-decision-manager-ref="webAccessDecisionManager" use-expressions="true">
         <intercept-url pattern="/login**" access="permitAll" />
         <intercept-url pattern="/inicializa/**" access="permitAll" />
+        <intercept-url pattern="/user/credential/barcode/**" access="permitAll" />
         <intercept-url pattern="/**" access="isAuthenticated()" />
         <form-login login-page="/login.jsp"
                     login-processing-url="/authenticate"

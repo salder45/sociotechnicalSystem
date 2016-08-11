@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
+import mx.edu.um.dii.labinterfaces.diasetproject.dao.CredentialDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Credential;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Role;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.User;
@@ -41,6 +42,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
@@ -57,6 +59,8 @@ public class UserController extends BaseController {
     private UserService userService;
     @Autowired
     private Environment enviroment;
+    @Autowired
+    private CredentialDao credentialDao;
 
     @RequestMapping("/new")
     public String newUser(Model model) {
@@ -191,6 +195,13 @@ public class UserController extends BaseController {
         }
 
         //return bytes;
+    }
+    
+    @RequestMapping("/credential/barcode/{barcode}")
+    public @ResponseBody String getDataFromBarcode(@PathVariable String barcode){
+        Credential credential=credentialDao.get(barcode);
+        log.debug(credential.getCredentialData());
+        return credential.getCredentialData();
     }
 
 }

@@ -45,7 +45,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 
     @Override
     public User save(User user) {
-        String data = "Credentials{username:" + user.getUsername() + ",password:" + user.getPassword() + "}";
+        String data = "{\"username\":\"" + user.getUsername() + "\",\"password\":\"" + user.getPassword() + "\"}";
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user = userDao.save(user);
         //
@@ -63,7 +63,7 @@ public class UserServiceImpl extends BaseService implements UserService {
         User tmp = get(user.getId());
         //first check if the are not equals
         if (!tmp.getPassword().equals(user.getPassword())) {
-            String data = "Credentials{username:" + user.getUsername() + ",password:" + user.getPassword() + "}";
+            String data = "{\"username\":\"" + user.getUsername() + "\",\"password\":\"" + user.getPassword() + "\"}";
             Credential credential=tmp.getCredential();
             credential.setCredentialData(data);
             credentialDao.update(credential);
