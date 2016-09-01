@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 
 /**
  *
@@ -21,12 +22,19 @@ import org.springframework.security.core.GrantedAuthority;
 public class Role implements Serializable,GrantedAuthority{
     @Id
     private String authority;
-    
+    private String name;
+    private String description;
     public Role(){
     }
     
     public Role(String authority){
         this.authority=authority;
+    }
+    
+    public Role(String authority,String name, String description){
+        this.authority=authority;
+        this.name=name;
+        this.description=description;
     }
     
     /**
@@ -42,6 +50,34 @@ public class Role implements Serializable,GrantedAuthority{
      */
     public void setAuthority(String authority){
         this.authority=authority;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
     }
     
     @Override

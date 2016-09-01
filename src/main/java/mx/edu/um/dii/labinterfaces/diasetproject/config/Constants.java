@@ -22,6 +22,14 @@ public class Constants {
     ROLE
     */
     public static final String ROLE_ADMIN="ROLE_ADMIN";
+    public static final String ROLE_SALES="ROLE_SALES";
+    public static final String ROLE_SALES_ADMIN="ROLE_SALES_ADMIN";
+    public static final String ROLE_PLANNING="ROLE_PLANNING";
+    public static final String ROLE_PLANNING_ADMIN="ROLE_PLANNING_ADMIN";
+    public static final String ROLE_PRODUCTION="ROLE_PRODUCTION";
+    public static final String ROLE_PRODUCTION_ADMIN="ROLE_PRODUCTION_ADMIN";
+    public static final String ROLE_QUALITY="ROLE_QUALITY";
+    public static final String ROLE_QUALITY_ADMIN="ROLE_QUALITY_ADMIN";
     public static final String ROLE_USER="ROLE_USER";
     /*
     DEFAULT USERS
