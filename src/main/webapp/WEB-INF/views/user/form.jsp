@@ -123,7 +123,7 @@
                 <s:message code="user.roles.label" var="rolesLabel"/>
                 <label for="roles" class="control-label col-xs-2">${rolesLabel}</label>
                 <div class="col-xs-5">
-                    <form:checkboxes path="roles" items="${rolesList}" itemValue="authority" itemLabel="authority" cssClass="" element="div"/>
+                    <form:checkboxes path="roles" items="${rolesList}" itemValue="authority" itemLabel="name" cssClass="" element="div"/>
                 </div>
             </div>
         </s:bind>
