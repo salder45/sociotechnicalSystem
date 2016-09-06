@@ -36,12 +36,17 @@
                         <sec:authorize access="hasRole('ROLE_ADMIN')">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><s:message code="menu.admin.label"/> <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="<c:url value="/user/new"/>"><s:message code="user.new.label"/></a></li>
-                                    <li><a href="<c:url value="/user/profile"/>"><s:message code="profile.label"/></a></li>
-                                    <li><a href="<c:url value="/user/list"/>"><s:message code="user.list.label"/></a></li>
+                                <ul class="dropdown-menu multi-level">
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#"><s:message code="user.label"/></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a tabindex="-1" href="<c:url value="/user/new"/>"><s:message code="user.new.label"/></a></li>
+                                            <li><a tabindex="-1" href="<c:url value="/user/profile"/>"><s:message code="profile.label"/></a></li>
+                                            <li><a tabindex="-1" href="<c:url value="/user/list"/>"><s:message code="user.list.label"/></a></li>
+                                        </ul>
+                                    </li>
                                 </ul>
-                            </li>                        
+                            </li>                           
                         </sec:authorize>
                         <!--In nav code must be <li></li>-->
                         <sitemesh:write property="nav"/>                        
