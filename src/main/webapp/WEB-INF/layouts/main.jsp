@@ -45,6 +45,20 @@
                                             <li><a tabindex="-1" href="<c:url value="/user/list"/>"><s:message code="user.list.label"/></a></li>
                                         </ul>
                                     </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#"><s:message code="area.label"/></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a tabindex="-1" href="<c:url value="/area/new"/>"><s:message code="area.new.label"/></a></li>
+                                            <li><a tabindex="-1" href="<c:url value="/area/list"/>"><s:message code="area.list.label"/></a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#"><s:message code="machine.label"/></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a tabindex="-1" href="<c:url value="/machine/new"/>"><s:message code="machine.new.label"/></a></li>
+                                            <li><a tabindex="-1" href="<c:url value="/machine/list"/>"><s:message code="machine.list.label"/></a></li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </li>                           
                         </sec:authorize>
