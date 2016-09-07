@@ -51,8 +51,15 @@ public class Constants {
     public static final String ROLE_UI="role";
     public static final String MESSAGE_UI="message";
     public static final String MESSAGE_ATTRS_UI="messageAttrs";
+    //
+    public static final String AREA_UI="area";
+    public static final String AREA_LIST_UI="areaList";
     /*
     Password
     */
     public static final String PASSWORD_JASYPT="D14537";
+    /*
+    STATUS
+    */
+    public static final String STATUS_ACTIVE="A";
 }
