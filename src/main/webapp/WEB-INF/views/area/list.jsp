@@ -37,18 +37,26 @@
                             <th><s:message code="dateCreated.label"/></th>
                             <th><s:message code="lastUpdated.label"/></th>
                             <th><s:message code="status.label"/></th>
+                            <th>
+                                <s:message code="edit.label"/> <s:message code="area.label"/>
+                            </th>
+                            <th>
+                                <s:message code="delete.label"/> <s:message code="area.label"/>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach items="${areaList}" var="area">
                             <tr>
-                                <th>${area.id}</th>
+                                <th><a href="<c:url value="/area/show/${area.id}"/>">${area.id}</a></th>
                                 <th>${area.code}</th>
                                 <th>${area.name}</th>
                                 <th>${area.description}</th>
                                 <th>${area.dateCreated}</th>
                                 <th>${area.lastUpdated}</th>
                                 <th>${area.status}</th>
+                                <td><a class="btn btn-default" href="<c:url value="/area/edit/${area.id}"/>"><s:message code="edit.label"/> <span class="glyphicon glyphicon-edit"></span></a></td>                                
+                                <td><a class="btn btn-default" href="<c:url value="/area/delete/${area.id}"/>" onclick="return confirm('<s:message code="confirm.delete.message" />');" ><s:message code="delete.label"/> <span class="glyphicon glyphicon-trash"></span></a></td>                                
                             </tr>
                         </c:forEach>
                     </tbody>

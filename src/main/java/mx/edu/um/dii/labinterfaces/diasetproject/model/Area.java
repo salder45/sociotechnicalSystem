@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,17 +28,18 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "areas")
 public class Area {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
     @Version
     private Integer version;
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date_created",nullable = false)
+    @Column(name = "date_created", nullable = false)
     @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm zzz")
     private Date dateCreated;
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "last_updated",nullable = false)
+    @Column(name = "last_updated", nullable = false)
     @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm zzz")
     private Date lastUpdated;
     @Column(nullable = false)
@@ -46,10 +48,10 @@ public class Area {
     private String name;
     private String description;
     //Missing Machines List's
-    @OneToMany(mappedBy = "area")
+    @OneToMany(mappedBy = "area",fetch = FetchType.EAGER)
     private List<Machine> machines;
-    
-    public Area(){
+
+    public Area() {
     }
 
     /**
@@ -163,33 +165,46 @@ public class Area {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
+    /**
+     * @return the machines
+     */
+    public List<Machine> getMachines() {
+        return machines;
+    }
+
+    /**
+     * @param machines the machines to set
+     */
+    public void setMachines(List<Machine> machines) {
+        this.machines = machines;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash=11*hash+Objects.hash(this.Id,this.code);        
+        hash = 11 * hash + Objects.hash(this.Id, this.code);
         return hash;
     }
-    
-    
+
     @Override
     public boolean equals(Object obj) {
-         if(obj==null){
+        if (obj == null) {
             return false;
         }
-        
+
         if (getClass() != obj.getClass()) {
             return false;
         }
-        
-        final Area other=(Area)obj;
-        return Objects.equals(this.Id, other.Id)&&Objects.equals(this.code, other.code);
-        
+
+        final Area other = (Area) obj;
+        return Objects.equals(this.Id, other.Id) && Objects.equals(this.code, other.code);
+
     }
-    
+
     @Override
     public String toString() {
-        return "{Area{Id:"+this.Id+", name:"+this.name+" , code: "+this.code+"}}";
+        return "{Area{Id:" + this.Id + ", name:" + this.name + " , code: " + this.code + "}}";
     }
-    
+
 }

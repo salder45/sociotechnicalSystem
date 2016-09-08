@@ -36,7 +36,6 @@
                 <form:hidden path="dateCreated" />
                 <form:hidden path="lastUpdated" />
                 <form:hidden path="status" />
-                <form:hidden path="machines" />
             </c:otherwise>
         </c:choose>
         <!--CHECK VALUES-->
