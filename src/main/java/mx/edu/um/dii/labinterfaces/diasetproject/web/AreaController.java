@@ -104,4 +104,19 @@ public class AreaController extends BaseController {
         log.debug("Area is {}", a);
         return "redirect:/area/show/" + area.getId();
     }
+
+    @RequestMapping("/delete/{id}")
+    public String delete(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        log.debug("delete area");
+        try {
+            String areaName = areaService.delete(id);
+            redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI,
+                    "area.deleted.message");
+            redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI,
+                    new String[]{areaName});
+        } catch (Exception e) {
+        }
+
+        return "redirect:/area/list";
+    }
 }
