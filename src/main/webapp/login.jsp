@@ -24,7 +24,7 @@
                 <c:when test="${pageContext.request.remoteAddr=='0:0:0:0:0:0:0:1'}">
                     <form:form id="login-form-barcode" action="${action}" method="post" class="form-signin" autocomplete="off">
                         <h1 class="text-center login-title"><s:message code="login.header.label"/></h1>
-                        <input name="barcode"  id="barcode" type="text" class="form-control" placeholder="<s:message code="barcode.label"/>" required autofocus>
+                        <input name="barcode"  id="barcode" type="text" maxlength="10" class="form-control" placeholder="<s:message code="barcode.label"/>" required autofocus onkeyup="checkLenghtTen(this.value)">
                         <input type="hidden" name="username" id="username"/>
                         <input type="hidden" name="password" id="password"/>
 
@@ -65,27 +65,52 @@
         </div><!--/.container-->
         <script src="<c:url value='/js/jquery-1.9.1.js' />"></script>
         <script src="<c:url value='/js/bootstrap.min.js' />"></script>
+        <script src="<c:url value='/js/scannerPlugin/jquery.scannerdetection.js' />"></script>
         <script src="<c:url value='/js/app.js' />"></script>
         <script type="text/javascript">
-                        $('#login-form-barcode').keydown(function (e) {
-                            if (e.target.className.indexOf("allowEnter") == -1) {
-                                var code = e.keyCode || e.which;
-                                if (code == 13) {
-                                    e.preventDefault();
+                        $('#barcode').scannerDetection()
+                                .bind('scannerDetectionComplete', function (e, data) {
+                                    //console.log("scannerDetectionComplete");
+                                    //console.log(data);
                                     searchBarcodeAjax();
-                                    return false;
-                                }
-                            }
-                        });
-                        
-                        $('#barcode').change(function(e){
-                            if($('#barcode').val().length<10){
+                                })
+                                .bind('scannerDetectionError', function (e, data) {
+                                    console.log("scannerDetectionError");
+                                    console.log(data);
+                                });
+                        /*
+                         $('#login-form-barcode').keydown(function (e) {
+                         if (e.target.className.indexOf("allowEnter") == -1) {
+                         var code = e.keyCode || e.which;
+                         //console.log(code);
+                         if (code == 13) {
+                         e.preventDefault();
+                         searchBarcodeAjax();
+                         return false;
+                         }
+                         }
+                         });
+                         $('#login-form-barcode').keydown(function (e) {
+                         if (e.target.className.indexOf("allowEnter") == -1) {
+                         var code = e.keyCode || e.which;
+                         if (code == 13) {
+                         e.preventDefault();
+                         searchBarcodeAjax();
+                         return false;
+                         }
+                         }
+                         });
+                         
+                        $('#barcode').change(function (e) {
+                            if ($('#barcode').val().length != 10) {
                                 $('#submitButton').prop('disabled', true);
-                            }else{
+                                $('#username').val("");
+                                $('#password').val("");
+                            } else {
                                 $('#submitButton').prop('disabled', false);
                             }
                         });
-
+                         */
         </script>
 
     </body>
