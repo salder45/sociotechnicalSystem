@@ -54,6 +54,9 @@ public class Constants {
     //
     public static final String AREA_UI="area";
     public static final String AREA_LIST_UI="areaList";
+    //
+    public static final String MACHINE_UI="machine";
+    public static final String MACHINE_LIST_UI="machineList";
     /*
     Password
     */
