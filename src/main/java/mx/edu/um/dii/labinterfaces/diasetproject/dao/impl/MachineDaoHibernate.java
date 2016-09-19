@@ -5,11 +5,13 @@
  */
 package mx.edu.um.dii.labinterfaces.diasetproject.dao.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.BaseDao;
@@ -35,12 +37,24 @@ public class MachineDaoHibernate extends BaseDao implements MachineDao {
         //Create a query object by creating an instance of the CriteriaQuery interface. This query object’s attributes will be modified with the details of the query.
         CriteriaQuery<Machine> criteriaQuery = criteriaBuilder.createQuery(Machine.class);
         //Set the query root by calling the from method on the CriteriaQuery object.
-        Root<Machine> m = criteriaQuery.from(Machine.class);
+        Root<Machine> machineRoot = criteriaQuery.from(Machine.class);
         //Specify what the type of the query result will be by calling the select method of the CriteriaQuery object.
-        criteriaQuery.select(m);
-        
-                
-        
+        criteriaQuery.select(machineRoot);
+        //declare Predicate list to hold filters
+        List<Predicate> criteriaList=new ArrayList<>();
+        /*
+        Use predicate for add stuff
+         */
+        if(machine.getArea()!=null&&machine.getArea().getId()!=null&&machine.getArea().getId()!=0L){
+            log.debug("Filter by area");
+            Predicate predicate=criteriaBuilder.equal(machineRoot.get("area").get("Id"), machine.getArea().getId());
+            criteriaList.add(predicate);
+        }
+        //convert list to predicate array
+        Predicate[] criteriaArray=new Predicate[criteriaList.size()];
+        criteriaList.toArray(criteriaArray);
+        //add to query
+        criteriaQuery.where(criteriaArray);
         //Prepare the query for execution by creating a TypedQuery<T> instance, specifying the type of the query result.
         TypedQuery<Machine> typedQuery = currentSession().createQuery(criteriaQuery);
         //Execute the query by calling the getResultList method on the TypedQuery<T> object. Because this query returns a collection of entities, the result is stored in a List.

@@ -14,6 +14,7 @@ import mx.edu.um.dii.labinterfaces.diasetproject.model.Machine;
  */
 public interface MachineService {
     public List<Machine> getAll();
+    public List<Machine> getByArea(Long areaId);
     public Machine getById(Long id);
     public Machine getByCode(String code);
     public Machine save(Machine machine);

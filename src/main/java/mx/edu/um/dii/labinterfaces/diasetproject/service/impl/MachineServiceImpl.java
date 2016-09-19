@@ -61,5 +61,15 @@ public class MachineServiceImpl extends BaseService implements MachineService{
     public String delete(Long id) {
         return machineDao.delete(id);
     }
+
+    @Override
+    public List<Machine> getByArea(Long areaId) {
+        Machine machine=new Machine();
+        Area area=new Area();
+        area.setId(areaId);
+        machine.setArea(area);
+        
+        return machineDao.getMachines(machine);
+    }
     
 }
