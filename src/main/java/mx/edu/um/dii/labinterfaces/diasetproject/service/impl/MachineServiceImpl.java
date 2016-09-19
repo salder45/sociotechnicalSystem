@@ -54,6 +54,10 @@ public class MachineServiceImpl extends BaseService implements MachineService{
 
     @Override
     public Machine update(Machine machine) {
+        if(machine.getArea()!=null&&machine.getArea().getId()!=null&&machine.getArea().getId()!=0L){
+            Area area=areaDao.get(machine.getArea().getId());
+            machine.setArea(area);
+        }
         return machineDao.update(machine);
     }
 
