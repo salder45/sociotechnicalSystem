@@ -70,7 +70,7 @@
         <s:bind path="machine.area.id">
             <div class="form-group">
                 <s:message code="area.label" var="areaLabel"/>
-                <label for="name" class="control-label col-xs-2">${descriptionLabel}</label>    
+                <label for="name" class="control-label col-xs-2">${areaLabel}</label>    
                 <div class="col-xs-5">
                     <form:select path="area.id" items="${areaList}" itemValue="id" itemLabel="name" class="form-control"/>
                 </div>                                
