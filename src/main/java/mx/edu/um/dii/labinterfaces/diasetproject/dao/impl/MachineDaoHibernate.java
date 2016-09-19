@@ -7,6 +7,10 @@ package mx.edu.um.dii.labinterfaces.diasetproject.dao.impl;
 
 import java.util.Date;
 import java.util.List;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.BaseDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.MachineDao;
@@ -26,7 +30,23 @@ public class MachineDaoHibernate extends BaseDao implements MachineDao {
 
     @Override
     public List<Machine> getMachines(Machine machine) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //Use an EntityManager instance to create a CriteriaBuilder object.
+        CriteriaBuilder criteriaBuilder = currentSession().getCriteriaBuilder();
+        //Create a query object by creating an instance of the CriteriaQuery interface. This query object’s attributes will be modified with the details of the query.
+        CriteriaQuery<Machine> criteriaQuery = criteriaBuilder.createQuery(Machine.class);
+        //Set the query root by calling the from method on the CriteriaQuery object.
+        Root<Machine> m = criteriaQuery.from(Machine.class);
+        //Specify what the type of the query result will be by calling the select method of the CriteriaQuery object.
+        criteriaQuery.select(m);
+        
+                
+        
+        //Prepare the query for execution by creating a TypedQuery<T> instance, specifying the type of the query result.
+        TypedQuery<Machine> typedQuery = currentSession().createQuery(criteriaQuery);
+        //Execute the query by calling the getResultList method on the TypedQuery<T> object. Because this query returns a collection of entities, the result is stored in a List.
+        List<Machine> machinesList = typedQuery.getResultList();
+
+        return machinesList;
     }
 
     @Override
@@ -74,12 +94,12 @@ public class MachineDaoHibernate extends BaseDao implements MachineDao {
 
     @Override
     public String delete(Long id) {
-        Machine machine=get(id);
-        String machineName=machine.getCode()+" - "+machine.getName();
-        
+        Machine machine = get(id);
+        String machineName = machine.getCode() + " - " + machine.getName();
+
         currentSession().delete(machine);
         currentSession().flush();
-        
+
         return machineName;
     }
 

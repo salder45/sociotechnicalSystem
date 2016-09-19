@@ -30,7 +30,7 @@ public class MachineServiceImpl extends BaseService implements MachineService{
     
     @Override
     public List<Machine> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return machineDao.getMachines(new Machine());
     }
 
     @Override

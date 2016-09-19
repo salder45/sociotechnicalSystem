@@ -5,6 +5,7 @@
  */
 package mx.edu.um.dii.labinterfaces.diasetproject.web;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -62,5 +63,17 @@ public class MachineController extends BaseController {
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI, new String[]{machine.getName()});
         
         return "redirect:/machine/list";
+    }
+    
+    @RequestMapping("/list")
+    public String list(Model model){
+        log.debug("get List Area");
+        
+        //GET MACHINE LIST BY....
+        List<Machine> list=machineService.getAll();
+        
+        model.addAttribute(Constants.MACHINE_LIST_UI, list);
+        
+        return "/machine/list";
     }
 }
