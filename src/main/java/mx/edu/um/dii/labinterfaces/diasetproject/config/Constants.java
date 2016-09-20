@@ -65,4 +65,5 @@ public class Constants {
     STATUS
     */
     public static final String STATUS_ACTIVE="A";
+    public static final String EMPTY_STRING="";
 }
