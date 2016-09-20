@@ -59,6 +59,13 @@
                                             <li><a tabindex="-1" href="<c:url value="/machine/list"/>"><s:message code="machine.list.label"/></a></li>
                                         </ul>
                                     </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#"><s:message code="seller.label"/></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a tabindex="-1" href="<c:url value="/seller/new"/>"><s:message code="seller.new.label"/></a></li>
+                                            <li><a tabindex="-1" href="<c:url value="/seller/list"/>"><s:message code="seller.list.label"/></a></li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </li>                           
                         </sec:authorize>
