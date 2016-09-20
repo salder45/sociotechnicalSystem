@@ -57,6 +57,9 @@ public class Constants {
     //
     public static final String MACHINE_UI="machine";
     public static final String MACHINE_LIST_UI="machineList";
+    //
+    public static final String SELLER_UI="seller";
+    public static final String SELLER_LIST_UI="sellerList";
     /*
     Password
     */
