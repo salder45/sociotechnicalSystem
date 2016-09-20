@@ -5,6 +5,7 @@
  */
 package mx.edu.um.dii.labinterfaces.diasetproject.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -27,7 +28,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Entity
 @Table(name = "areas")
-public class Area {
+public class Area implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

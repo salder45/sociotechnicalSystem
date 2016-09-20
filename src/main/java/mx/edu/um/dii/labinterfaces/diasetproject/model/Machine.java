@@ -5,6 +5,7 @@
  */
 package mx.edu.um.dii.labinterfaces.diasetproject.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -27,7 +28,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Entity
 @Table(name = "machines")
-public class Machine {
+public class Machine implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
