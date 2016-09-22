@@ -60,6 +60,9 @@ public class Constants {
     //
     public static final String SELLER_UI="seller";
     public static final String SELLER_LIST_UI="sellerList";
+    //
+    public static final String CUSTOMER_UI="customer";
+    public static final String CUSTOMER_LIST_UI="customerList";
     /*
     Password
     */

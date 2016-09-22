@@ -66,6 +66,13 @@
                                             <li><a tabindex="-1" href="<c:url value="/seller/list"/>"><s:message code="seller.list.label"/></a></li>
                                         </ul>
                                     </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#"><s:message code="customer.label"/></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a tabindex="-1" href="<c:url value="/customer/new"/>"><s:message code="customer.new.label"/></a></li>
+                                            <li><a tabindex="-1" href="<c:url value="/customer/list"/>"><s:message code="customer.list.label"/></a></li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </li>                           
                         </sec:authorize>

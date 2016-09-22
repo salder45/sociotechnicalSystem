@@ -68,7 +68,7 @@ public class CustomerDaoHibernate extends BaseDao implements CustomerDao {
 
     @Override
     public Customer get(Long id) {
-        Customer customer = currentSession().getReference(Customer.class, id);
+        Customer customer = currentSession().get(Customer.class, id);
         return customer;
     }
 
