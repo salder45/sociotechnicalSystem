@@ -148,6 +148,20 @@ public class Unit implements Serializable {
         this.code = code;
     }
 
+    /**
+     * @return the typeResults
+     */
+    public List<TypeResult> getTypeResults() {
+        return typeResults;
+    }
+
+    /**
+     * @param typeResults the typeResults to set
+     */
+    public void setTypeResults(List<TypeResult> typeResults) {
+        this.typeResults = typeResults;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
