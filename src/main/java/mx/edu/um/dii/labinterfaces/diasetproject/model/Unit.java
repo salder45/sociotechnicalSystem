@@ -7,12 +7,15 @@ package mx.edu.um.dii.labinterfaces.diasetproject.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,7 +28,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Entity
 @Table(name = "units")
-public class Unit implements Serializable{
+public class Unit implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
@@ -43,6 +47,8 @@ public class Unit implements Serializable{
     private String status;
     private String name;
     private String code;
+    @OneToMany(mappedBy = "unit", fetch = FetchType.EAGER)
+    private List<TypeResult> typeResults;
 
     /**
      * @return the Id
@@ -141,7 +147,7 @@ public class Unit implements Serializable{
     public void setCode(String code) {
         this.code = code;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 7;
