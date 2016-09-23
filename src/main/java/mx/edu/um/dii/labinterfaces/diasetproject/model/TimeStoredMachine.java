@@ -5,10 +5,20 @@
  */
 package mx.edu.um.dii.labinterfaces.diasetproject.model;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 /**
  *
  * @author laboratoriointerface
  */
-public class TimeStoredMachine {
-    
+@Entity
+@DiscriminatorValue("Machine")
+public class TimeStoredMachine extends TimeStored{
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "machine_id")
+    private Machine machine;
 }
