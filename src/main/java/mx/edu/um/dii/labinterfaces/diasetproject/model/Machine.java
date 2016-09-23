@@ -7,6 +7,7 @@ package mx.edu.um.dii.labinterfaces.diasetproject.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,7 +30,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Entity
 @Table(name = "machines")
-public class Machine implements Serializable{
+public class Machine implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,6 +55,8 @@ public class Machine implements Serializable{
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "area_id")
     private Area area;
+    @OneToMany(mappedBy = "machine", fetch = FetchType.EAGER)
+    private List<Result> results;
 
     /**
      * @return the Id
@@ -194,6 +198,20 @@ public class Machine implements Serializable{
         this.area = area;
     }
 
+    /**
+     * @return the results
+     */
+    public List<Result> getResults() {
+        return results;
+    }
+
+    /**
+     * @param results the results to set
+     */
+    public void setResults(List<Result> results) {
+        this.results = results;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -212,12 +230,12 @@ public class Machine implements Serializable{
         }
 
         final Machine other = (Machine) obj;
-        return Objects.equals(this.Id, other.Id)&&Objects.equals(this.code, other.code);
+        return Objects.equals(this.Id, other.Id) && Objects.equals(this.code, other.code);
     }
-    
+
     @Override
     public String toString() {
-        return "{Machine{Id:"+this.Id+", name:"+this.name+", code:"+this.code+"}}";
+        return "{Machine{Id:" + this.Id + ", name:" + this.name + ", code:" + this.code + "}}";
     }
-    
+
 }
