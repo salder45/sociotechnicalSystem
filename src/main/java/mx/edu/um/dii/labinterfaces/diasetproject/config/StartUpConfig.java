@@ -28,7 +28,7 @@ public class StartUpConfig implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext sc) throws ServletException {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.register(ComponentConfig.class, DataConfig.class, MailConfig.class, WebConfig.class);
+        context.register(ComponentConfig.class, DataConfig.class, MailConfig.class, WebConfig.class,SecurityConfig.class);
         context.setDisplayName(Constants.APP_NAME);
         //
         FilterRegistration.Dynamic sitemeshFilter = sc.addFilter("sitemeshFilter", new ConfigurableSiteMeshFilter());
