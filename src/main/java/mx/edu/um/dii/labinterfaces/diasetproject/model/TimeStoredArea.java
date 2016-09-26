@@ -21,4 +21,18 @@ public class TimeStoredArea extends TimeStored{
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "area_id")
     private Area area;
+
+    /**
+     * @return the area
+     */
+    public Area getArea() {
+        return area;
+    }
+
+    /**
+     * @param area the area to set
+     */
+    public void setArea(Area area) {
+        this.area = area;
+    }
 }

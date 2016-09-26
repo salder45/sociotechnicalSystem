@@ -7,6 +7,7 @@ package mx.edu.um.dii.labinterfaces.diasetproject.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -63,4 +64,142 @@ public class TimeStored implements Serializable{
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "work_order_id")
     private WorkOrder workOrder;
+
+    /**
+     * @return the Id
+     */
+    public Long getId() {
+        return Id;
+    }
+
+    /**
+     * @param Id the Id to set
+     */
+    public void setId(Long Id) {
+        this.Id = Id;
+    }
+
+    /**
+     * @return the version
+     */
+    public Integer getVersion() {
+        return version;
+    }
+
+    /**
+     * @param version the version to set
+     */
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
+    /**
+     * @return the dateCreated
+     */
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    /**
+     * @param dateCreated the dateCreated to set
+     */
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    /**
+     * @return the lastUpdated
+     */
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    /**
+     * @param lastUpdated the lastUpdated to set
+     */
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    /**
+     * @return the status
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    /**
+     * @return the startTime
+     */
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    /**
+     * @param startTime the startTime to set
+     */
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    /**
+     * @return the finishTime
+     */
+    public Date getFinishTime() {
+        return finishTime;
+    }
+
+    /**
+     * @param finishTime the finishTime to set
+     */
+    public void setFinishTime(Date finishTime) {
+        this.finishTime = finishTime;
+    }
+
+    /**
+     * @return the workOrder
+     */
+    public WorkOrder getWorkOrder() {
+        return workOrder;
+    }
+
+    /**
+     * @param workOrder the workOrder to set
+     */
+    public void setWorkOrder(WorkOrder workOrder) {
+        this.workOrder = workOrder;
+    }
+    
+    @Override
+    public int hashCode() {
+     int hash = 7;
+        hash = 11 * hash + Objects.hash(this.Id, this.status);        
+        return hash;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        final TimeStored other=(TimeStored)obj;
+        return Objects.equals(this.Id, other.Id)&&Objects.equals(this.status, other.status);
+    }
+    
+    @Override
+    public String toString() {
+        return "{TimeStored{Id:"+this.Id+", status:"+this.status+"}}";
+    }    
 }

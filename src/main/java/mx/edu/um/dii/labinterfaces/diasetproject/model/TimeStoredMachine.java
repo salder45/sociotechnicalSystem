@@ -21,4 +21,18 @@ public class TimeStoredMachine extends TimeStored{
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "machine_id")
     private Machine machine;
+
+    /**
+     * @return the machine
+     */
+    public Machine getMachine() {
+        return machine;
+    }
+
+    /**
+     * @param machine the machine to set
+     */
+    public void setMachine(Machine machine) {
+        this.machine = machine;
+    }
 }
