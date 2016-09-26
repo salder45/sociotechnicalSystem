@@ -20,6 +20,7 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.Size;
 import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
+import mx.edu.um.dii.labinterfaces.diasetproject.utils.ProjectUtils;
 import org.jasypt.util.text.BasicTextEncryptor;
 
 /**
@@ -52,7 +53,8 @@ public class Credential implements Serializable{
     }
     
     public Credential(Long userId,String data){
-        this.barcodeValue=calculateBarcode(userId);
+        //this.barcodeValue=calculateBarcode(userId);
+        this.barcodeValue=ProjectUtils.generateCode(userId, Constants.USER_START_CODE);
         if(bte==null){
             bte=new BasicTextEncryptor();            
         }

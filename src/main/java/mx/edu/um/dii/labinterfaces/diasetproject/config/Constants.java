@@ -18,6 +18,16 @@ public class Constants {
     public static final String LOGO_PATH = "/reports/Diaset.png";
     public static final String DEFAULT_PHOTO_PATH = "/reports/Default_Avatar.png";
     public static final String DEFAULT_STRING_BARCODE = "0000000000";
+    //CODES
+    public static final String AREA_START_CODE = "A";
+    public static final String MACHINE_START_CODE = "M";
+    public static final String USER_START_CODE = "U";
+    public static final String SELLER_START_CODE = "S";
+    public static final String CUSTOMER_START_CODE = "C";
+    public static final String WORKORDER_START_CODE = "WO";
+    public static final Integer MAX_SIZE_TEN=10;
+    public static final Integer MAX_SIZE_FIFTEEN=15;
+    
     /*
     ROLE
     */
