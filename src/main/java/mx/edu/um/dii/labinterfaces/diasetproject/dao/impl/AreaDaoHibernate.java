@@ -11,6 +11,7 @@ import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.AreaDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.BaseDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Area;
+import mx.edu.um.dii.labinterfaces.diasetproject.utils.ProjectUtils;
 import org.hibernate.NonUniqueObjectException;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -54,6 +55,10 @@ public class AreaDaoHibernate extends BaseDao implements AreaDao {
         //TODO CREATE CODE FOR THE AREA
         
         currentSession().save(area);
+        //
+        area.setCode(ProjectUtils.generateCode(area.getId(), Constants.AREA_START_CODE));
+        update(area);
+        //
         return area;
     }
 

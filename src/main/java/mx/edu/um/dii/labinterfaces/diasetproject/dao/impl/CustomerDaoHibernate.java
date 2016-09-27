@@ -17,6 +17,7 @@ import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.BaseDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.CustomerDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Customer;
+import mx.edu.um.dii.labinterfaces.diasetproject.utils.ProjectUtils;
 import org.hibernate.NonUniqueObjectException;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -89,7 +90,10 @@ public class CustomerDaoHibernate extends BaseDao implements CustomerDao {
         customer.setStatus(Constants.STATUS_ACTIVE);
 
         currentSession().save(customer);
-
+        //
+        customer.setCode(ProjectUtils.generateCode(customer.getId(), Constants.CUSTOMER_START_CODE));
+        update(customer);
+        //
         return customer;
     }
 

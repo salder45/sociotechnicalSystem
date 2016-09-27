@@ -17,6 +17,7 @@ import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.BaseDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.SellerDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Seller;
+import mx.edu.um.dii.labinterfaces.diasetproject.utils.ProjectUtils;
 import org.hibernate.NonUniqueObjectException;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -41,9 +42,9 @@ public class SellerDaoHibernate extends BaseDao implements SellerDao {
         //Specify what the type of the query result will be by calling the select method of the CriteriaQuery object.
         criteriaQuery.select(sellerRoot);
         //declare Predicate list to hold filters
-        List<Predicate> criteriaList=new ArrayList<>();
+        List<Predicate> criteriaList = new ArrayList<>();
         /*Add criterias*/
-        /*
+ /*
         
         Sample
         
@@ -52,15 +53,15 @@ public class SellerDaoHibernate extends BaseDao implements SellerDao {
             Predicate predicate=criteriaBuilder.equal(machineRoot.get("area").get("Id"), machine.getArea().getId());
             criteriaList.add(predicate);
         }
-        */
-        if(seller.getStatus()!=null&&!seller.getStatus().equals(Constants.EMPTY_STRING)){
+         */
+        if (seller.getStatus() != null && !seller.getStatus().equals(Constants.EMPTY_STRING)) {
             log.debug("Filter by status");
-            Predicate predicate=criteriaBuilder.equal(sellerRoot.get("status"), seller.getStatus());
+            Predicate predicate = criteriaBuilder.equal(sellerRoot.get("status"), seller.getStatus());
             criteriaList.add(predicate);
         }
-        
-         //convert list to predicate array
-        Predicate[] criteriaArray=new Predicate[criteriaList.size()];
+
+        //convert list to predicate array
+        Predicate[] criteriaArray = new Predicate[criteriaList.size()];
         criteriaList.toArray(criteriaArray);
         //add to query
         criteriaQuery.where(criteriaArray);
@@ -96,7 +97,10 @@ public class SellerDaoHibernate extends BaseDao implements SellerDao {
         seller.setStatus(Constants.STATUS_ACTIVE);
         //
         currentSession().save(seller);
-
+        //
+        seller.setCode(ProjectUtils.generateCode(seller.getId(), Constants.SELLER_START_CODE));
+        update(seller);
+        //
         return seller;
     }
 
@@ -112,18 +116,18 @@ public class SellerDaoHibernate extends BaseDao implements SellerDao {
             currentSession().merge(seller);
             currentSession().flush();
         }
-        
+
         return seller;
     }
 
     @Override
     public String delete(Long id) {
-        Seller seller=get(id);
-        String nameStrong=seller.getName();
-        
+        Seller seller = get(id);
+        String nameStrong = seller.getName();
+
         currentSession().delete(seller);
         currentSession().flush();
-        
+
         return nameStrong;
     }
 

@@ -17,6 +17,7 @@ import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.BaseDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.MachineDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Machine;
+import mx.edu.um.dii.labinterfaces.diasetproject.utils.ProjectUtils;
 import org.hibernate.NonUniqueObjectException;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -87,6 +88,10 @@ public class MachineDaoHibernate extends BaseDao implements MachineDao {
         machine.setStatus(Constants.STATUS_ACTIVE);
         //
         currentSession().save(machine);
+        //
+        machine.setCode(ProjectUtils.generateCode(machine.getId(), Constants.MACHINE_START_CODE));
+        update(machine);
+        //
         return machine;
     }
 

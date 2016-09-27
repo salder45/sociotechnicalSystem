@@ -46,6 +46,7 @@ public class Customer implements Serializable {
     @Column(nullable = false)
     private String status;
     private String name;
+    private String code;
     @OneToMany(mappedBy = "customer",fetch = FetchType.EAGER)
     private List<WorkOrder> workOrders;
 
@@ -131,6 +132,20 @@ public class Customer implements Serializable {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * @return the code
+     */
+    public String getCode() {
+        return code;
+    }
+
+    /**
+     * @param code the code to set
+     */
+    public void setCode(String code) {
+        this.code = code;
     }
 
     /**
