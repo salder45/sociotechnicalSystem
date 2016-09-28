@@ -73,6 +73,9 @@ public class Constants {
     //
     public static final String CUSTOMER_UI="customer";
     public static final String CUSTOMER_LIST_UI="customerList";
+    //
+    public static final String WORK_ORDER_UI="workOrder";
+    public static final String WORK_ORDER_LIST_UI="workOrderList";
     /*
     Password
     */
