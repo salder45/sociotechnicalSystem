@@ -48,6 +48,7 @@ public class Batch implements Serializable {
     @Column(nullable = false)
     private String status;
     private String description;
+    private Integer batchPieces;
     private Boolean existDraw;
     private Boolean sharpening;
     private Boolean coveringRequired;
@@ -142,6 +143,20 @@ public class Batch implements Serializable {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    /**
+     * @return the batchPieces
+     */
+    public Integer getBatchPieces() {
+        return batchPieces;
+    }
+
+    /**
+     * @param batchPieces the batchPieces to set
+     */
+    public void setBatchPieces(Integer batchPieces) {
+        this.batchPieces = batchPieces;
     }
 
     /**
