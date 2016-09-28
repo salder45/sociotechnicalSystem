@@ -7,6 +7,8 @@ package mx.edu.um.dii.labinterfaces.diasetproject.web;
 
 import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.WorkOrder;
+import mx.edu.um.dii.labinterfaces.diasetproject.service.CustomerService;
+import mx.edu.um.dii.labinterfaces.diasetproject.service.SellerService;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.WorkOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class WorkOrderController extends BaseController{
     @Autowired
     private WorkOrderService workOrderService;
+    
+    @Autowired
+    private CustomerService customerService;
+    
+    @Autowired
+    private SellerService sellerService;
     
     @RequestMapping("new")
     public String newWorkOrder(Model model){
