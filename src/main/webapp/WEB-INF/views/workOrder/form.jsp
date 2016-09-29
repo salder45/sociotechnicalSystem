@@ -58,6 +58,17 @@
                 </div>
             </div>
         </s:bind>  
+        <s:bind path="workOrder.seller.id">
+            <div class="form-group">
+                <s:message code="seller.label" var="sellerLabel"/>
+                <label for="estimatedReleaseDate" class="control-label col-xs-2">${sellerLabel}</label>    
+                <div class="col-xs-5">
+                    <div id="seller-autocomplete">
+                        <form:input id="sellerId" path="seller.id" class="form-control" placeholder="${sellerLabel}" autocomplete="off"/>
+                    </div>
+                </div>
+            </div>
+        </s:bind>  
     </fieldset>
     <c:choose>
         <c:when test="${param.type=='NEW'}">
@@ -83,10 +94,15 @@
         </c:otherwise>
     </c:choose>
 </form:form>
+<c:url var="autoCompleteSeller" value="/seller/getSellerList"/>
 <content>
     <script type="text/javascript">
         $(function () {
             $('#estimatedReleaseDate').datetimepicker();
+            $('#sellerId').autocomplete({
+                source:'${autoCompleteSeller}',
+                minLenght:2
+            });
         });
     </script>                                
 </content>

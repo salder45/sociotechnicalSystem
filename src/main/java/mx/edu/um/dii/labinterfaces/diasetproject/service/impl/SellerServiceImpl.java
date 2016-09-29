@@ -30,6 +30,15 @@ public class SellerServiceImpl extends BaseService implements SellerService {
     }
 
     @Override
+    public List<Seller> getAutcompleteNameAndCode(String filter) {
+        filter="%"+filter+"%";
+        Seller seller=new Seller();
+        seller.setCode(filter);
+        seller.setName(filter);
+        return sellerDao.getSellers(seller);
+    }
+
+    @Override
     public List<Seller> getSellersActives() {
         Seller seller = new Seller();
         seller.setStatus(Constants.STATUS_ACTIVE);

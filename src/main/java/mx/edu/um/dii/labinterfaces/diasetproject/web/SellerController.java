@@ -20,6 +20,8 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
@@ -122,5 +124,12 @@ public class SellerController extends BaseController {
         model.addAttribute(Constants.SELLER_UI, seller);
         
         return "/seller/show";
+    }
+    
+    @RequestMapping("/getSellerList")
+    @ResponseBody
+    public List<Seller> getSellerList(@RequestParam(name = "term") String filter){
+        log.debug("getSellerList");
+        return sellerService.getAutcompleteNameAndCode(filter);
     }
 }

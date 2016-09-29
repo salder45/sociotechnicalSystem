@@ -14,6 +14,7 @@ import mx.edu.um.dii.labinterfaces.diasetproject.model.Seller;
  */
 public interface SellerService {
     public List<Seller> getAll();
+    public List<Seller> getAutcompleteNameAndCode(String filter);
     public List<Seller> getSellersActives();
     public List<Seller> getSellersInactives();
     public Seller getById(Long id);
