@@ -53,6 +53,24 @@ public class CustomerDaoHibernate extends BaseDao implements CustomerDao {
             criteriaList.add(predicate);
         }
 
+        if (customer.getName() != null && !customer.getName().equals(Constants.EMPTY_STRING)) {
+            Predicate predicateName;
+            Predicate predicateCode;
+
+            Character first = customer.getName().charAt(0);
+            Character last = customer.getName().charAt(customer.getName().length() - 1);
+            //
+            if (first == '%' && last == '%') {
+                predicateName = criteriaBuilder.like(customerRoot.<String>get("name"), customer.getName());
+                predicateCode = criteriaBuilder.like(customerRoot.<String>get("code"), customer.getCode());
+                Predicate predicateOr=criteriaBuilder.or(predicateName,predicateCode);
+                criteriaList.add(predicateOr);
+            } else {
+                 predicateName = criteriaBuilder.equal(customerRoot.get("name"), customer.getName());
+                criteriaList.add(predicateName);
+            }
+        }
+
         //convert list to predicate array
         Predicate[] criteriaArray = new Predicate[criteriaList.size()];
         criteriaList.toArray(criteriaArray);
@@ -101,25 +119,25 @@ public class CustomerDaoHibernate extends BaseDao implements CustomerDao {
     public Customer update(Customer customer) {
         try {
             customer.setLastUpdated(new Date());
-            
+
             currentSession().update(customer);
         } catch (NonUniqueObjectException nuoe) {
             log.warn("Already exist a Customer with the same Id in session, trying to merge");
             currentSession().merge(customer);
             currentSession().flush();
         }
-        
+
         return customer;
     }
 
     @Override
     public String delete(Long id) {
-        Customer customer=get(id);
-        String name=customer.getName();
-        
+        Customer customer = get(id);
+        String name = customer.getName();
+
         currentSession().delete(customer);
         currentSession().flush();
-        
+
         return name;
     }
 

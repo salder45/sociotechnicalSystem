@@ -129,7 +129,8 @@ public class CustomerController extends BaseController {
 
     @RequestMapping("/getCustomerList")
     @ResponseBody
-    public List<Customer> getCustomerList(@RequestParam String filter) {
+    public List<Customer> getCustomerList(@RequestParam(name = "term") String filter) {
+        log.debug("getCustomerList");
         return customerService.getAll();
     }
 }

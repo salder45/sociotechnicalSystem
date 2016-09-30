@@ -14,6 +14,7 @@ import mx.edu.um.dii.labinterfaces.diasetproject.model.Customer;
  */
 public interface CustomerService {
     public List<Customer> getAll();
+    public List<Customer> getAutcompleteNameAndCode(String filter);
     public List<Customer> getCustomersActives();
     public List<Customer> getCustomersInactives();
     public Customer getById(Long id);

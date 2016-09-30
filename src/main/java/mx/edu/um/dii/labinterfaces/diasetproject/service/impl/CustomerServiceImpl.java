@@ -28,6 +28,14 @@ public class CustomerServiceImpl extends BaseService implements CustomerService 
     public List<Customer> getAll() {
         return customerDao.getCustomers(new Customer());
     }
+    
+    @Override
+    public List<Customer> getAutcompleteNameAndCode(String filter) {
+        filter="%"+filter+"%";
+        Customer customer=new Customer();
+        customer.setName(filter);
+        return customerDao.getCustomers(customer);
+    }
 
     @Override
     public List<Customer> getCustomersActives() {
@@ -68,6 +76,6 @@ public class CustomerServiceImpl extends BaseService implements CustomerService 
     @Override
     public String delete(Long id) {
         return customerDao.delete(id);
-    }
+    }    
 
 }
