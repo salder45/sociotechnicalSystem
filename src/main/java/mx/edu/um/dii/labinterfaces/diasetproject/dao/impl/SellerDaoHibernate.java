@@ -63,7 +63,8 @@ public class SellerDaoHibernate extends BaseDao implements SellerDao {
         //name
         if (seller.getName() != null && !seller.getName().equals(Constants.EMPTY_STRING)) {
             log.debug("---name");
-            Predicate predicate;
+            Predicate predicateName;
+            Predicate predicateCode;
             //
             Character first = seller.getName().charAt(0);
             Character last = seller.getName().charAt(seller.getName().length() - 1);
@@ -71,31 +72,23 @@ public class SellerDaoHibernate extends BaseDao implements SellerDao {
             if (first == '%' && last == '%') {
                 log.debug("---like");
                 //like
-                predicate = criteriaBuilder.like(sellerRoot.<String>get("name"), seller.getName());
+                predicateName = criteriaBuilder.like(sellerRoot.<String>get("name"), seller.getName());
+                predicateCode = criteriaBuilder.like(sellerRoot.<String>get("code"), seller.getCode());
+                Predicate predicateOr=criteriaBuilder.or(predicateName,predicateCode);
+                criteriaList.add(predicateOr);
             } else {
                 log.debug("---equal");
                 //equals
-                predicate = criteriaBuilder.equal(sellerRoot.get("name"), seller.getName());
+                predicateName = criteriaBuilder.equal(sellerRoot.get("name"), seller.getName());
+                criteriaList.add(predicateName);
             }
-            criteriaList.add(predicate);
         }
         //code
         if (seller.getCode() != null && !seller.getCode().equals(Constants.EMPTY_STRING)) {
             log.debug("---code");
             Predicate predicate;
-            //
-            Character first = seller.getCode().charAt(0);
-            Character last = seller.getCode().charAt(seller.getName().length() - 1);
-            //
-            if (first == '%' && last == '%') {
-                log.debug("---like");
-                //like
-                predicate = criteriaBuilder.like(sellerRoot.<String>get("code"), seller.getCode());
-            } else {
-                log.debug("---equal");
-                //equals
-                predicate = criteriaBuilder.equal(sellerRoot.get("code"), seller.getCode());
-            }
+            //equals
+            predicate = criteriaBuilder.equal(sellerRoot.get("code"), seller.getCode());
             criteriaList.add(predicate);
         }
 

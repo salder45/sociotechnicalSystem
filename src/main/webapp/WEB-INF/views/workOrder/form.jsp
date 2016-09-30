@@ -100,8 +100,21 @@
         $(function () {
             $('#estimatedReleaseDate').datetimepicker();
             $('#sellerId').autocomplete({
-                source:'${autoCompleteSeller}',
-                minLenght:2
+                minLength:2,
+                source:function(request,response){
+                    $.ajax({
+                        url:"${autoCompleteSeller}",
+                        data:{term: request.term},
+                        dataType: "json",
+                        success:function(jsonReceived){
+                            response ($.map(jsonReceived,function(item){
+                                return {
+                                    value:item.id,label:item.name
+                                };
+                            }));
+                        }
+                    });
+                }
             });
         });
     </script>                                

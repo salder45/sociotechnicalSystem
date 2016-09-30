@@ -33,7 +33,6 @@ public class SellerServiceImpl extends BaseService implements SellerService {
     public List<Seller> getAutcompleteNameAndCode(String filter) {
         filter="%"+filter+"%";
         Seller seller=new Seller();
-        seller.setCode(filter);
         seller.setName(filter);
         return sellerDao.getSellers(seller);
     }
