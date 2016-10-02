@@ -40,6 +40,8 @@
                 <form:hidden path="status" />
             </c:otherwise>
         </c:choose>
+        <form:hidden path="seller.id" />
+        <form:hidden path="customer.id" />
         <s:bind path="workOrder.estimatedReleaseDate">
             <div class="form-group">
                 <s:message code="workorder.estimated.date.label" var="releaseDateLabel"/>
@@ -58,17 +60,24 @@
                 </div>
             </div>
         </s:bind>  
-        <s:bind path="workOrder.seller.id">
-            <div class="form-group">
-                <s:message code="seller.label" var="sellerLabel"/>
-                <label for="estimatedReleaseDate" class="control-label col-xs-2">${sellerLabel}</label>    
-                <div class="col-xs-5">
-                    <div id="seller-autocomplete">
-                        <form:input id="sellerId" path="seller.id" class="form-control" placeholder="${sellerLabel}" autocomplete="off"/>
-                    </div>
+        <div class="form-group">
+            <s:message code="seller.label" var="sellerLabel"/>
+            <label for="seller" class="control-label col-xs-2">${sellerLabel}</label>    
+            <div class="col-xs-5">
+                <div id="seller-autocomplete">
+                    <input id="sellerId" class="form-control" type="text" placeholder="${sellerLabel}" autocomplete="off"/>
                 </div>
             </div>
-        </s:bind>  
+        </div>
+        <div class="form-group">
+            <s:message code="customer.label" var="customerLabel"/>
+            <label for="customer" class="control-label col-xs-2">${customerLabel}</label>    
+            <div class="col-xs-5">
+                <div id="customer-autocomplete">
+                    <input id="customerId" class="form-control" type="text" placeholder="${customerLabel}" autocomplete="off"/>
+                </div>
+            </div>
+        </div>
     </fieldset>
     <c:choose>
         <c:when test="${param.type=='NEW'}">
@@ -95,25 +104,70 @@
     </c:choose>
 </form:form>
 <c:url var="autoCompleteSeller" value="/seller/getSellerList"/>
+<c:url var="autoCompleteCustomer" value="/customer/getCustomerList"/>
 <content>
     <script type="text/javascript">
         $(function () {
+            //datepicker
             $('#estimatedReleaseDate').datetimepicker();
+            //seller
             $('#sellerId').autocomplete({
-                minLength:2,
-                source:function(request,response){
+                minLength: 1,
+                source: function (request, response) {
                     $.ajax({
-                        url:"${autoCompleteSeller}",
-                        data:{term: request.term},
+                        url: "${autoCompleteSeller}",
+                        data: {term: request.term},
                         dataType: "json",
-                        success:function(jsonReceived){
-                            response ($.map(jsonReceived,function(item){
+                        success: function (jsonReceived) {
+                            console.log("succes");
+                            response($.map(jsonReceived, function (item) {
                                 return {
-                                    value:item.id,label:item.name
+                                    value: item.id, label: item.name
                                 };
                             }));
                         }
                     });
+                },
+                select: function (event, ui) {
+                    event.preventDefault();
+                    $("#sellerId").val(ui.item.label);
+                    $("#seller.id").val(ui.item.value);
+                },
+                focus: function (event, ui) {
+                    console.log("select");
+                    event.preventDefault();
+                    $("#sellerId").val(ui.item.label);
+                    $("#seller.id").val(ui.item.value);
+                }
+            });
+            //customer
+            $('#customerId').autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                    $.ajax({
+                        url: "${autoCompleteCustomer}",
+                        data: {term: request.term},
+                        dataType: "json",
+                        success: function (jsonReceived) {
+                            console.log("succes");
+                            response($.map(jsonReceived, function (item) {
+                                return {
+                                    value: item.id, label: item.name
+                                };
+                            }));
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    event.preventDefault();
+                    $("#customerId").val(ui.item.label);
+                    $("#customer.id").val(ui.item.value);
+                },
+                focus: function (event, ui) {
+                    console.log("select");
+                    event.preventDefault();
+                    $("#customerId").val(ui.item.label);
+                    $("#customer.id").val(ui.item.value);
                 }
             });
         });
