@@ -109,7 +109,7 @@
     <script type="text/javascript">
         $(function () {
             //datepicker
-            $('#estimatedReleaseDate').datetimepicker();
+            $('#estimatedReleaseDate').datetimepicker({format : "DD/MM/YYYY hh:mm zz"});
             //seller
             $('#sellerId').autocomplete({
                 minLength: 1,
