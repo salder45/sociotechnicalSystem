@@ -124,6 +124,7 @@
         <script src="<c:url value='/js/fileinput.min.js' />"></script>
         <script src="<c:url value='/js/scannerPlugin/jquery.scannerdetection.js' />"></script>
         <script src="<c:url value='/js/moment.js' />"></script>
+        <script src="<c:url value='/js/moment-timezone.js' />"></script>
         <script src="<c:url value='/js/bootstrap-datetimepicker.min.js' />"></script>
         <script src="<c:url value='/js/jquery-ui-1.9.2.custom.min.js' />"></script>
     <sitemesh:write property="content"/>
