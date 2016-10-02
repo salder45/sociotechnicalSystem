@@ -40,22 +40,22 @@ public class WorkOrder implements Serializable{
     private Integer version;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_created", nullable = false)
-    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm zzz")
+    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm")
     private Date dateCreated;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "last_updated", nullable = false)
-    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm zzz")
+    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm")
     private Date lastUpdated;
     @Column(nullable = false)
     private String status;
     private String code;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "estimated_release_date", nullable = false)
-    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm zzz")
+    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm")
     private Date estimatedReleaseDate;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "release_date", nullable = false)
-    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm zzz")
+    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm")
     private Date releaseDate;
     private Integer piecesNumber;
     @ManyToOne(fetch = FetchType.EAGER)

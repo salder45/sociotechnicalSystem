@@ -45,21 +45,21 @@ public class TimeStored implements Serializable{
     private Integer version;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_created", nullable = false)
-    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm zzz")
+    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm")
     private Date dateCreated;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "last_updated", nullable = false)
-    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm zzz")
+    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm")
     private Date lastUpdated;
     @Column(nullable = false)
     private String status;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "start_time", nullable = false)
-    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm zzz")
+    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm")
     private Date startTime;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "finish_time", nullable = false)
-    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm zzz")
+    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm")
     private Date finishTime;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "work_order_id")
