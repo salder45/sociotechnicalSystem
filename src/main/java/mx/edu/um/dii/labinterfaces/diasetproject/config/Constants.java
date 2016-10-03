@@ -53,6 +53,12 @@ public class Constants {
     public static final String DEFAULT_USER_QUALITY="calidad";
     public static final String DEFAULT_USER_QUALITY_ADMIN="calidadAdmin";
     public static final String DEFAULT_USER_ADMIN="admin";
+    //
+    public static final String DEFAULT_AREA_SELLING="Ventas";
+    public static final String DEFAULT_AREA_PLANNING="Planeacion";
+    public static final String DEFAULT_AREA_PRODUCTION="Produccion";
+    public static final String DEFAULT_AREA_QUALITY="Calidad";
+    
     /**
      * Valores para el constructor de Locale
      */

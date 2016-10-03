@@ -60,6 +60,11 @@ public class Area implements Serializable {
 
     public Area() {
     }
+    
+    public Area(String name,String description){
+        this.name=name;
+        this.description=description;
+    }
 
     /**
      * @return the Id

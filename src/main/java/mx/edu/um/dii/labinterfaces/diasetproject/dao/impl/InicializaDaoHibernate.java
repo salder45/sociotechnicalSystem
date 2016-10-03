@@ -7,11 +7,13 @@ package mx.edu.um.dii.labinterfaces.diasetproject.dao.impl;
 
 import java.util.HashSet;
 import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
+import mx.edu.um.dii.labinterfaces.diasetproject.dao.AreaDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.BaseDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.CredentialDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.InicializaDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.RoleDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.UserDao;
+import mx.edu.um.dii.labinterfaces.diasetproject.model.Area;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Credential;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Role;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.User;
@@ -35,6 +37,8 @@ public class InicializaDaoHibernate extends BaseDao implements InicializaDao {
     private UserDao userDao;
     @Autowired
     private RoleDao roleDao;
+    @Autowired
+    private AreaDao areaDao;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -224,6 +228,28 @@ public class InicializaDaoHibernate extends BaseDao implements InicializaDao {
             Credential credential = new Credential(customUser.getId(), data);
             credential.setUser(customUser);
             credentialDao.save(credential);
+        }
+        
+        //Create Areas
+        Area areaSelling=areaDao.getByName(Constants.DEFAULT_AREA_SELLING);
+        if(areaSelling==null||areaSelling.getId()==null||areaSelling.getId().equals(0L)){
+            areaSelling=new Area(Constants.DEFAULT_AREA_SELLING, "Depto encargado de gestionar las ventas de la empresa");
+            areaDao.save(areaSelling);
+        }
+        Area areaPlanning=areaDao.getByName(Constants.DEFAULT_AREA_PLANNING);
+        if(areaPlanning==null||areaPlanning.getId()==null||areaPlanning.getId().equals(0L)){
+            areaPlanning=new Area(Constants.DEFAULT_AREA_PLANNING, "Depto encargado de gestionar el plan de produccion de la empresa de la empresa");
+            areaDao.save(areaPlanning);
+        }
+        Area areaProduction=areaDao.getByName(Constants.DEFAULT_AREA_PRODUCTION);
+        if(areaProduction==null||areaProduction.getId()==null||areaProduction.getId().equals(0L)){
+            areaProduction=new Area(Constants.DEFAULT_AREA_PRODUCTION, "Depto encargado de realizar la fabricacion de los bienes requeridos por los clientes de la empresa");
+            areaDao.save(areaProduction);
+        }
+        Area areaQuality=areaDao.getByName(Constants.DEFAULT_AREA_QUALITY);
+        if(areaQuality==null||areaQuality.getId()==null||areaQuality.getId().equals(0L)){
+            areaQuality=new Area(Constants.DEFAULT_AREA_QUALITY, "Depto encargado de gestionar las ventas de la empresa");
+            areaDao.save(areaQuality);
         }
 
     }

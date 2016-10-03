@@ -47,13 +47,21 @@ public class AreaDaoHibernate extends BaseDao implements AreaDao {
     }
 
     @Override
+    public Area getByName(String name) {
+        Query query = currentSession().createQuery("select a from Area a where a.name=:Name");
+        query.setParameter("Name", name);
+        Area area = (Area) query.uniqueResult();
+        return area;
+    }
+
+    @Override
     public Area save(Area area) {
         //set values
         area.setDateCreated(new Date());
         area.setLastUpdated(new Date());
         area.setStatus(Constants.STATUS_ACTIVE);
         //TODO CREATE CODE FOR THE AREA
-        
+
         currentSession().save(area);
         //
         area.setCode(ProjectUtils.generateCode(area.getId(), Constants.AREA_START_CODE));
@@ -67,7 +75,7 @@ public class AreaDaoHibernate extends BaseDao implements AreaDao {
         try {
             //set values
             area.setLastUpdated(new Date());
-            
+
             currentSession().update(area);
             currentSession().flush();
         } catch (NonUniqueObjectException nuoe) {
@@ -81,12 +89,12 @@ public class AreaDaoHibernate extends BaseDao implements AreaDao {
 
     @Override
     public String delete(Long id) {
-        Area area=get(id);
-        String name=area.getCode()+"-"+area.getName();
-        
+        Area area = get(id);
+        String name = area.getCode() + "-" + area.getName();
+
         currentSession().delete(area);
         currentSession().flush();
-        
+
         return name;
     }
 

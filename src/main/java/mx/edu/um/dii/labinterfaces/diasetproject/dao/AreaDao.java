@@ -15,6 +15,7 @@ import mx.edu.um.dii.labinterfaces.diasetproject.model.Area;
 public interface AreaDao{
     public List<Area> getAll();
     public Area get(Long id);
+    public Area getByName(String name);
     public Area getByCode(String code);
     public Area save(Area area);
     public Area update(Area area);
