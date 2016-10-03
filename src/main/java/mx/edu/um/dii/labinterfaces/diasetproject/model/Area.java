@@ -51,6 +51,8 @@ public class Area implements Serializable{
     //Missing Machines List's
     @OneToMany(mappedBy = "area",fetch = FetchType.EAGER)
     private List<Machine> machines;
+    @OneToMany(mappedBy = "areaActual",fetch = FetchType.EAGER)
+    private List<WorkOrder> workOrders;
 
     public Area() {
     }
@@ -179,6 +181,20 @@ public class Area implements Serializable{
      */
     public void setMachines(List<Machine> machines) {
         this.machines = machines;
+    }
+
+    /**
+     * @return the workOrders
+     */
+    public List<WorkOrder> getWorkOrders() {
+        return workOrders;
+    }
+
+    /**
+     * @param workOrders the workOrders to set
+     */
+    public void setWorkOrders(List<WorkOrder> workOrders) {
+        this.workOrders = workOrders;
     }
 
     @Override

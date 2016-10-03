@@ -78,6 +78,13 @@
                 </div>
             </div>
         </div>
+        <div class="form-group">
+            <s:message code="batch.label" var="customerLabel"/>
+            <label for="customer" class="control-label col-xs-2">${customerLabel}</label>               
+        </div>
+        Display here
+        Add button
+
     </fieldset>
     <c:choose>
         <c:when test="${param.type=='NEW'}">
@@ -109,7 +116,7 @@
     <script type="text/javascript">
         $(function () {
             //datepicker
-            $('#estimatedReleaseDate').datetimepicker({format : "DD/MM/YYYY hh:mm zz"});
+            $('#estimatedReleaseDate').datetimepicker({format: "DD/MM/YYYY hh:mm"});
             //seller
             $('#sellerId').autocomplete({
                 minLength: 1,

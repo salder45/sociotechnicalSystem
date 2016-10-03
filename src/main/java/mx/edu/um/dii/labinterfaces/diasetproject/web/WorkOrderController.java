@@ -51,7 +51,7 @@ public class WorkOrderController extends BaseController {
     public String create(HttpServletRequest request, @Valid WorkOrder workOrder, BindingResult bindingResult, Errors errors, Model model, RedirectAttributes redirectAttributes) {
         log.debug("create workOrder");
         if (bindingResult.hasErrors()) {
-            log.error("Error detected in user form...");
+            log.error("Error detected in work form...");
             model.addAttribute(Constants.WORK_ORDER_UI, workOrder);
             return "/workOrder/new";
         }
@@ -61,6 +61,6 @@ public class WorkOrderController extends BaseController {
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI, "workorder.created.message");
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI, new String[]{workOrder.getCode()});
 
-        return "redirect:/workOrder/list";
+        return "redirect:/workOrder/edit"+w.getId();
     }
 }
