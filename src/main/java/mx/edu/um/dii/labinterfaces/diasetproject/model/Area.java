@@ -20,6 +20,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -28,7 +30,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Entity
 @Table(name = "areas")
-public class Area implements Serializable{
+public class Area implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,9 +51,11 @@ public class Area implements Serializable{
     private String name;
     private String description;
     //Missing Machines List's
-    @OneToMany(mappedBy = "area",fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
+    @OneToMany(mappedBy = "area", fetch = FetchType.EAGER)
     private List<Machine> machines;
-    @OneToMany(mappedBy = "areaActual",fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
+    @OneToMany(mappedBy = "areaActual", fetch = FetchType.EAGER)
     private List<WorkOrder> workOrders;
 
     public Area() {
