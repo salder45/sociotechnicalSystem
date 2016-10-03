@@ -44,8 +44,15 @@ public class Constants {
     /*
     DEFAULT USERS
     */
-    public static final String DEFAULT_USER_ADMIN="admin";
     public static final String DEFAULT_USER="user";
+    public static final String DEFAULT_USER_SALES="ventas";
+    public static final String DEFAULT_USER_SALES_ADMIN="ventasAdmin";
+    public static final String DEFAULT_USER_PLANNING="planeacion";
+    public static final String DEFAULT_USER_PRODUCTION="produccion";
+    public static final String DEFAULT_USER_PRODUCTION_ADMIN="produccionAdmin";
+    public static final String DEFAULT_USER_QUALITY="calidad";
+    public static final String DEFAULT_USER_QUALITY_ADMIN="calidadAdmin";
+    public static final String DEFAULT_USER_ADMIN="admin";
     /**
      * Valores para el constructor de Locale
      */

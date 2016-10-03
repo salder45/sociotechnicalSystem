@@ -105,6 +105,8 @@ public class InicializaDaoHibernate extends BaseDao implements InicializaDao {
             roleUser = new Role(Constants.ROLE_USER,"Usuario","Rol base de Usuario");
             roleDao.save(roleUser);
         }
+        //CREATE USERS
+        
         //Create admin/user and custom user
         User userAdmin = userDao.get(Constants.DEFAULT_USER_ADMIN);
         if (userAdmin == null || userAdmin.getId() == null || userAdmin.getId().equals(0L)) {
@@ -118,17 +120,97 @@ public class InicializaDaoHibernate extends BaseDao implements InicializaDao {
             credential.setUser(userAdmin);
             credentialDao.save(credential);
         }
-
-        User user = userDao.get(Constants.DEFAULT_USER);
-        if (user == null || user.getId() == null || user.getId().equals(0L)) {
-            String pwd = "user";
-            user = new User(Constants.DEFAULT_USER, passwordEncoder.encode(pwd), "user", "user", "user");
-            user.addRole(roleDao.get(Constants.ROLE_USER));
+        //SALES
+        User userVentas = userDao.get(Constants.DEFAULT_USER_SALES);
+        if (userVentas == null || userVentas.getId() == null || userVentas.getId().equals(0L)) {
+            String pwd = "ventas";
+            userVentas = new User(Constants.DEFAULT_USER_SALES, passwordEncoder.encode(pwd), "admin", "admin", "admin");
+            userVentas.addRole(roleDao.get(Constants.ROLE_SALES));
+            //TODO             
+            userDao.save(userVentas);
+            String data = "{\"username\":\"" + userVentas.getUsername() + "\",\"password\":\"" + pwd + "\"}";
+            Credential credential = new Credential(userVentas.getId(), data);
+            credential.setUser(userVentas);
+            credentialDao.save(credential);
+        }
+        User userVentasAdmin = userDao.get(Constants.DEFAULT_USER_SALES_ADMIN);
+        if (userVentasAdmin == null || userVentasAdmin.getId() == null || userVentasAdmin.getId().equals(0L)) {
+            String pwd = "ventasAdmin";
+            userVentasAdmin = new User(Constants.DEFAULT_USER_SALES_ADMIN, passwordEncoder.encode(pwd), "admin", "admin", "admin");
+            userVentasAdmin.addRole(roleDao.get(Constants.ROLE_SALES_ADMIN));
+            //TODO             
+            userDao.save(userVentasAdmin);
+            String data = "{\"username\":\"" + userVentasAdmin.getUsername() + "\",\"password\":\"" + pwd + "\"}";
+            Credential credential = new Credential(userVentasAdmin.getId(), data);
+            credential.setUser(userVentasAdmin);
+            credentialDao.save(credential);
+        }
+        //PLANNING
+        User userPlanning = userDao.get(Constants.DEFAULT_USER_PLANNING);
+        if (userPlanning == null || userPlanning.getId() == null || userPlanning.getId().equals(0L)) {
+            String pwd = "planeacion";
+            userPlanning = new User(Constants.DEFAULT_USER_PLANNING, passwordEncoder.encode(pwd), "admin", "admin", "admin");
+            userPlanning.addRole(roleDao.get(Constants.ROLE_PLANNING));
+            userPlanning.addRole(roleDao.get(Constants.ROLE_PLANNING_ADMIN));
+            //TODO             
+            userDao.save(userPlanning);
+            String data = "{\"username\":\"" + userPlanning.getUsername() + "\",\"password\":\"" + pwd + "\"}";
+            Credential credential = new Credential(userPlanning.getId(), data);
+            credential.setUser(userPlanning);
+            credentialDao.save(credential);
+        }
+        
+        
+        //PRODUCTION
+        User userProduction = userDao.get(Constants.DEFAULT_USER_PRODUCTION);
+        if (userProduction == null || userProduction.getId() == null || userProduction.getId().equals(0L)) {
+            String pwd = "produccion";
+            userProduction = new User(Constants.DEFAULT_USER_PRODUCTION, passwordEncoder.encode(pwd), "user", "user", "user");
+            userProduction.addRole(roleDao.get(Constants.ROLE_PRODUCTION));
             //TODO check encodepassword option
-            userDao.save(user);
-            String data = "{\"username\":\"" + user.getUsername() + "\",\"password\":\"" + pwd + "\"}";
-            Credential credential = new Credential(user.getId(), data);
-            credential.setUser(user);
+            userDao.save(userProduction);
+            String data = "{\"username\":\"" + userProduction.getUsername() + "\",\"password\":\"" + pwd + "\"}";
+            Credential credential = new Credential(userProduction.getId(), data);
+            credential.setUser(userProduction);
+            credentialDao.save(credential);
+        }
+        
+        User userProductionAdmin = userDao.get(Constants.DEFAULT_USER_PRODUCTION_ADMIN);
+        if (userProductionAdmin == null || userProductionAdmin.getId() == null || userProductionAdmin.getId().equals(0L)) {
+            String pwd = "produccionAdmin";
+            userProductionAdmin = new User(Constants.DEFAULT_USER_PRODUCTION_ADMIN, passwordEncoder.encode(pwd), "user", "user", "user");
+            userProductionAdmin.addRole(roleDao.get(Constants.ROLE_PRODUCTION_ADMIN));
+            //TODO check encodepassword option
+            userDao.save(userProductionAdmin);
+            String data = "{\"username\":\"" + userProductionAdmin.getUsername() + "\",\"password\":\"" + pwd + "\"}";
+            Credential credential = new Credential(userProductionAdmin.getId(), data);
+            credential.setUser(userProductionAdmin);
+            credentialDao.save(credential);
+        }
+        
+        User userQuality = userDao.get(Constants.DEFAULT_USER_QUALITY);
+        if (userQuality == null || userQuality.getId() == null || userQuality.getId().equals(0L)) {
+            String pwd = "user";
+            userQuality = new User(Constants.DEFAULT_USER_QUALITY, passwordEncoder.encode(pwd), "user", "user", "user");
+            userQuality.addRole(roleDao.get(Constants.ROLE_QUALITY));
+            //TODO check encodepassword option
+            userDao.save(userQuality);
+            String data = "{\"username\":\"" + userQuality.getUsername() + "\",\"password\":\"" + pwd + "\"}";
+            Credential credential = new Credential(userQuality.getId(), data);
+            credential.setUser(userQuality);
+            credentialDao.save(credential);
+        }
+        
+        User userQualityAdmin = userDao.get(Constants.DEFAULT_USER_QUALITY_ADMIN);
+        if (userQualityAdmin == null || userQualityAdmin.getId() == null || userQualityAdmin.getId().equals(0L)) {
+            String pwd = "calidadAdmin";
+            userQualityAdmin = new User(Constants.DEFAULT_USER_QUALITY_ADMIN, passwordEncoder.encode(pwd), "user", "user", "user");
+            userQualityAdmin.addRole(roleDao.get(Constants.ROLE_QUALITY_ADMIN));
+            //TODO check encodepassword option
+            userDao.save(userQualityAdmin);
+            String data = "{\"username\":\"" + userQualityAdmin.getUsername() + "\",\"password\":\"" + pwd + "\"}";
+            Credential credential = new Credential(userQualityAdmin.getId(), data);
+            credential.setUser(userQualityAdmin);
             credentialDao.save(credential);
         }
 
