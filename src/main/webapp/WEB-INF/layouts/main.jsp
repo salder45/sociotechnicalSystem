@@ -84,6 +84,26 @@
                                 </ul>
                             </li>                           
                         </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_SALES')">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><s:message code="area.sales.label"/> <span class="caret"></span></a>
+                            </li>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_PLANNING')">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><s:message code="area.planning.label"/> <span class="caret"></span></a>
+                            </li>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_PRODUCTION')">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><s:message code="area.production.label"/> <span class="caret"></span></a>
+                            </li>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_QUALITY')">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><s:message code="area.quality.label"/> <span class="caret"></span></a>
+                            </li>
+                        </sec:authorize>
                         <!--In nav code must be <li></li>-->
                         <sitemesh:write property="nav"/>                        
                     </ul>
