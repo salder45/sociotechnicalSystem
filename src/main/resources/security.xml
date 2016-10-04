@@ -51,6 +51,14 @@
         <beans:property name="hierarchy">
             <beans:value>
                 ROLE_ADMIN > ROLE_USER
+                ROLE_ADMIN > ROLE_SALES_ADMIN
+                ROLE_ADMIN > ROLE_PLANNING_ADMIN
+                ROLE_ADMIN > ROLE_PRODUCTION_ADMIN
+                ROLE_ADMIN > ROLE_QUALITY_ADMIN
+                ROLE_SALES_ADMIN > ROLE_SALES
+                ROLE_PLANNING_ADMIN > ROLE_PLANNING
+                ROLE_PRODUCTION_ADMIN > ROLE_PRODUCTION
+                ROLE_QUALITY_ADMIN > ROLE_QUALITY
             </beans:value>
         </beans:property>
     </beans:bean>
