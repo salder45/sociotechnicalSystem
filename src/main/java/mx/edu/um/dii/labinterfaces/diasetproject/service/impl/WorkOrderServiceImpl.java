@@ -6,11 +6,16 @@
 package mx.edu.um.dii.labinterfaces.diasetproject.service.impl;
 
 import java.util.List;
+import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
+import mx.edu.um.dii.labinterfaces.diasetproject.dao.CustomerDao;
+import mx.edu.um.dii.labinterfaces.diasetproject.dao.SellerDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.WorkOrderDao;
-import mx.edu.um.dii.labinterfaces.diasetproject.model.Area;
+import mx.edu.um.dii.labinterfaces.diasetproject.model.Customer;
+import mx.edu.um.dii.labinterfaces.diasetproject.model.Seller;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.WorkOrder;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.BaseService;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.WorkOrderService;
+import mx.edu.um.dii.labinterfaces.diasetproject.utils.ProjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +28,12 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
 
     @Autowired
     private WorkOrderDao workOrderDao;
+    
+    @Autowired
+    private SellerDao sellerDao;
+    
+    @Autowired
+    private CustomerDao customerDao;
 
     @Override
     public List<WorkOrder> getAll() {
@@ -40,13 +51,32 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
     }
 
     @Override
+    public WorkOrder create(WorkOrder workOrder) {
+        workOrder.setEstimatedReleaseDate(ProjectUtils.getDefaultDate());
+        workOrder.setReleaseDate(ProjectUtils.getDefaultDate());
+        workOrder.setStatus(Constants.STATUS_ACTIVE);
+        //Customer
+        if(workOrder.getCustomer()!=null&&workOrder.getCustomer().getId()!=null&&workOrder.getCustomer().getId()!=0L){
+            Customer customer=customerDao.get(workOrder.getCustomer().getId());
+            workOrder.setCustomer(customer);
+        }
+        //Seller
+        if(workOrder.getSeller()!=null&&workOrder.getSeller().getId()!=null&&workOrder.getSeller().getId()!=0L){
+            Seller seller=sellerDao.get(workOrder.getSeller().getId());
+            workOrder.setSeller(seller);
+        }
+                
+        return workOrderDao.save(workOrder);
+    }
+
+    @Override
     public WorkOrder save(WorkOrder workOrder) {
         return workOrderDao.save(workOrder);
     }
 
     @Override
     public WorkOrder update(WorkOrder workOrder) {
-        return workOrderDao.update(workOrder);        
+        return workOrderDao.update(workOrder);
     }
 
     @Override

@@ -5,6 +5,13 @@
  */
 package mx.edu.um.dii.labinterfaces.diasetproject.utils;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
 
 /**
@@ -29,5 +36,16 @@ public class ProjectUtils {
         }  
 
         return returnValue+stringId;
+    }
+    
+    public static Date getDefaultDate(){
+        DateFormat formatter=new SimpleDateFormat("MM/dd/yyyy");
+        Date defaultDate=null;
+        try {
+            defaultDate=formatter.parse("01/01/1989");
+        } catch (ParseException ex) {
+            Logger.getLogger(ProjectUtils.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        return defaultDate;
     }
 }

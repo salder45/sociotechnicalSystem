@@ -19,7 +19,7 @@
         <div class="container">
             <div class="row">
                 <legend><s:message code="workorder.new.label"/></legend>
-                <jsp:include page="form.jsp">
+                <jsp:include page="formWorkOrder.jsp">
                     <jsp:param name="type" value="NEW"/>
                 </jsp:include>
             </div><!--/.row-->

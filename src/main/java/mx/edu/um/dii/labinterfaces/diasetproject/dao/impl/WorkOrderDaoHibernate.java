@@ -83,7 +83,6 @@ public class WorkOrderDaoHibernate extends BaseDao implements WorkOrderDao {
     public WorkOrder save(WorkOrder workOrder) {
         workOrder.setDateCreated(new Date());
         workOrder.setLastUpdated(new Date());
-        workOrder.setStatus(Constants.STATUS_ACTIVE);
         //
         currentSession().save(workOrder);
         //

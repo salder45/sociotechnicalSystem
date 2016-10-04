@@ -5,9 +5,12 @@
  */
 package mx.edu.um.dii.labinterfaces.diasetproject.web;
 
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
+import mx.edu.um.dii.labinterfaces.diasetproject.model.Customer;
+import mx.edu.um.dii.labinterfaces.diasetproject.model.Seller;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.WorkOrder;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.CustomerService;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.SellerService;
@@ -41,9 +44,14 @@ public class WorkOrderController extends BaseController {
     public String newWorkOrder(Model model) {
         log.debug("new workOrder");
         WorkOrder workOrder = new WorkOrder();
-
+        //set select data
+        List<Seller> sellersList=sellerService.getAll();
+        List<Customer> customerList=customerService.getAll();
+        //
         model.addAttribute(Constants.WORK_ORDER_UI, workOrder);
-
+        model.addAttribute(Constants.SELLER_LIST_UI, sellersList);
+        model.addAttribute(Constants.CUSTOMER_LIST_UI, customerList);
+        
         return "/workOrder/new";
     }
 
@@ -56,7 +64,7 @@ public class WorkOrderController extends BaseController {
             return "/workOrder/new";
         }
 
-        WorkOrder w = workOrderService.save(workOrder);
+        WorkOrder w = workOrderService.create(workOrder);
 
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI, "workorder.created.message");
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI, new String[]{workOrder.getCode()});

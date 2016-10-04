@@ -5,14 +5,16 @@
  */
 package mx.edu.um.dii.labinterfaces.diasetproject.config;
 
+import java.util.Date;
+
 /**
  *
  * @author laboratoriointerface
  */
 public class Constants {
 
-    public static final Integer MAX_SIZE_PASSWORD=20;
-    
+    public static final Integer MAX_SIZE_PASSWORD = 20;
+
     public static final String DEFAULT_ENCODING = "UTF-8";
     public static final String APP_NAME = "Diaset";
     public static final String LOGO_PATH = "/reports/Diaset.png";
@@ -25,40 +27,40 @@ public class Constants {
     public static final String SELLER_START_CODE = "S";
     public static final String CUSTOMER_START_CODE = "C";
     public static final String WORKORDER_START_CODE = "WO";
-    public static final Integer MAX_SIZE_TEN=10;
-    public static final Integer MAX_SIZE_FIFTEEN=15;
-    
+    public static final Integer MAX_SIZE_TEN = 10;
+    public static final Integer MAX_SIZE_FIFTEEN = 15;
+
     /*
     ROLE
-    */
-    public static final String ROLE_ADMIN="ROLE_ADMIN";
-    public static final String ROLE_SALES="ROLE_SALES";
-    public static final String ROLE_SALES_ADMIN="ROLE_SALES_ADMIN";
-    public static final String ROLE_PLANNING="ROLE_PLANNING";
-    public static final String ROLE_PLANNING_ADMIN="ROLE_PLANNING_ADMIN";
-    public static final String ROLE_PRODUCTION="ROLE_PRODUCTION";
-    public static final String ROLE_PRODUCTION_ADMIN="ROLE_PRODUCTION_ADMIN";
-    public static final String ROLE_QUALITY="ROLE_QUALITY";
-    public static final String ROLE_QUALITY_ADMIN="ROLE_QUALITY_ADMIN";
-    public static final String ROLE_USER="ROLE_USER";
+     */
+    public static final String ROLE_ADMIN = "ROLE_ADMIN";
+    public static final String ROLE_SALES = "ROLE_SALES";
+    public static final String ROLE_SALES_ADMIN = "ROLE_SALES_ADMIN";
+    public static final String ROLE_PLANNING = "ROLE_PLANNING";
+    public static final String ROLE_PLANNING_ADMIN = "ROLE_PLANNING_ADMIN";
+    public static final String ROLE_PRODUCTION = "ROLE_PRODUCTION";
+    public static final String ROLE_PRODUCTION_ADMIN = "ROLE_PRODUCTION_ADMIN";
+    public static final String ROLE_QUALITY = "ROLE_QUALITY";
+    public static final String ROLE_QUALITY_ADMIN = "ROLE_QUALITY_ADMIN";
+    public static final String ROLE_USER = "ROLE_USER";
     /*
     DEFAULT USERS
-    */
-    public static final String DEFAULT_USER="user";
-    public static final String DEFAULT_USER_SALES="ventas";
-    public static final String DEFAULT_USER_SALES_ADMIN="ventasAdmin";
-    public static final String DEFAULT_USER_PLANNING="planeacion";
-    public static final String DEFAULT_USER_PRODUCTION="produccion";
-    public static final String DEFAULT_USER_PRODUCTION_ADMIN="produccionAdmin";
-    public static final String DEFAULT_USER_QUALITY="calidad";
-    public static final String DEFAULT_USER_QUALITY_ADMIN="calidadAdmin";
-    public static final String DEFAULT_USER_ADMIN="admin";
+     */
+    public static final String DEFAULT_USER = "user";
+    public static final String DEFAULT_USER_SALES = "ventas";
+    public static final String DEFAULT_USER_SALES_ADMIN = "ventasAdmin";
+    public static final String DEFAULT_USER_PLANNING = "planeacion";
+    public static final String DEFAULT_USER_PRODUCTION = "produccion";
+    public static final String DEFAULT_USER_PRODUCTION_ADMIN = "produccionAdmin";
+    public static final String DEFAULT_USER_QUALITY = "calidad";
+    public static final String DEFAULT_USER_QUALITY_ADMIN = "calidadAdmin";
+    public static final String DEFAULT_USER_ADMIN = "admin";
     //
-    public static final String DEFAULT_AREA_SELLING="Ventas";
-    public static final String DEFAULT_AREA_PLANNING="Planeacion";
-    public static final String DEFAULT_AREA_PRODUCTION="Produccion";
-    public static final String DEFAULT_AREA_QUALITY="Calidad";
-    
+    public static final String DEFAULT_AREA_SELLING = "Ventas";
+    public static final String DEFAULT_AREA_PLANNING = "Planeacion";
+    public static final String DEFAULT_AREA_PRODUCTION = "Produccion";
+    public static final String DEFAULT_AREA_QUALITY = "Calidad";
+
     /**
      * Valores para el constructor de Locale
      */
@@ -67,36 +69,39 @@ public class Constants {
     public static final String LOCALE_VARIANT = "Traditional_WIN";
     /*
     * Request names
-    */
-    public static final String USER_UI="user";
-    public static final String USER_LIST_UI="usersList";
-    public static final String ROLE_LIST_UI="rolesList";
-    public static final String ROLE_UI="role";
-    public static final String MESSAGE_UI="message";
-    public static final String MESSAGE_ATTRS_UI="messageAttrs";
+     */
+    public static final String USER_UI = "user";
+    public static final String USER_LIST_UI = "usersList";
+    public static final String ROLE_LIST_UI = "rolesList";
+    public static final String ROLE_UI = "role";
+    public static final String MESSAGE_UI = "message";
+    public static final String MESSAGE_ATTRS_UI = "messageAttrs";
     //
-    public static final String AREA_UI="area";
-    public static final String AREA_LIST_UI="areaList";
+    public static final String AREA_UI = "area";
+    public static final String AREA_LIST_UI = "areaList";
     //
-    public static final String MACHINE_UI="machine";
-    public static final String MACHINE_LIST_UI="machineList";
+    public static final String MACHINE_UI = "machine";
+    public static final String MACHINE_LIST_UI = "machineList";
     //
-    public static final String SELLER_UI="seller";
-    public static final String SELLER_LIST_UI="sellerList";
+    public static final String SELLER_UI = "seller";
+    public static final String SELLER_LIST_UI = "sellerList";
     //
-    public static final String CUSTOMER_UI="customer";
-    public static final String CUSTOMER_LIST_UI="customerList";
+    public static final String CUSTOMER_UI = "customer";
+    public static final String CUSTOMER_LIST_UI = "customerList";
     //
-    public static final String WORK_ORDER_UI="workOrder";
-    public static final String WORK_ORDER_LIST_UI="workOrderList";
+    public static final String WORK_ORDER_UI = "workOrder";
+    public static final String WORK_ORDER_LIST_UI = "workOrderList";
     /*
     Password
-    */
-    public static final String PASSWORD_JASYPT="D14537";
+     */
+    public static final String PASSWORD_JASYPT = "D14537";
     /*
     STATUS
-    */
-    public static final String STATUS_ACTIVE="A";
-    public static final String STATUS_INACTIVE="I";
-    public static final String EMPTY_STRING="";
+     */
+    public static final String STATUS_WORKING_AT = "W_AT";
+    public static final String STATUS_PAUSED = "P";
+    public static final String STATUS_IDLE = "ID";
+    public static final String STATUS_ACTIVE = "A";
+    public static final String STATUS_INACTIVE = "I";
+    public static final String EMPTY_STRING = "";
 }
