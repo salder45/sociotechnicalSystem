@@ -64,6 +64,7 @@ public class WorkOrder implements Serializable{
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "seller_id")
     private Seller seller;
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "area_id")
     private Area areaActual;
     /*
