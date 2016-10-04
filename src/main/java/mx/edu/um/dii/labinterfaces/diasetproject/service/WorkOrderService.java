@@ -16,6 +16,7 @@ public interface WorkOrderService {
     public List<WorkOrder> getAll();
     public WorkOrder getById(Long id);
     public WorkOrder getByCode(String code);
+    public List<WorkOrder> getByArea(Long areaId);
     public WorkOrder create(WorkOrder workOrder);
     public WorkOrder save(WorkOrder workOrder);
     public WorkOrder update(WorkOrder workOrder);
