@@ -43,7 +43,7 @@ public class WorkOrderController extends BaseController {
 
     @Autowired
     private SellerService sellerService;
-    
+
     @Autowired
     private AreaService areaService;
 
@@ -78,23 +78,30 @@ public class WorkOrderController extends BaseController {
 
         return "redirect:/workOrder/edit" + w.getId();
     }
-    
+
     @RequestMapping("/listOrders/{areaId}")
-    public String listSellingOrders(@PathVariable Long areaId, Model model){
+    public String listSellingOrders(@PathVariable Long areaId, Model model) {
         //Area
-        Area area=areaService.get(areaId);
-        WorkOrder order=new WorkOrder();
+        Area area = areaService.get(areaId);
+        WorkOrder order = new WorkOrder();
         order.setAreaActual(area);
         //
         List<WorkOrder> workOrdersList;
-        
+
         return "/workOrder/list";
     }
 
     @RequestMapping("/addBatch")
     public String addBatch(HttpServletRequest request, @Valid Batch batch, BindingResult bindingResult, Errors errors, Model model, RedirectAttributes redirectAttributes) {
         log.debug("addBatchs");
-        
+//save batch and redirect to addWorkOrderDetails
+        return "";
+    }
+
+    @RequestMapping("/addWorkOrderDetails")
+    public String addWorkOrderDetails(HttpServletRequest request, @Valid Batch batch, BindingResult bindingResult, Errors errors, Model model, RedirectAttributes redirectAttributes) {
+        log.debug("addBatchs");
+        //load workOrder and batch list
         return "";
     }
 }
