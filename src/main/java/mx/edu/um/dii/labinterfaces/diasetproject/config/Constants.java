@@ -91,6 +91,9 @@ public class Constants {
     //
     public static final String WORK_ORDER_UI = "workOrder";
     public static final String WORK_ORDER_LIST_UI = "workOrderList";
+    //
+    public static final String BATCH_UI = "batch";
+    public static final String BATCH_LIST_UI = "batchList";
     /*
     Password
      */

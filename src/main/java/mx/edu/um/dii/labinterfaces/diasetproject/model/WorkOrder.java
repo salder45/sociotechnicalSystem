@@ -296,6 +296,6 @@ public class WorkOrder implements Serializable{
     
     @Override
     public String toString() {
-        return "{TimeStored{Id:"+this.Id+", code:"+this.code+"}}";
+        return "{WorkOrder{Id:"+this.Id+", code:"+this.code+"}}";
     }    
 }

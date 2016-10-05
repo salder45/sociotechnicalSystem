@@ -15,6 +15,7 @@ import mx.edu.um.dii.labinterfaces.diasetproject.model.Customer;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Seller;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.WorkOrder;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.AreaService;
+import mx.edu.um.dii.labinterfaces.diasetproject.service.BatchService;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.CustomerService;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.SellerService;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.WorkOrderService;
@@ -47,7 +48,10 @@ public class WorkOrderController extends BaseController {
     @Autowired
     private AreaService areaService;
 
-    @RequestMapping("new")
+    @Autowired
+    private BatchService batchService;
+
+    @RequestMapping("/new")
     public String newWorkOrder(Model model) {
         log.debug("new workOrder");
         WorkOrder workOrder = new WorkOrder();
@@ -76,7 +80,7 @@ public class WorkOrderController extends BaseController {
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI, "workorder.created.message");
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI, new String[]{workOrder.getCode()});
 
-        return "redirect:/workOrder/edit" + w.getId();
+        return "redirect:/workOrder/addWorkOrderDetails/" + w.getId();
     }
 
     @RequestMapping("/listOrders/{areaId}")
@@ -94,14 +98,49 @@ public class WorkOrderController extends BaseController {
     @RequestMapping("/addBatch")
     public String addBatch(HttpServletRequest request, @Valid Batch batch, BindingResult bindingResult, Errors errors, Model model, RedirectAttributes redirectAttributes) {
         log.debug("addBatchs");
-//save batch and redirect to addWorkOrderDetails
-        return "";
+        //
+        WorkOrder workOrder = workOrderService.getById(batch.getWorkOrder().getId());
+        if (bindingResult.hasErrors()) {
+            log.error("Error detected in batch form...");
+            model.addAttribute(Constants.WORK_ORDER_UI, workOrder);
+            model.addAttribute(Constants.BATCH_UI, batch);
+            return "/workOrder/details";
+        }
+        //save batch
+        batch.setWorkOrder(workOrder);
+        batchService.save(batch);
+        //redirect to addWorkOrderDetails
+        return "redirect:/workOrder/addWorkOrderDetails/" + batch.getWorkOrder().getId();
     }
 
-    @RequestMapping("/addWorkOrderDetails")
-    public String addWorkOrderDetails(HttpServletRequest request, @Valid Batch batch, BindingResult bindingResult, Errors errors, Model model, RedirectAttributes redirectAttributes) {
+    @RequestMapping("/removeBatch/{batchId}")
+    public String delete(@PathVariable Long batchId, Model model, RedirectAttributes redirectAttributes) {
+        log.debug("delete Batchs...");
+        Batch batch=batchService.getById(batchId);
+        try {
+            String batchDescription = batchService.delete(batchId);
+            redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI,
+                    "batch.deleted.message");
+            redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI,
+                    new String[]{batchDescription});
+            log.debug("Batch: {} deleted", batchDescription);
+        } catch (Exception e) {
+        }
+
+        return "redirect:/workOrder/addWorkOrderDetails/" + batch.getWorkOrder().getId();
+    }
+
+    @RequestMapping("/addWorkOrderDetails/{id}")
+    public String addWorkOrderDetails(@PathVariable Long id, Model model) {
         log.debug("addBatchs");
-        //load workOrder and batch list
-        return "";
+
+        WorkOrder workOrder = workOrderService.getById(id);
+        Batch batch = new Batch();
+        batch.setWorkOrder(workOrder);
+
+        model.addAttribute(Constants.WORK_ORDER_UI, workOrder);
+        model.addAttribute(Constants.BATCH_UI, batch);
+
+        return "/workOrder/details";
     }
 }
