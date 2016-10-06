@@ -109,14 +109,17 @@ public class WorkOrderController extends BaseController {
         //save batch
         batch.setWorkOrder(workOrder);
         batchService.save(batch);
+        //
+        redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI, "batch.created.message");
+        redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI, new String[]{batch.getDescription()});
         //redirect to addWorkOrderDetails
         return "redirect:/workOrder/addWorkOrderDetails/" + batch.getWorkOrder().getId();
     }
 
     @RequestMapping("/removeBatch/{batchId}")
-    public String delete(@PathVariable Long batchId, Model model, RedirectAttributes redirectAttributes) {
+    public String removeBatch(@PathVariable Long batchId, Model model, RedirectAttributes redirectAttributes) {
         log.debug("delete Batchs...");
-        Batch batch=batchService.getById(batchId);
+        Batch batch = batchService.getById(batchId);
         try {
             String batchDescription = batchService.delete(batchId);
             redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI,
@@ -126,9 +129,48 @@ public class WorkOrderController extends BaseController {
             log.debug("Batch: {} deleted", batchDescription);
         } catch (Exception e) {
         }
+        
+        redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI, "batch.deleted.message");
+        redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI, new String[]{batch.getDescription()});
 
         return "redirect:/workOrder/addWorkOrderDetails/" + batch.getWorkOrder().getId();
     }
+
+    @RequestMapping("/editBatch/{batchId}")
+    public String editBatch(@PathVariable Long batchId, Model model) {
+        log.debug("edit Batch...");
+        Batch batch = batchService.getById(batchId);
+
+        model.addAttribute(Constants.WORK_ORDER_UI, batch.getWorkOrder());
+        model.addAttribute(Constants.BATCH_UI, batch);
+
+        return "/workOrder/details";
+    }
+    
+    @RequestMapping("/updateBatch")
+    public String updateBatch(HttpServletRequest request, @Valid Batch batch, BindingResult bindingResult, Errors errors, Model model, RedirectAttributes redirectAttributes) {
+    log.debug("addBatchs");
+        //
+        WorkOrder workOrder = workOrderService.getById(batch.getWorkOrder().getId());
+        if (bindingResult.hasErrors()) {
+            log.error("Error detected in batch form...");
+            model.addAttribute(Constants.WORK_ORDER_UI, workOrder);
+            model.addAttribute(Constants.BATCH_UI, batch);
+            return "/workOrder/details";
+        }
+        
+        //save batch
+        batch.setWorkOrder(workOrder);
+        batchService.update(batch);
+        
+        redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI, "batch.updated.message");
+        redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI, new String[]{batch.getDescription()});
+        
+        //redirect to addWorkOrderDetails
+        return "redirect:/workOrder/addWorkOrderDetails/" + batch.getWorkOrder().getId();
+    }
+    
+    
 
     @RequestMapping("/addWorkOrderDetails/{id}")
     public String addWorkOrderDetails(@PathVariable Long id, Model model) {

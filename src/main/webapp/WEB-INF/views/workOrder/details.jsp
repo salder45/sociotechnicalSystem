@@ -27,9 +27,27 @@
                         </strong>
                     </div>
                 </c:if>
-                <c:url var="action" value="/workOrder/addBatch"/>
+                <c:choose>
+                    <c:when test="${batch.id!=null}">
+                        <c:url var="action" value="/workOrder/updateBatch"/>
+                    </c:when>
+                    <c:otherwise>
+                        <c:url var="action" value="/workOrder/addBatch"/>
+                    </c:otherwise>
+                </c:choose>
                 <form:form modelAttribute="batch" method="post" action="${action}" class="form-horizontal">
                     <form:hidden path="workOrder.id" />
+                    <c:choose>
+                        <c:when test="${batch.id!=null}">
+                            <form:hidden path="id" />
+                            <form:hidden path="version" />
+                            <form:hidden path="dateCreated" />
+                            <form:hidden path="lastUpdated" />
+                            <form:hidden path="status" />
+                        </c:when>
+                        <c:otherwise>
+                        </c:otherwise>
+                    </c:choose>
                     <div class="form-group">
                         <label class="col-sm-2 control-label"><s:message code="area.code.label"/>:</label> 
                         <div class="col-sm-10">
@@ -102,13 +120,27 @@
                         </div>
                     </s:bind>
 
-                    <div class="form-group">
-                        <div class="col-xs-10">
-                            <form:button id="editBtn" name="editBtn" class="btn btn-primary btn-large" value="edit">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> <s:message code="save.label"/>
-                            </form:button>
-                        </div>
-                    </div>
+                    <c:choose>
+                        <c:when test="${batch.id!=null}">
+                            <div class="form-group">
+                                <div class="col-xs-10">
+                                    <form:button id="editBtn" name="editBtn" class="btn btn-primary btn-large" value="edit">
+                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> <s:message code="update.label"/>
+                                    </form:button>
+                                </div>
+                            </div>
+                        </c:when>
+                        <c:otherwise>                            
+                            <div class="form-group">
+                                <div class="col-xs-10">
+                                    <form:button id="editBtn" name="editBtn" class="btn btn-primary btn-large" value="edit">
+                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> <s:message code="save.label"/>
+                                    </form:button>
+                                </div>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
+
 
                     <legend><s:message code="batch.list.label"/></legend>
                     <table id="table-batchs" class="table table-striped table-hover">
@@ -119,6 +151,9 @@
                                 <th><s:message code="batch.draw.exist.label"/></th>
                                 <th><s:message code="batch.sharpening.label"/></th>
                                 <th><s:message code="batch.covering.label"/></th>
+                                <th>
+                                    <s:message code="edit.label"/> <s:message code="batch.label"/>
+                                </th>
                                 <th>
                                     <s:message code="delete.label"/> <s:message code="batch.label"/>
                                 </th>
@@ -132,6 +167,7 @@
                                     <th>${oneBatch.existDraw}</th>
                                     <th>${oneBatch.sharpening}</th>
                                     <th>${oneBatch.coveringRequired}</th>
+                                    <td><a class="btn btn-default" href="<c:url value="/workOrder/editBatch/${oneBatch.id}"/>"><s:message code="edit.label"/> <span class="glyphicon glyphicon-edit"></span></a></td>
                                     <td><a class="btn btn-default" href="<c:url value="/workOrder/removeBatch/${oneBatch.id}"/>" onclick="return confirm('<s:message code="confirm.delete.message" />');" ><s:message code="delete.label"/> <span class="glyphicon glyphicon-trash"></span></a></td>
                                 </tr>
                             </c:forEach>
