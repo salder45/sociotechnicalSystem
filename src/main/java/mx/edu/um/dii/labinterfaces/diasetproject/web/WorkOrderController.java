@@ -21,11 +21,13 @@ import mx.edu.um.dii.labinterfaces.diasetproject.service.SellerService;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.WorkOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
@@ -83,6 +85,56 @@ public class WorkOrderController extends BaseController {
         return "redirect:/workOrder/addWorkOrderDetails/" + w.getId();
     }
 
+    @RequestMapping("/edit/{id}")
+    public String edit(@PathVariable Long id, Model model) {
+        log.debug("edit WorkOrder...");
+        WorkOrder workOrder = workOrderService.getById(id);
+        //set select data
+        List<Seller> sellersList = sellerService.getAll();
+        List<Customer> customerList = customerService.getAll();
+        //
+        model.addAttribute(Constants.WORK_ORDER_UI, workOrder);
+        model.addAttribute(Constants.SELLER_LIST_UI, sellersList);
+        model.addAttribute(Constants.CUSTOMER_LIST_UI, customerList);
+        //
+        return "/workOrder/edit";
+    }
+    
+    @Transactional
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String update(HttpServletRequest request, @Valid WorkOrder workOrder, BindingResult bindingResult, Errors errors, Model model, RedirectAttributes redirectAttributes) {
+        log.debug("Update user...");
+        if (bindingResult.hasErrors()) {
+            log.error("Error detected in workOrder form...");
+            return "/workOrder/edit";
+        }
+        WorkOrder w=workOrderService.update(workOrder);
+        
+        redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI,
+                "workorder.updated.message");
+        redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI,
+                new String[]{w.getCode()});
+        //
+        return "redirect:/workOrder/addWorkOrderDetails/" + workOrder.getId();
+    }
+    
+    @RequestMapping("/delete/{id}")
+    public String delete(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        log.debug("delete WorkOrder...");
+        try {
+            String orderCode = workOrderService.delete(id);
+            redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI,
+                    "workorder.deleted.message");
+            redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI,
+                    new String[]{orderCode});
+            log.debug("User: {} deleted", orderCode);
+        } catch (Exception e) {
+        }
+        //TODO check this redirect
+        return "redirect:/workOrder/new";
+    }
+    
+
     @RequestMapping("/listOrders/{areaId}")
     public String listSellingOrders(@PathVariable Long areaId, Model model) {
         //Area
@@ -129,7 +181,7 @@ public class WorkOrderController extends BaseController {
             log.debug("Batch: {} deleted", batchDescription);
         } catch (Exception e) {
         }
-        
+
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI, "batch.deleted.message");
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI, new String[]{batch.getDescription()});
 
@@ -146,10 +198,10 @@ public class WorkOrderController extends BaseController {
 
         return "/workOrder/details";
     }
-    
+
     @RequestMapping("/updateBatch")
     public String updateBatch(HttpServletRequest request, @Valid Batch batch, BindingResult bindingResult, Errors errors, Model model, RedirectAttributes redirectAttributes) {
-    log.debug("addBatchs");
+        log.debug("addBatchs");
         //
         WorkOrder workOrder = workOrderService.getById(batch.getWorkOrder().getId());
         if (bindingResult.hasErrors()) {
@@ -158,19 +210,17 @@ public class WorkOrderController extends BaseController {
             model.addAttribute(Constants.BATCH_UI, batch);
             return "/workOrder/details";
         }
-        
+
         //save batch
         batch.setWorkOrder(workOrder);
         batchService.update(batch);
-        
+
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI, "batch.updated.message");
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI, new String[]{batch.getDescription()});
-        
+
         //redirect to addWorkOrderDetails
         return "redirect:/workOrder/addWorkOrderDetails/" + batch.getWorkOrder().getId();
     }
-    
-    
 
     @RequestMapping("/addWorkOrderDetails/{id}")
     public String addWorkOrderDetails(@PathVariable Long id, Model model) {

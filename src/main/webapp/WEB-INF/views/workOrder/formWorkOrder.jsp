@@ -31,6 +31,14 @@
             <c:when test="${param.type=='NEW'}">
             </c:when>
             <c:otherwise>
+                <form:hidden path="id" />
+                <form:hidden path="version" />
+                <form:hidden path="code" />
+                <form:hidden path="dateCreated" />
+                <form:hidden path="lastUpdated" />
+                <form:hidden path="status" />
+                <form:hidden path="estimatedReleaseDate" />
+                <form:hidden path="releaseDate" />
             </c:otherwise>
         </c:choose>
         <s:bind path="workOrder.seller.id">

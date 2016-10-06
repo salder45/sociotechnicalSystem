@@ -8,10 +8,12 @@ package mx.edu.um.dii.labinterfaces.diasetproject.service.impl;
 import java.util.List;
 import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.AreaDao;
+import mx.edu.um.dii.labinterfaces.diasetproject.dao.BatchDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.CustomerDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.SellerDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.WorkOrderDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Area;
+import mx.edu.um.dii.labinterfaces.diasetproject.model.Batch;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Customer;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Seller;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.WorkOrder;
@@ -30,15 +32,18 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
 
     @Autowired
     private WorkOrderDao workOrderDao;
-    
+
     @Autowired
     private SellerDao sellerDao;
-    
+
     @Autowired
     private CustomerDao customerDao;
-    
+
     @Autowired
     private AreaDao areaDao;
+
+    @Autowired
+    private BatchDao batchDao;
 
     @Override
     public List<WorkOrder> getAll() {
@@ -62,16 +67,16 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
         workOrder.setStatus(Constants.STATUS_ACTIVE);
         workOrder.setAreaActual(areaDao.getByName(Constants.DEFAULT_AREA_SELLING));
         //Customer
-        if(workOrder.getCustomer()!=null&&workOrder.getCustomer().getId()!=null&&workOrder.getCustomer().getId()!=0L){
-            Customer customer=customerDao.get(workOrder.getCustomer().getId());
+        if (workOrder.getCustomer() != null && workOrder.getCustomer().getId() != null && workOrder.getCustomer().getId() != 0L) {
+            Customer customer = customerDao.get(workOrder.getCustomer().getId());
             workOrder.setCustomer(customer);
         }
         //Seller
-        if(workOrder.getSeller()!=null&&workOrder.getSeller().getId()!=null&&workOrder.getSeller().getId()!=0L){
-            Seller seller=sellerDao.get(workOrder.getSeller().getId());
+        if (workOrder.getSeller() != null && workOrder.getSeller().getId() != null && workOrder.getSeller().getId() != 0L) {
+            Seller seller = sellerDao.get(workOrder.getSeller().getId());
             workOrder.setSeller(seller);
         }
-                
+
         return workOrderDao.save(workOrder);
     }
 
@@ -82,20 +87,34 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
 
     @Override
     public WorkOrder update(WorkOrder workOrder) {
+        //Customer
+        if (workOrder.getCustomer() != null && workOrder.getCustomer().getId() != null && workOrder.getCustomer().getId() != 0L) {
+            Customer customer = customerDao.get(workOrder.getCustomer().getId());
+            workOrder.setCustomer(customer);
+        }
+        //Seller
+        if (workOrder.getSeller() != null && workOrder.getSeller().getId() != null && workOrder.getSeller().getId() != 0L) {
+            Seller seller = sellerDao.get(workOrder.getSeller().getId());
+            workOrder.setSeller(seller);
+        }
         return workOrderDao.update(workOrder);
     }
 
     @Override
     public String delete(Long id) {
+        WorkOrder workOrder = getById(id);
+        for(Batch batch:workOrder.getBatchs()){
+            batchDao.delete(batch.getId());
+        }
         return workOrderDao.delete(id);
     }
 
     @Override
     public List<WorkOrder> getByArea(Long areaId) {
-        Area area=new Area();
+        Area area = new Area();
         area.setId(areaId);
         //
-        WorkOrder workOrder=new WorkOrder();
+        WorkOrder workOrder = new WorkOrder();
         workOrder.setAreaActual(area);
         //
         return workOrderDao.get(workOrder);
