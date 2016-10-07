@@ -51,6 +51,12 @@ public class WorkOrderDaoHibernate extends BaseDao implements WorkOrderDao {
             criteriaList.add(predicate);
         }
         
+        if(workOrder.getAreaActual()!=null&&workOrder.getAreaActual().getId()!=null&&workOrder.getAreaActual().getId()!=0L){
+            log.debug("Filter by area");
+            Predicate predicate=criteriaBuilder.equal(workOrderRoot.get("areaActual").get("Id"), workOrder.getAreaActual().getId());
+            criteriaList.add(predicate);
+        }
+        
         //convert list to predicate array
         Predicate[] criteriaArray=new Predicate[criteriaList.size()];
         criteriaList.toArray(criteriaArray);

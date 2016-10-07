@@ -136,13 +136,14 @@ public class WorkOrderController extends BaseController {
     
 
     @RequestMapping("/listOrders/{areaId}")
-    public String listSellingOrders(@PathVariable Long areaId, Model model) {
+    public String listOrders(@PathVariable Long areaId, Model model) {
         //Area
         Area area = areaService.get(areaId);
         WorkOrder order = new WorkOrder();
         order.setAreaActual(area);
         //
-        List<WorkOrder> workOrdersList;
+        List<WorkOrder> workOrdersList=workOrderService.getByArea(areaId);
+        model.addAttribute(Constants.WORK_ORDER_LIST_UI, workOrdersList);
 
         return "/workOrder/list";
     }
