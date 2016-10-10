@@ -106,5 +106,6 @@ public class Constants {
     public static final String STATUS_IDLE = "ID";
     public static final String STATUS_ACTIVE = "A";
     public static final String STATUS_INACTIVE = "I";
+    public static final String STATUS_CLOSED = "C";
     public static final String EMPTY_STRING = "";
 }

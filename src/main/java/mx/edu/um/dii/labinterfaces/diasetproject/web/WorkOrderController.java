@@ -84,6 +84,16 @@ public class WorkOrderController extends BaseController {
 
         return "redirect:/workOrder/addWorkOrderDetails/" + w.getId();
     }
+    
+    @RequestMapping("/close/{id}")
+    public String close(@PathVariable Long id, Model model) {
+        WorkOrder workOrder=workOrderService.getById(id);
+        Long areaId=workOrder.getAreaActual().getId();
+        
+        workOrderService.close(workOrder);
+        
+        return "redirect:/workOrder/listOrders/"+areaId;
+    }
 
     @RequestMapping("/edit/{id}")
     public String edit(@PathVariable Long id, Model model) {

@@ -19,6 +19,7 @@ import mx.edu.um.dii.labinterfaces.diasetproject.model.Customer;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Seller;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.WorkOrder;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.BaseService;
+import mx.edu.um.dii.labinterfaces.diasetproject.service.TimeStoredService;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.WorkOrderService;
 import mx.edu.um.dii.labinterfaces.diasetproject.utils.ProjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,9 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
 
     @Autowired
     private BatchDao batchDao;
+    
+    @Autowired
+    private TimeStoredService timeStoredService;
 
     @Override
     public List<WorkOrder> getAll() {
@@ -77,8 +81,21 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
             Seller seller = sellerDao.get(workOrder.getSeller().getId());
             workOrder.setSeller(seller);
         }
+        //open timeStored
+        
+        workOrderDao.save(workOrder);
 
-        return workOrderDao.save(workOrder);
+        return workOrder;
+    }
+
+    @Override
+    public WorkOrder close(WorkOrder workOrder) {
+        workOrder=getById(workOrder.getId());
+        workOrder.setStatus(Constants.STATUS_CLOSED);
+        workOrder.setReleaseDate(new Date());
+        update(workOrder);
+        //close TimeStored
+        return workOrder;
     }
 
     @Override
@@ -104,7 +121,7 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
     @Override
     public String delete(Long id) {
         WorkOrder workOrder = getById(id);
-        for(Batch batch:workOrder.getBatchs()){
+        for (Batch batch : workOrder.getBatchs()) {
             batchDao.delete(batch.getId());
         }
         return workOrderDao.delete(id);
@@ -123,19 +140,19 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
 
     @Override
     public WorkOrder setEstimatedReleaseDate(Date releaseDate, Long workOrderId) {
-        WorkOrder workOrder=getById(workOrderId);
+        WorkOrder workOrder = getById(workOrderId);
         workOrder.setEstimatedReleaseDate(releaseDate);
-        workOrder=update(workOrder);
+        workOrder = update(workOrder);
         return workOrder;
     }
 
     @Override
     public WorkOrder sendToArea(Long newAreaId, Long workOrderId) {
-        Area area=areaDao.get(newAreaId);
-        WorkOrder workOrder=getById(workOrderId);
+        Area area = areaDao.get(newAreaId);
+        WorkOrder workOrder = getById(workOrderId);
         workOrder.setAreaActual(area);
         //createdTimeStoredArea
-        workOrder=update(workOrder);
+        workOrder = update(workOrder);
         return workOrder;
     }
 
