@@ -144,6 +144,7 @@ public class WorkOrderController extends BaseController {
         //
         List<WorkOrder> workOrdersList=workOrderService.getByArea(areaId);
         model.addAttribute(Constants.WORK_ORDER_LIST_UI, workOrdersList);
+        model.addAttribute(Constants.AREA_UI, area);
 
         return "/workOrder/list";
     }

@@ -87,21 +87,55 @@
                         <sec:authorize access="hasRole('ROLE_SALES')">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><s:message code="area.sales.label"/> <span class="caret"></span></a>
+                                <ul class="dropdown-menu multi-level">
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#"><s:message code="seller.label"/></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a tabindex="-1" href="<c:url value="/seller/new"/>"><s:message code="seller.new.label"/></a></li>
+                                            <li><a tabindex="-1" href="<c:url value="/seller/list"/>"><s:message code="seller.list.label"/></a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#"><s:message code="customer.label"/></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a tabindex="-1" href="<c:url value="/customer/new"/>"><s:message code="customer.new.label"/></a></li>
+                                            <li><a tabindex="-1" href="<c:url value="/customer/list"/>"><s:message code="customer.list.label"/></a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a tabindex="-1" href="<c:url value="/workOrder/listOrders/1"/>"><s:message code="workorder.list.label"/></a>
+                                    </li>
+                                </ul>
                             </li>
                         </sec:authorize>
                         <sec:authorize access="hasRole('ROLE_PLANNING')">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><s:message code="area.planning.label"/> <span class="caret"></span></a>
+                                <ul class="dropdown-menu multi-level">
+                                    <li>
+                                        <a tabindex="-1" href="<c:url value="/workOrder/listOrders/2"/>"><s:message code="workorder.list.label"/></a>
+                                    </li>
+                                </ul>
                             </li>
                         </sec:authorize>
                         <sec:authorize access="hasRole('ROLE_PRODUCTION')">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><s:message code="area.production.label"/> <span class="caret"></span></a>
+                                <ul class="dropdown-menu multi-level">
+                                    <li>
+                                        <a tabindex="-1" href="<c:url value="/workOrder/listOrders/3"/>"><s:message code="workorder.list.label"/></a>
+                                    </li>
+                                </ul>
                             </li>
                         </sec:authorize>
                         <sec:authorize access="hasRole('ROLE_QUALITY')">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><s:message code="area.quality.label"/> <span class="caret"></span></a>
+                                <ul class="dropdown-menu multi-level">
+                                    <li>
+                                        <a tabindex="-1" href="<c:url value="/workOrder/listOrders/4"/>"><s:message code="workorder.list.label"/></a>
+                                    </li>
+                                </ul>
                             </li>
                         </sec:authorize>
                         <!--In nav code must be <li></li>-->
