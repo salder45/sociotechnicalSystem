@@ -166,6 +166,7 @@ public class WorkOrderController extends BaseController {
             log.error("Error detected in workOrder form...");
             return "/workOrder/sendToArea";
         }
+        Long areaId=workOrder.getAreaActual().getId();
         workOrder=workOrderService.sendToArea(workOrder.getAreaActual().getId(), workOrder.getId());
         //messagesHere
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI,
@@ -173,7 +174,7 @@ public class WorkOrderController extends BaseController {
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI,
                 new String[]{workOrder.getCode()});
         
-         return "redirect:/workOrder/listOrders/" + workOrder.getAreaActual().getId();
+         return "redirect:/workOrder/listOrders/" + areaId;
     }
 
     @RequestMapping("/delete/{id}")

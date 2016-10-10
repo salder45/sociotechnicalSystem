@@ -108,6 +108,7 @@
     <content>
         <script type="text/javascript">
             $(document).ready(function () {
+                $('#estimatedReleaseDate').datetimepicker({format: "DD/MM/YYYY hh:mm"});
                 $('#table-workOrders').DataTable();
             });
         </script>

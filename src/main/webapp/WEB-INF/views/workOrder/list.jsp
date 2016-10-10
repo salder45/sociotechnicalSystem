@@ -52,6 +52,14 @@
                             <th><s:message code="workorder.pieces.label"/></th>
                             <th><s:message code="seller.label"/></th>
                             <th><s:message code="customer.label"/></th>
+                            <th><s:message code="send.label"/> <s:message code="workorder.label"/> </th>
+                                <sec:authorize access="hasRole('ROLE_PLANNING')">
+                                    <c:choose>
+                                        <c:when test="${area.name=='Planeacion'}">
+                                        <th><s:message code="send.label"/> <s:message code="workorder.label"/> </th>
+                                        </c:when>
+                                    </c:choose>
+                                </sec:authorize>
                         </tr>
                     </thead>
                     <tbody>
@@ -62,6 +70,14 @@
                                 <th>${workOrder.piecesNumber}</th>
                                 <th>${workOrder.seller.name}</th>
                                 <th>${workOrder.customer.name}</th>
+                                <th><a class="btn btn-default" href="<c:url value="/workOrder/sendWorkOrderToArea/${workOrder.id}"/>"><s:message code="send.label"/> <span class="glyphicon glyphicon-send"></span></a></th>
+                                        <sec:authorize access="hasRole('ROLE_PLANNING')">
+                                            <c:choose>
+                                                <c:when test="${area.name=='Planeacion'}">
+                                            <th><a class="btn btn-default" href="<c:url value="/workOrder/loadEstimatedReleaseDate/${workOrder.id}"/>"><s:message code="workorder.set.estimated.date.label"/> <span class="glyphicon glyphicon-calendar"></span></a></th>
+                                                </c:when>
+                                            </c:choose>
+                                </sec:authorize>
                             </tr>
                         </c:forEach>
                     </tbody>

@@ -27,7 +27,7 @@
                         </strong>
                     </div>
                 </c:if>
-                <c:url var="action" value="/workOrder/sendToArea"/>
+                <c:url var="action" value="/workOrder/sendWorkOrder"/>
                 <form:form modelAttribute="workOrder" method="post" action="${action}" class="form-horizontal">
                     <form:hidden path="id" />
                     <div class="form-group">
@@ -90,7 +90,7 @@
                             <s:message code="area.label" var="areaLabel"/>
                             <label for="name" class="control-label col-xs-2">${areaLabel}</label>    
                             <div class="col-xs-5">
-                                <form:select path="area.id" items="${areaList}" itemValue="id" itemLabel="name" class="form-control"/>
+                                <form:select path="areaActual.id" items="${areaList}" itemValue="id" itemLabel="name" class="form-control"/>
                             </div>                                
                         </div>
                     </s:bind>
