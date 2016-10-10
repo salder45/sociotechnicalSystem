@@ -29,6 +29,14 @@
                 </c:if>
                 <c:url var="action" value="/workOrder/sendWorkOrder"/>
                 <form:form modelAttribute="workOrder" method="post" action="${action}" class="form-horizontal">
+                    <form:errors path="*">
+                        <c:forEach items="${messages}" var="message">
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <span class="glyphicon glyphicon-alert"></span> <strong>${message}</strong>
+                            </div>
+                        </c:forEach>                        
+                    </form:errors>
                     <form:hidden path="id" />
                     <div class="form-group">
                         <label class="col-sm-2 control-label"><s:message code="area.code.label"/>:</label> 

@@ -133,6 +133,8 @@ public class WorkOrderController extends BaseController {
         log.debug("Set Release Date...");
         if (bindingResult.hasErrors()) {
             log.error("Error detected in workOrder form...");
+            model.addAttribute(Constants.WORK_ORDER_UI, workOrder);
+
             return "/workOrder/setReleaseDate";
         }
 
@@ -145,36 +147,41 @@ public class WorkOrderController extends BaseController {
         //
         return "redirect:/workOrder/listOrders/" + workOrder.getAreaActual().getId();
     }
-    
+
     @RequestMapping("/sendWorkOrderToArea/{id}")
     public String loadSendToAnotherArea(@PathVariable Long id, Model model) {
         log.debug("loadSendToAnotherArea WorkOrder...");
         WorkOrder workOrder = workOrderService.getById(id);
-        List<Area> areasList=areaService.getAll();
+        List<Area> areasList = areaService.getAll();
         //
         model.addAttribute(Constants.WORK_ORDER_UI, workOrder);
         model.addAttribute(Constants.AREA_LIST_UI, areasList);
-        
+
         return "/workOrder/sendToArea";
     }
-    
+
     @Transactional
     @RequestMapping(value = "/sendWorkOrder", method = RequestMethod.POST)
     public String sendWorkOrder(HttpServletRequest request, @Valid WorkOrder workOrder, BindingResult bindingResult, Errors errors, Model model, RedirectAttributes redirectAttributes) {
         log.debug("Send Work Order...");
+        WorkOrder w = workOrderService.getById(workOrder.getId());
+        Long areaId = w.getAreaActual().getId();
         if (bindingResult.hasErrors()) {
             log.error("Error detected in workOrder form...");
+            List<Area> areasList = areaService.getAll();
+            //
+            model.addAttribute(Constants.WORK_ORDER_UI, workOrder);
+            model.addAttribute(Constants.AREA_LIST_UI, areasList);
             return "/workOrder/sendToArea";
         }
-        Long areaId=workOrder.getAreaActual().getId();
-        workOrder=workOrderService.sendToArea(workOrder.getAreaActual().getId(), workOrder.getId());
+        workOrder = workOrderService.sendToArea(workOrder.getAreaActual().getId(), workOrder.getId());
         //messagesHere
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI,
                 "workorder.sent.message");
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI,
                 new String[]{workOrder.getCode()});
-        
-         return "redirect:/workOrder/listOrders/" + areaId;
+
+        return "redirect:/workOrder/listOrders/" + areaId;
     }
 
     @RequestMapping("/delete/{id}")

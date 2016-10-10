@@ -29,7 +29,21 @@
                 </c:if>
                 <c:url var="action" value="/workOrder/setEstimatedReleaseDate"/>
                 <form:form modelAttribute="workOrder" method="post" action="${action}" class="form-horizontal">
+                    <form:errors path="*">
+                        <c:forEach items="${messages}" var="message">
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <span class="glyphicon glyphicon-alert"></span> <strong>${message}</strong>
+                            </div>
+                        </c:forEach>                        
+                    </form:errors>
                     <form:hidden path="id" />
+                    <form:hidden path="version" />
+                    <form:hidden path="code" />
+                    <form:hidden path="dateCreated" />
+                    <form:hidden path="lastUpdated" />
+                    <form:hidden path="status" />
+                    <form:hidden path="releaseDate" />
                     <div class="form-group">
                         <label class="col-sm-2 control-label"><s:message code="area.code.label"/>:</label> 
                         <div class="col-sm-10">
@@ -108,7 +122,7 @@
     <content>
         <script type="text/javascript">
             $(document).ready(function () {
-                $('#estimatedReleaseDate').datetimepicker({format: "DD/MM/YYYY hh:mm"});
+                $('#estimatedReleaseDate').datetimepicker({format: "MM/DD/YYYY hh:mm"});
                 $('#table-workOrders').DataTable();
             });
         </script>
