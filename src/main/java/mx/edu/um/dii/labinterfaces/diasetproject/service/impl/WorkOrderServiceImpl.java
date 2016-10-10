@@ -5,6 +5,7 @@
  */
 package mx.edu.um.dii.labinterfaces.diasetproject.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.AreaDao;
@@ -118,6 +119,14 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
         workOrder.setAreaActual(area);
         //
         return workOrderDao.get(workOrder);
+    }
+
+    @Override
+    public WorkOrder setEstimatedReleaseDate(Date releaseDate, Long workOrderId) {
+        WorkOrder workOrder=getById(workOrderId);
+        workOrder.setEstimatedReleaseDate(releaseDate);
+        workOrder=update(workOrder);
+        return workOrder;
     }
 
 }

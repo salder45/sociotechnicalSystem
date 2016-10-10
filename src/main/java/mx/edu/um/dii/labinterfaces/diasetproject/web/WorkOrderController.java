@@ -99,17 +99,17 @@ public class WorkOrderController extends BaseController {
         //
         return "/workOrder/edit";
     }
-    
+
     @Transactional
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String update(HttpServletRequest request, @Valid WorkOrder workOrder, BindingResult bindingResult, Errors errors, Model model, RedirectAttributes redirectAttributes) {
-        log.debug("Update user...");
+        log.debug("Update workOrder...");
         if (bindingResult.hasErrors()) {
             log.error("Error detected in workOrder form...");
             return "/workOrder/edit";
         }
-        WorkOrder w=workOrderService.update(workOrder);
-        
+        WorkOrder w = workOrderService.update(workOrder);
+
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI,
                 "workorder.updated.message");
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI,
@@ -117,7 +117,35 @@ public class WorkOrderController extends BaseController {
         //
         return "redirect:/workOrder/addWorkOrderDetails/" + workOrder.getId();
     }
-    
+
+    @RequestMapping("/loadEstimatedReleaseDate/{id}")
+    public String loadEstimatedReleaseDate(@PathVariable Long id, Model model) {
+        log.debug("loadEstimatedReleaseDate WorkOrder...");
+        WorkOrder workOrder = workOrderService.getById(id);
+        //
+        model.addAttribute(Constants.WORK_ORDER_UI, workOrder);
+        return "/workOrder/setReleaseDate";
+    }
+
+    @Transactional
+    @RequestMapping(value = "/setEstimatedReleaseDate", method = RequestMethod.POST)
+    public String setEstimatedReleaseDate(HttpServletRequest request, @Valid WorkOrder workOrder, BindingResult bindingResult, Errors errors, Model model, RedirectAttributes redirectAttributes) {
+        log.debug("Set Release Date...");
+        if (bindingResult.hasErrors()) {
+            log.error("Error detected in workOrder form...");
+            return "/workOrder/edit";
+        }
+
+        workOrder = workOrderService.setEstimatedReleaseDate(workOrder.getEstimatedReleaseDate(), workOrder.getId());
+        //set message
+        redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI,
+                "workorder.updated.message");
+        redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI,
+                new String[]{workOrder.getCode()});
+        //
+        return "redirect:/workOrder/listOrders/" + workOrder.getAreaActual().getId();
+    }
+
     @RequestMapping("/delete/{id}")
     public String delete(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
         log.debug("delete WorkOrder...");
@@ -133,7 +161,6 @@ public class WorkOrderController extends BaseController {
         //TODO check this redirect
         return "redirect:/workOrder/new";
     }
-    
 
     @RequestMapping("/listOrders/{areaId}")
     public String listOrders(@PathVariable Long areaId, Model model) {
@@ -142,7 +169,7 @@ public class WorkOrderController extends BaseController {
         WorkOrder order = new WorkOrder();
         order.setAreaActual(area);
         //
-        List<WorkOrder> workOrdersList=workOrderService.getByArea(areaId);
+        List<WorkOrder> workOrdersList = workOrderService.getByArea(areaId);
         model.addAttribute(Constants.WORK_ORDER_LIST_UI, workOrdersList);
         model.addAttribute(Constants.AREA_UI, area);
 

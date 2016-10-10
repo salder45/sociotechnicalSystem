@@ -5,6 +5,7 @@
  */
 package mx.edu.um.dii.labinterfaces.diasetproject.service;
 
+import java.util.Date;
 import java.util.List;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.WorkOrder;
 
@@ -21,4 +22,5 @@ public interface WorkOrderService {
     public WorkOrder save(WorkOrder workOrder);
     public WorkOrder update(WorkOrder workOrder);
     public String delete(Long id);
+    public WorkOrder setEstimatedReleaseDate(Date releaseDate,Long workOrderId);
 }
