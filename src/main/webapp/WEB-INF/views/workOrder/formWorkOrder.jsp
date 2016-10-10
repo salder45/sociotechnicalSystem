@@ -59,6 +59,15 @@
                 </div>                                
             </div>
         </s:bind>
+        <s:bind path="workOrder.piecesNumber">
+            <div class="form-group">
+                <s:message code="workorder.pieces.label" var="piecesLabel"/>
+                <label for="estimatedReleaseDate" class="control-label col-xs-2">${piecesLabel}</label>    
+                <div class="col-xs-5">
+                    <form:input path="piecesNumber" class="form-control" placeholder="${piecesLabel}"/>
+                </div>
+            </div>
+        </s:bind>  
     </fieldset>
     <c:choose>
         <c:when test="${param.type=='NEW'}">

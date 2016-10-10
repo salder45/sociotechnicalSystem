@@ -133,7 +133,7 @@ public class WorkOrderController extends BaseController {
         log.debug("Set Release Date...");
         if (bindingResult.hasErrors()) {
             log.error("Error detected in workOrder form...");
-            return "/workOrder/edit";
+            return "/workOrder/setReleaseDate";
         }
 
         workOrder = workOrderService.setEstimatedReleaseDate(workOrder.getEstimatedReleaseDate(), workOrder.getId());
@@ -144,6 +144,36 @@ public class WorkOrderController extends BaseController {
                 new String[]{workOrder.getCode()});
         //
         return "redirect:/workOrder/listOrders/" + workOrder.getAreaActual().getId();
+    }
+    
+    @RequestMapping("/sendWorkOrderToArea/{id}")
+    public String loadSendToAnotherArea(@PathVariable Long id, Model model) {
+        log.debug("loadSendToAnotherArea WorkOrder...");
+        WorkOrder workOrder = workOrderService.getById(id);
+        List<Area> areasList=areaService.getAll();
+        //
+        model.addAttribute(Constants.WORK_ORDER_UI, workOrder);
+        model.addAttribute(Constants.AREA_LIST_UI, areasList);
+        
+        return "/workOrder/sendToArea";
+    }
+    
+    @Transactional
+    @RequestMapping(value = "/sendWorkOrder", method = RequestMethod.POST)
+    public String sendWorkOrder(HttpServletRequest request, @Valid WorkOrder workOrder, BindingResult bindingResult, Errors errors, Model model, RedirectAttributes redirectAttributes) {
+        log.debug("Send Work Order...");
+        if (bindingResult.hasErrors()) {
+            log.error("Error detected in workOrder form...");
+            return "/workOrder/sendToArea";
+        }
+        workOrder=workOrderService.sendToArea(workOrder.getAreaActual().getId(), workOrder.getId());
+        //messagesHere
+        redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI,
+                "workorder.sent.message");
+        redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI,
+                new String[]{workOrder.getCode()});
+        
+         return "redirect:/workOrder/listOrders/" + workOrder.getAreaActual().getId();
     }
 
     @RequestMapping("/delete/{id}")

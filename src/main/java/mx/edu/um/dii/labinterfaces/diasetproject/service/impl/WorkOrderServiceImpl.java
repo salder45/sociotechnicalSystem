@@ -129,4 +129,14 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
         return workOrder;
     }
 
+    @Override
+    public WorkOrder sendToArea(Long newAreaId, Long workOrderId) {
+        Area area=areaDao.get(newAreaId);
+        WorkOrder workOrder=getById(workOrderId);
+        workOrder.setAreaActual(area);
+        //createdTimeStoredArea
+        workOrder=update(workOrder);
+        return workOrder;
+    }
+
 }

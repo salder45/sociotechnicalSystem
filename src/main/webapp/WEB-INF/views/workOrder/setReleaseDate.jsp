@@ -55,7 +55,7 @@
                         </div>
                     </div>
                     <legend><s:message code="batch.list.label"/></legend>
-                    <table id="table-batchs" class="table table-striped table-hover">
+                    <table id="table-workOrders" class="table table-striped table-hover">
                         <thead>
                             <tr>
                                 <th><s:message code="area.description.label"/></th>
@@ -85,15 +85,15 @@
                             </c:forEach>
                         </tbody>
                     </table>
-                    <s:bind path="workOrder.piecesNumber">
+                    <s:bind path="workOrder.estimatedReleaseDate">
                         <div class="form-group">
-                            <s:message code="workorder.pieces.label" var="piecesLabel"/>
-                            <label for="estimatedReleaseDate" class="control-label col-xs-2">${piecesLabel}</label>    
+                            <s:message code="workorder.estimated.date.label" var="releaseDateLabel"/>
+                            <label for="estimatedReleaseDate" class="control-label col-xs-2">${releaseDateLabel}</label>    
                             <div class="col-xs-5">
-                                <form:input path="piecesNumber" class="form-control" placeholder="${piecesLabel}"/>
+                                <form:input path="estimatedReleaseDate" class="form-control" placeholder="${releaseDateLabel}" id="estimatedReleaseDate"/>
                             </div>
                         </div>
-                    </s:bind>
+                    </s:bind>  
                     <div class="form-group">
                         <div class="col-xs-10">
                             <form:button id="saveBtn" name="saveBtn" class="btn btn-primary btn-large" value="send">
@@ -105,4 +105,11 @@
             </div><!--/.row-->
         </div><!--/.container-->
     </body>
+    <content>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#table-workOrders').DataTable();
+            });
+        </script>
+    </content>
 </html>

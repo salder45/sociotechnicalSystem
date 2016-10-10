@@ -23,4 +23,5 @@ public interface WorkOrderService {
     public WorkOrder update(WorkOrder workOrder);
     public String delete(Long id);
     public WorkOrder setEstimatedReleaseDate(Date releaseDate,Long workOrderId);
+    public WorkOrder sendToArea(Long newAreaId,Long workOrderId);
 }
