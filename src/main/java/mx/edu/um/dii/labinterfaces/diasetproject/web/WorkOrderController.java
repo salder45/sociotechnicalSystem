@@ -12,11 +12,13 @@ import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Area;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Batch;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Customer;
+import mx.edu.um.dii.labinterfaces.diasetproject.model.Machine;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Seller;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.WorkOrder;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.AreaService;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.BatchService;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.CustomerService;
+import mx.edu.um.dii.labinterfaces.diasetproject.service.MachineService;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.SellerService;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.WorkOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +55,9 @@ public class WorkOrderController extends BaseController {
     @Autowired
     private BatchService batchService;
 
+    @Autowired
+    private MachineService machineService;
+
     @RequestMapping("/new")
     public String newWorkOrder(Model model) {
         log.debug("new workOrder");
@@ -84,15 +89,15 @@ public class WorkOrderController extends BaseController {
 
         return "redirect:/workOrder/addWorkOrderDetails/" + w.getId();
     }
-    
+
     @RequestMapping("/close/{id}")
     public String close(@PathVariable Long id, Model model) {
-        WorkOrder workOrder=workOrderService.getById(id);
-        Long areaId=workOrder.getAreaActual().getId();
-        
+        WorkOrder workOrder = workOrderService.getById(id);
+        Long areaId = workOrder.getAreaActual().getId();
+
         workOrderService.close(workOrder);
-        
-        return "redirect:/workOrder/listOrders/"+areaId;
+
+        return "redirect:/workOrder/listOrders/" + areaId;
     }
 
     @RequestMapping("/edit/{id}")
@@ -311,5 +316,52 @@ public class WorkOrderController extends BaseController {
         model.addAttribute(Constants.BATCH_UI, batch);
 
         return "/workOrder/details";
+    }
+
+    @RequestMapping("/selectMachineToPutIn/{id}")
+    public String selectMachineToPutIn(@PathVariable Long id, Model model) {
+        log.debug("selectMachineToPutIn");
+        WorkOrder workOrder = workOrderService.getById(id);
+        List<Machine> machineList = machineService.getByArea(workOrder.getAreaActual().getId());
+
+        model.addAttribute(Constants.WORK_ORDER_UI, workOrder);
+        model.addAttribute(Constants.MACHINE_LIST_UI, machineList);
+
+        return "/workOrder/selectMachine";
+    }
+
+    @RequestMapping("/putInMachine")
+    public String putInMachine(HttpServletRequest request, @Valid WorkOrder workOrder, BindingResult bindingResult, Errors errors, Model model, RedirectAttributes redirectAttributes) {
+        log.debug("putInMachine Work Order...");
+        WorkOrder w = workOrderService.getById(workOrder.getId());
+        if (bindingResult.hasErrors()) {
+            log.error("Error detected in workOrder form...");
+            List<Machine> machineList = machineService.getByArea(workOrder.getAreaActual().getId());
+
+            model.addAttribute(Constants.WORK_ORDER_UI, workOrder);
+            model.addAttribute(Constants.MACHINE_LIST_UI, machineList);
+            return "/workOrder/selectMachine";
+        }
+        
+        workOrderService.setToMachine(workOrder.getMachineActual().getId(), workOrder.getId());
+        //
+        redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI, "workorder.process.message");
+        redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI, new String[]{w.getCode()});
+        //        
+        return "redirect:/workOrder/listOrders/" + w.getAreaActual().getId();
+    }
+
+    @RequestMapping("/pullOutMachine/{id}")
+    public String pullOutMachine(@PathVariable Long id,RedirectAttributes redirectAttributes) {
+        log.debug("pullOutMachine Work Order...");
+        
+        WorkOrder workOrder=workOrderService.getById(id);
+        
+        workOrderService.pullOutMachine(workOrder.getMachineActual().getId(), id);
+        //
+        redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI, "workorder.stopped.message");
+        redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI, new String[]{workOrder.getCode()});
+        
+        return "redirect:/workOrder/listOrders/" + workOrder.getAreaActual().getId();
     }
 }

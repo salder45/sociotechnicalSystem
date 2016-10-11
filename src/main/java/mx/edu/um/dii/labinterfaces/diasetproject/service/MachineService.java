@@ -18,6 +18,8 @@ public interface MachineService {
     public Machine getById(Long id);
     public Machine getByCode(String code);
     public Machine save(Machine machine);
+    public Machine setWorkingStatus(Machine machine);
+    public Machine setAvalaibleStatus(Machine machine);
     public Machine update(Machine machine);
     public String delete(Long id);
 }

@@ -16,9 +16,11 @@ import mx.edu.um.dii.labinterfaces.diasetproject.dao.WorkOrderDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Area;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Batch;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Customer;
+import mx.edu.um.dii.labinterfaces.diasetproject.model.Machine;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Seller;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.WorkOrder;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.BaseService;
+import mx.edu.um.dii.labinterfaces.diasetproject.service.MachineService;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.TimeStoredService;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.WorkOrderService;
 import mx.edu.um.dii.labinterfaces.diasetproject.utils.ProjectUtils;
@@ -46,9 +48,12 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
 
     @Autowired
     private BatchDao batchDao;
-    
+
     @Autowired
     private TimeStoredService timeStoredService;
+
+    @Autowired
+    private MachineService machineService;
 
     @Override
     public List<WorkOrder> getAll() {
@@ -82,7 +87,7 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
             workOrder.setSeller(seller);
         }
         //open timeStored
-        
+
         workOrderDao.save(workOrder);
 
         return workOrder;
@@ -90,7 +95,8 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
 
     @Override
     public WorkOrder close(WorkOrder workOrder) {
-        workOrder=getById(workOrder.getId());
+        workOrder = getById(workOrder.getId());
+        workOrder.setAreaActual(null);
         workOrder.setStatus(Constants.STATUS_CLOSED);
         workOrder.setReleaseDate(new Date());
         update(workOrder);
@@ -153,6 +159,36 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
         workOrder.setAreaActual(area);
         //createdTimeStoredArea
         workOrder = update(workOrder);
+        return workOrder;
+    }
+
+    @Override
+    public WorkOrder setToMachine(Long machineId, Long workOrderId) {
+        Machine machine = machineService.getById(machineId);
+        WorkOrder workOrder = getById(workOrderId);
+        //set machineActual at order
+        workOrder.setMachineActual(machine);
+        workOrder.setStatus(Constants.STATUS_WORKING_AT);
+        //set status working at machine
+        machineService.setWorkingStatus(machine);
+
+        update(workOrder);
+
+        return workOrder;
+    }
+
+    @Override
+    public WorkOrder pullOutMachine(Long machineId, Long workOrderId) {
+        Machine machine = machineService.getById(machineId);
+        WorkOrder workOrder = getById(workOrderId);
+        //set machineActual at order
+        workOrder.setMachineActual(null);
+        workOrder.setStatus(Constants.STATUS_ACTIVE);
+        //set status working at machine
+        machineService.setAvalaibleStatus(machine);
+
+        update(workOrder);
+
         return workOrder;
     }
 

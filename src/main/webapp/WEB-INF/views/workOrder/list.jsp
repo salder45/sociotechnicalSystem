@@ -60,6 +60,13 @@
                                         </c:when>
                                     </c:choose>
                                 </sec:authorize>
+                                <sec:authorize access="hasRole('ROLE_PRODUCTION')">
+                                    <c:choose>
+                                        <c:when test="${area.name=='Produccion'}">
+                                        <th><s:message code="area.production.label"/> <s:message code="workorder.label"/> </th>
+                                        </c:when>
+                                    </c:choose>
+                                </sec:authorize>
                         </tr>
                     </thead>
                     <tbody>
@@ -77,6 +84,22 @@
                                             <th><a class="btn btn-default" href="<c:url value="/workOrder/loadEstimatedReleaseDate/${workOrder.id}"/>"><s:message code="workorder.set.estimated.date.label"/> <span class="glyphicon glyphicon-calendar"></span></a></th>
                                                 </c:when>
                                             </c:choose>
+                                        </sec:authorize>
+                                        <sec:authorize access="hasRole('ROLE_PRODUCTION')">
+                                            <c:choose>
+                                                <c:when test="${area.name=='Produccion'}">
+                                            <!--CHECK IF ORDER IS BEING WORKING ON-->
+                                            <c:choose>
+                                                <c:when test="${workOrder.status=='W_AT'}">
+                                                    <!--CHECK IF ORDER IS BEING WORKING ON-->
+                                                    <th><a class="btn btn-default" href="<c:url value="/workOrder/pullOutMachine/${workOrder.id}"/>"><s:message code="processing.label"/> <span class="glyphicon glyphicon-stop"></span></a></th>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <th><a class="btn btn-default" href="<c:url value="/workOrder/selectMachineToPutIn/${workOrder.id}"/>"><s:message code="process.label"/> <span class="glyphicon glyphicon-play"></span></a></th>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:when>
+                                    </c:choose>
                                 </sec:authorize>
                             </tr>
                         </c:forEach>

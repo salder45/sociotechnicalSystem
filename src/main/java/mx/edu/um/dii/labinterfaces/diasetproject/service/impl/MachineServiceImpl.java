@@ -6,6 +6,7 @@
 package mx.edu.um.dii.labinterfaces.diasetproject.service.impl;
 
 import java.util.List;
+import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.AreaDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.MachineDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Area;
@@ -74,6 +75,22 @@ public class MachineServiceImpl extends BaseService implements MachineService{
         machine.setArea(area);
         
         return machineDao.getMachines(machine);
+    }
+
+    @Override
+    public Machine setWorkingStatus(Machine machine) {
+        machine.setStatus(Constants.STATUS_WORKING_AT);
+        update(machine);
+        
+        return machine;
+    }
+
+    @Override
+    public Machine setAvalaibleStatus(Machine machine) {
+        machine.setStatus(Constants.STATUS_IDLE);
+        update(machine);
+        
+        return machine;
     }
     
 }

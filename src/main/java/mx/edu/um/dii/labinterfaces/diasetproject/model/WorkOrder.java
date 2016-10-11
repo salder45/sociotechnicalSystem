@@ -67,6 +67,9 @@ public class WorkOrder implements Serializable{
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "area_id")
     private Area areaActual;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "machine_id")
+    private Machine machineActual;
     /*
     batchs
     */
@@ -271,6 +274,20 @@ public class WorkOrder implements Serializable{
      */
     public void setAreaActual(Area areaActual) {
         this.areaActual = areaActual;
+    }
+
+    /**
+     * @return the machineActual
+     */
+    public Machine getMachineActual() {
+        return machineActual;
+    }
+
+    /**
+     * @param machineActual the machineActual to set
+     */
+    public void setMachineActual(Machine machineActual) {
+        this.machineActual = machineActual;
     }
     
     @Override

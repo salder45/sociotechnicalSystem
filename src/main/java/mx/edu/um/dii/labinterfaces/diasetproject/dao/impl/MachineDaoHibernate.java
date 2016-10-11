@@ -85,7 +85,7 @@ public class MachineDaoHibernate extends BaseDao implements MachineDao {
         machine.setDateCreated(new Date());
         machine.setLastUpdated(new Date());
         //check where you can set the status
-        machine.setStatus(Constants.STATUS_ACTIVE);
+        machine.setStatus(Constants.STATUS_IDLE);
         //
         currentSession().save(machine);
         //
