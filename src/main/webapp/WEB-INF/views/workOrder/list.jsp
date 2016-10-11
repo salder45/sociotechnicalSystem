@@ -67,6 +67,13 @@
                                         </c:when>
                                     </c:choose>
                                 </sec:authorize>
+                                <sec:authorize access="hasRole('ROLE_QUALITY')">
+                                    <c:choose>
+                                        <c:when test="${area.name=='Calidad'}">
+                                        <th><s:message code="finish.label"/> <s:message code="workorder.label"/> </th>
+                                        </c:when>
+                                    </c:choose>
+                                </sec:authorize>
                         </tr>
                     </thead>
                     <tbody>
@@ -93,14 +100,21 @@
                                                 <c:when test="${workOrder.status=='W_AT'}">
                                                     <!--CHECK IF ORDER IS BEING WORKING ON-->
                                                     <th><a class="btn btn-default" href="<c:url value="/workOrder/pullOutMachine/${workOrder.id}"/>"><s:message code="processing.label"/> <span class="glyphicon glyphicon-stop"></span></a></th>
-                                                </c:when>
-                                                <c:otherwise>
+                                                        </c:when>
+                                                        <c:otherwise>
                                                     <th><a class="btn btn-default" href="<c:url value="/workOrder/selectMachineToPutIn/${workOrder.id}"/>"><s:message code="process.label"/> <span class="glyphicon glyphicon-play"></span></a></th>
-                                                </c:otherwise>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </c:when>
                                             </c:choose>
-                                        </c:when>
-                                    </c:choose>
-                                </sec:authorize>
+                                        </sec:authorize>
+                                        <sec:authorize access="hasRole('ROLE_QUALITY')">
+                                            <c:choose>
+                                                <c:when test="${area.name=='Calidad'}">
+                                            <th><a class="btn btn-default" href="<c:url value="/workOrder/close/${workOrder.id}"/>"><s:message code="finish.label"/> <span class="glyphicon glyphicon-lock"></span></a></th>
+                                                </c:when>
+                                            </c:choose>
+                                        </sec:authorize>
                             </tr>
                         </c:forEach>
                     </tbody>

@@ -91,11 +91,14 @@ public class WorkOrderController extends BaseController {
     }
 
     @RequestMapping("/close/{id}")
-    public String close(@PathVariable Long id, Model model) {
+    public String close(@PathVariable Long id, Model model,RedirectAttributes redirectAttributes) {
         WorkOrder workOrder = workOrderService.getById(id);
         Long areaId = workOrder.getAreaActual().getId();
 
         workOrderService.close(workOrder);
+        
+        redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI, "workorder.closed.message");
+        redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI, new String[]{workOrder.getCode()});
 
         return "redirect:/workOrder/listOrders/" + areaId;
     }
