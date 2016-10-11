@@ -86,9 +86,9 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
             Seller seller = sellerDao.get(workOrder.getSeller().getId());
             workOrder.setSeller(seller);
         }
-        //open timeStored
-
         workOrderDao.save(workOrder);
+        //open timeStored
+        timeStoredService.createTimeStored(workOrder);
 
         return workOrder;
     }
@@ -101,6 +101,7 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
         workOrder.setReleaseDate(new Date());
         update(workOrder);
         //close TimeStored
+        timeStoredService.closeTimeStored(workOrder);
         return workOrder;
     }
 
