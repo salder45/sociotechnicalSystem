@@ -108,4 +108,8 @@ public class Constants {
     public static final String STATUS_INACTIVE = "I";
     public static final String STATUS_CLOSED = "C";
     public static final String EMPTY_STRING = "";
+    //
+    public static final String TYPE_TIMESTORED = "TimeStored";
+    public static final String TYPE_TIMESTORED_AREA = "TimeStoredArea";
+    public static final String TYPE_TIMESTORED_MACHINE = "TimeStoredMachine";
 }

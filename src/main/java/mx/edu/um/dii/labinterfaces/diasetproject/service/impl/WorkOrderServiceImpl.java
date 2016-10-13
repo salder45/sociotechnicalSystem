@@ -89,19 +89,26 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
         workOrderDao.save(workOrder);
         //open timeStored
         timeStoredService.createTimeStored(workOrder);
-
+        //set timeStoredArea
+        timeStoredService.createTimeStoredArea(workOrder);
         return workOrder;
     }
 
     @Override
     public WorkOrder close(WorkOrder workOrder) {
         workOrder = getById(workOrder.getId());
+        
+        Area areaTmp=workOrder.getAreaActual();
+        
         workOrder.setAreaActual(null);
         workOrder.setStatus(Constants.STATUS_CLOSED);
         workOrder.setReleaseDate(new Date());
         update(workOrder);
         //close TimeStored
         timeStoredService.closeTimeStored(workOrder);
+        //close TimeStoredArea
+        timeStoredService.closeTimeStoredArea(workOrder);
+        
         return workOrder;
     }
 

@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
 
 /**
  *
@@ -34,5 +35,10 @@ public class TimeStoredArea extends TimeStored{
      */
     public void setArea(Area area) {
         this.area = area;
+    }
+    
+    @Override
+    public String getType() {
+        return Constants.TYPE_TIMESTORED_AREA;
     }
 }

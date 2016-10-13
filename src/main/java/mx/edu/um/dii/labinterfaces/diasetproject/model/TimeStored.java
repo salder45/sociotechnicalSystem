@@ -24,6 +24,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
+import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -37,7 +38,8 @@ import org.springframework.format.annotation.DateTimeFormat;
         name = "STORED_BY",
         discriminatorType = DiscriminatorType.STRING
 )
-public class TimeStored implements Serializable{
+public class TimeStored implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
@@ -176,14 +178,14 @@ public class TimeStored implements Serializable{
     public void setWorkOrder(WorkOrder workOrder) {
         this.workOrder = workOrder;
     }
-    
+
     @Override
     public int hashCode() {
-     int hash = 7;
-        hash = 11 * hash + Objects.hash(this.Id, this.status);        
+        int hash = 7;
+        hash = 11 * hash + Objects.hash(this.Id, this.status);
         return hash;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -193,13 +195,17 @@ public class TimeStored implements Serializable{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        
-        final TimeStored other=(TimeStored)obj;
-        return Objects.equals(this.Id, other.Id)&&Objects.equals(this.status, other.status);
+
+        final TimeStored other = (TimeStored) obj;
+        return Objects.equals(this.Id, other.Id) && Objects.equals(this.status, other.status);
     }
-    
+
     @Override
     public String toString() {
-        return "{TimeStored{Id:"+this.Id+", status:"+this.status+"}}";
-    }    
+        return "{TimeStored{Id:" + this.Id + ", status:" + this.status + "}}";
+    }
+
+    public String getType() {
+        return Constants.TYPE_TIMESTORED;
+    }
 }
