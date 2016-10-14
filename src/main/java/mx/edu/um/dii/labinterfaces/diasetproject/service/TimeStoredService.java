@@ -21,6 +21,6 @@ public interface TimeStoredService {
     public TimeStored closeTimeStored(WorkOrder workOrder);
     public TimeStoredArea createTimeStoredArea(Long workOrderId,Long areaId);
     public TimeStoredArea closeTimeStoredArea(Long workOrderId,Long areaId);
-    public TimeStoredMachine createTimeStoredMachine(WorkOrder workOrder);
-    public TimeStoredMachine closeTimeStoredMachine(WorkOrder workOrder);
+    public TimeStoredMachine createTimeStoredMachine(Long workOrderId,Long machineId);
+    public TimeStoredMachine closeTimeStoredMachine(Long workOrderId,Long machineId);
 }

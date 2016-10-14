@@ -8,9 +8,9 @@ package mx.edu.um.dii.labinterfaces.diasetproject.service.impl;
 import java.util.Date;
 import java.util.List;
 import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
-import mx.edu.um.dii.labinterfaces.diasetproject.dao.AreaDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.TimeStoredDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Area;
+import mx.edu.um.dii.labinterfaces.diasetproject.model.Machine;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.TimeStored;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.TimeStoredArea;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.TimeStoredMachine;
@@ -92,19 +92,6 @@ public class TimeStoredServiceImpl extends BaseService implements TimeStoredServ
         timeStoredDao.save(timeStoredArea);
 
         return timeStoredArea;
-        /*
-        Area area = areaService.get(workOrder.getAreaActual().getId());
-        TimeStoredArea timeStoredArea = new TimeStoredArea();
-        timeStoredArea.setWorkOrder(workOrder);
-        timeStoredArea.setStartTime(new Date());
-        timeStoredArea.setFinishTime(ProjectUtils.getDefaultDate());
-        timeStoredArea.setStatus(Constants.STATUS_ACTIVE);
-        timeStoredArea.setArea(area);
-
-        timeStoredDao.save(timeStoredArea);
-
-        return timeStoredArea;
-         */
 
     }
 
@@ -113,6 +100,7 @@ public class TimeStoredServiceImpl extends BaseService implements TimeStoredServ
         log.debug("closeTimeStoredArea");
         WorkOrder workOrder = workOrderService.getById(workOrderId);
         Area area = areaService.get(areaId);
+        
         TimeStoredArea timeStoredArea = new TimeStoredArea();
         for (TimeStored ts : workOrder.getTimesStored()) {
             if (Constants.TYPE_TIMESTORED_AREA.equals(ts.getType())) {
@@ -123,54 +111,58 @@ public class TimeStoredServiceImpl extends BaseService implements TimeStoredServ
             }
         }
         timeStoredArea = (TimeStoredArea) timeStoredDao.getTimeStored(timeStoredArea.getId());
-        
-        timeStoredArea.setFinishTime(new Date());
-        timeStoredArea.setStatus(Constants.STATUS_CLOSED);
 
-        timeStoredDao.update(timeStoredArea);
-        
-        return timeStoredArea;
-        /*
-        TimeStoredArea timeStoredArea = new TimeStoredArea();
-        Area area = areaService.get(workOrder.getAreaActual().getId());
-        workOrder = workOrderService.getById(workOrder.getId());
-        for (TimeStored ts : workOrder.getTimesStored()) {
-            log.debug(ts.getId() + " - " + ts.getType());
-            if (Constants.TYPE_TIMESTORED_AREA.equals(ts.getType())) {
-                TimeStoredArea tmp = (TimeStoredArea) ts;
-                log.debug(tmp.toString());
-                log.debug(tmp.getArea().toString());
-                log.debug("-------");
-                log.debug("Status: " + tmp.getStatus());
-                log.debug("Area: " + tmp.getArea().getId());
-                if (tmp.getStatus().equals(Constants.STATUS_ACTIVE) && tmp.getArea().getId().equals(area.getId())) {
-                    timeStoredArea = tmp;
-                    log.debug(timeStoredArea.toString());
-                }
-                log.debug("*******");
-            }
-        }
-
-        timeStoredArea = (TimeStoredArea) timeStoredDao.getTimeStored(timeStoredArea.getId());
         timeStoredArea.setFinishTime(new Date());
         timeStoredArea.setStatus(Constants.STATUS_CLOSED);
 
         timeStoredDao.update(timeStoredArea);
 
         return timeStoredArea;
-         */
     }
 
     @Override
-    public TimeStoredMachine createTimeStoredMachine(WorkOrder workOrder) {
+    public TimeStoredMachine createTimeStoredMachine(Long workOrderId,Long machineId) {
         log.debug("createTimeStoredMachine");
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Machine machine=machineService.getById(machineId);
+        WorkOrder workOrder=workOrderService.getById(workOrderId);
+        
+        TimeStoredMachine timeStoredMachine = new TimeStoredMachine();
+        timeStoredMachine.setWorkOrder(workOrder);
+        timeStoredMachine.setStartTime(new Date());
+        timeStoredMachine.setFinishTime(ProjectUtils.getDefaultDate());
+        timeStoredMachine.setStatus(Constants.STATUS_ACTIVE);
+        timeStoredMachine.setMachine(machine);
+        
+        timeStoredDao.save(timeStoredMachine);
+        
+        return timeStoredMachine;        
     }
 
     @Override
-    public TimeStoredMachine closeTimeStoredMachine(WorkOrder workOrder) {
+    public TimeStoredMachine closeTimeStoredMachine(Long workOrderId,Long machineId) {
         log.debug("closeTimeStoredMachine");
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Machine machine=machineService.getById(machineId);
+        WorkOrder workOrder=workOrderService.getById(workOrderId);
+        
+        TimeStoredMachine timeStoredMachine=new TimeStoredMachine();
+        
+        for (TimeStored ts : workOrder.getTimesStored()) {
+            if (Constants.TYPE_TIMESTORED_MACHINE.equals(ts.getType())) {
+                TimeStoredMachine tmp=(TimeStoredMachine)ts;
+                if (tmp.getStatus().equals(Constants.STATUS_ACTIVE) && tmp.getMachine().getId().equals(machine.getId())) {
+                    timeStoredMachine=tmp;
+                }
+            }
+        }
+        
+        timeStoredMachine=(TimeStoredMachine)timeStoredDao.getTimeStored(timeStoredMachine.getId());
+        
+        timeStoredMachine.setFinishTime(new Date());
+        timeStoredMachine.setStatus(Constants.STATUS_CLOSED);
+        
+        timeStoredDao.update(timeStoredMachine);
+        
+        return timeStoredMachine;        
     }
 
 }

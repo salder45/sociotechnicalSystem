@@ -184,6 +184,8 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
         machineService.setWorkingStatus(machine);
 
         update(workOrder);
+        //
+        timeStoredService.createTimeStoredMachine(workOrderId, machineId);
 
         return workOrder;
     }
@@ -199,6 +201,8 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
         machineService.setAvalaibleStatus(machine);
 
         update(workOrder);
+        //
+        timeStoredService.closeTimeStoredMachine(workOrderId, machineId);
 
         return workOrder;
     }
