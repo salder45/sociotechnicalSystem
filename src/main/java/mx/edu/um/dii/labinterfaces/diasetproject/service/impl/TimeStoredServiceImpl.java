@@ -76,9 +76,23 @@ public class TimeStoredServiceImpl extends BaseService implements TimeStoredServ
     }
 
     @Override
-    public TimeStoredArea createTimeStoredArea(WorkOrder workOrder) {
+    public TimeStoredArea createTimeStoredArea(Long workOrderId, Long areaId) {
         log.debug("createTimeStoredArea");
-        workOrder = workOrderService.getById(workOrder.getId());
+        //get data
+        WorkOrder workOrder = workOrderService.getById(workOrderId);
+        Area area = areaService.get(areaId);
+        //create
+        TimeStoredArea timeStoredArea = new TimeStoredArea();
+        timeStoredArea.setWorkOrder(workOrder);
+        timeStoredArea.setStartTime(new Date());
+        timeStoredArea.setFinishTime(ProjectUtils.getDefaultDate());
+        timeStoredArea.setStatus(Constants.STATUS_ACTIVE);
+        timeStoredArea.setArea(area);
+        //
+        timeStoredDao.save(timeStoredArea);
+
+        return timeStoredArea;
+        /*
         Area area = areaService.get(workOrder.getAreaActual().getId());
         TimeStoredArea timeStoredArea = new TimeStoredArea();
         timeStoredArea.setWorkOrder(workOrder);
@@ -90,12 +104,35 @@ public class TimeStoredServiceImpl extends BaseService implements TimeStoredServ
         timeStoredDao.save(timeStoredArea);
 
         return timeStoredArea;
+         */
+
     }
 
     @Override
-    public TimeStoredArea closeTimeStoredArea(WorkOrder workOrder) {
+    public TimeStoredArea closeTimeStoredArea(Long workOrderId, Long areaId) {
         log.debug("closeTimeStoredArea");
+        WorkOrder workOrder = workOrderService.getById(workOrderId);
+        Area area = areaService.get(areaId);
         TimeStoredArea timeStoredArea = new TimeStoredArea();
+        for (TimeStored ts : workOrder.getTimesStored()) {
+            if (Constants.TYPE_TIMESTORED_AREA.equals(ts.getType())) {
+                TimeStoredArea tmp = (TimeStoredArea) ts;
+                if (tmp.getStatus().equals(Constants.STATUS_ACTIVE) && tmp.getArea().getId().equals(area.getId())) {
+                    timeStoredArea = tmp;
+                }
+            }
+        }
+        timeStoredArea = (TimeStoredArea) timeStoredDao.getTimeStored(timeStoredArea.getId());
+        
+        timeStoredArea.setFinishTime(new Date());
+        timeStoredArea.setStatus(Constants.STATUS_CLOSED);
+
+        timeStoredDao.update(timeStoredArea);
+        
+        return timeStoredArea;
+        /*
+        TimeStoredArea timeStoredArea = new TimeStoredArea();
+        Area area = areaService.get(workOrder.getAreaActual().getId());
         workOrder = workOrderService.getById(workOrder.getId());
         for (TimeStored ts : workOrder.getTimesStored()) {
             log.debug(ts.getId() + " - " + ts.getType());
@@ -103,9 +140,14 @@ public class TimeStoredServiceImpl extends BaseService implements TimeStoredServ
                 TimeStoredArea tmp = (TimeStoredArea) ts;
                 log.debug(tmp.toString());
                 log.debug(tmp.getArea().toString());
-                if (tmp.getStatus().equals(Constants.STATUS_ACTIVE) && tmp.getArea().getId().equals(workOrder.getAreaActual().getId())) {
+                log.debug("-------");
+                log.debug("Status: " + tmp.getStatus());
+                log.debug("Area: " + tmp.getArea().getId());
+                if (tmp.getStatus().equals(Constants.STATUS_ACTIVE) && tmp.getArea().getId().equals(area.getId())) {
                     timeStoredArea = tmp;
+                    log.debug(timeStoredArea.toString());
                 }
+                log.debug("*******");
             }
         }
 
@@ -116,6 +158,7 @@ public class TimeStoredServiceImpl extends BaseService implements TimeStoredServ
         timeStoredDao.update(timeStoredArea);
 
         return timeStoredArea;
+         */
     }
 
     @Override

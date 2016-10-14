@@ -90,7 +90,7 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
         //open timeStored
         timeStoredService.createTimeStored(workOrder);
         //set timeStoredArea
-        timeStoredService.createTimeStoredArea(workOrder);
+        timeStoredService.createTimeStoredArea(workOrder.getId(),workOrder.getAreaActual().getId());
         return workOrder;
     }
 
@@ -106,8 +106,8 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
         update(workOrder);
         //close TimeStored
         timeStoredService.closeTimeStored(workOrder);
-        //close TimeStoredArea
-        timeStoredService.closeTimeStoredArea(workOrder);
+        //close TimeStoredArea       
+        timeStoredService.closeTimeStoredArea(workOrder.getId(),areaTmp.getId());
         
         return workOrder;
     }
@@ -162,11 +162,14 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
 
     @Override
     public WorkOrder sendToArea(Long newAreaId, Long workOrderId) {
-        Area area = areaDao.get(newAreaId);
         WorkOrder workOrder = getById(workOrderId);
+        //close TimeStoredArea
+        timeStoredService.closeTimeStoredArea(workOrderId, workOrder.getAreaActual().getId());
+        Area area = areaDao.get(newAreaId);
         workOrder.setAreaActual(area);
         //createdTimeStoredArea
         workOrder = update(workOrder);
+        timeStoredService.createTimeStoredArea(workOrderId, newAreaId);
         return workOrder;
     }
 
