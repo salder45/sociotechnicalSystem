@@ -70,6 +70,8 @@
                                 <sec:authorize access="hasRole('ROLE_QUALITY')">
                                     <c:choose>
                                         <c:when test="${area.name=='Calidad'}">
+                                        <th><s:message code="area.quality.label"/> <s:message code="workorder.label"/> </th>
+                                        <th><s:message code="check.label"/> <s:message code="workorder.label"/> </th>
                                         <th><s:message code="finish.label"/> <s:message code="workorder.label"/> </th>
                                         </c:when>
                                     </c:choose>
@@ -111,6 +113,17 @@
                                         <sec:authorize access="hasRole('ROLE_QUALITY')">
                                             <c:choose>
                                                 <c:when test="${area.name=='Calidad'}">
+                                            <!--CHECK IF ORDER IS BEING WORKING ON-->
+                                            <c:choose>
+                                                <c:when test="${workOrder.status=='W_AT'}">
+                                                    <!--CHECK IF ORDER IS BEING WORKING ON-->
+                                                    <th><a class="btn btn-default" href="<c:url value="/workOrder/pullOutMachine/${workOrder.id}"/>"><s:message code="processing.label"/> <span class="glyphicon glyphicon-stop"></span></a></th>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                    <th><a class="btn btn-default" href="<c:url value="/workOrder/selectMachineToPutIn/${workOrder.id}"/>"><s:message code="process.label"/> <span class="glyphicon glyphicon-play"></span></a></th>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                            <th><a class="btn btn-default" href="<c:url value="/workOrder/check/${workOrder.id}"/>"><s:message code="check.label"/> <span class="glyphicon glyphicon-ok-circle"></span></a></th>
                                             <th><a class="btn btn-default" href="<c:url value="/workOrder/close/${workOrder.id}"/>"><s:message code="finish.label"/> <span class="glyphicon glyphicon-lock"></span></a></th>
                                                 </c:when>
                                             </c:choose>
