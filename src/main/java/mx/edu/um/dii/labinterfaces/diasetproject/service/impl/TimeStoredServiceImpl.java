@@ -125,6 +125,7 @@ public class TimeStoredServiceImpl extends BaseService implements TimeStoredServ
         log.debug("createTimeStoredMachine");
         Machine machine=machineService.getById(machineId);
         WorkOrder workOrder=workOrderService.getById(workOrderId);
+        Area area=areaService.get(machine.getArea().getId());
         
         TimeStoredMachine timeStoredMachine = new TimeStoredMachine();
         timeStoredMachine.setWorkOrder(workOrder);
@@ -132,6 +133,7 @@ public class TimeStoredServiceImpl extends BaseService implements TimeStoredServ
         timeStoredMachine.setFinishTime(ProjectUtils.getDefaultDate());
         timeStoredMachine.setStatus(Constants.STATUS_ACTIVE);
         timeStoredMachine.setMachine(machine);
+        timeStoredMachine.setArea(area);
         
         timeStoredDao.save(timeStoredMachine);
         

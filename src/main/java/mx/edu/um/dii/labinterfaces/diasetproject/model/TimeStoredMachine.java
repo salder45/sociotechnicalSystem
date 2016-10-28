@@ -22,6 +22,9 @@ public class TimeStoredMachine extends TimeStored{
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "machine_id")
     private Machine machine;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "area_id")
+    private Area area;
 
     /**
      * @return the machine
@@ -35,6 +38,20 @@ public class TimeStoredMachine extends TimeStored{
      */
     public void setMachine(Machine machine) {
         this.machine = machine;
+    }
+
+    /**
+     * @return the area
+     */
+    public Area getArea() {
+        return area;
+    }
+
+    /**
+     * @param area the area to set
+     */
+    public void setArea(Area area) {
+        this.area = area;
     }
     
     @Override
