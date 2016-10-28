@@ -76,13 +76,7 @@
                                 <th><s:message code="batch.pieces.label"/></th>
                                 <th><s:message code="batch.draw.exist.label"/></th>
                                 <th><s:message code="batch.sharpening.label"/></th>
-                                <th><s:message code="batch.covering.label"/></th>
-                                <th>
-                                    <s:message code="edit.label"/> <s:message code="batch.label"/>
-                                </th>
-                                <th>
-                                    <s:message code="delete.label"/> <s:message code="batch.label"/>
-                                </th>
+                                <th><s:message code="batch.covering.label"/></th>                                
                             </tr>
                         </thead>
                         <tbody>
@@ -93,8 +87,6 @@
                                     <th>${oneBatch.existDraw}</th>
                                     <th>${oneBatch.sharpening}</th>
                                     <th>${oneBatch.coveringRequired}</th>
-                                    <td><a class="btn btn-default" href="<c:url value="/workOrder/editBatch/${oneBatch.id}"/>"><s:message code="edit.label"/> <span class="glyphicon glyphicon-edit"></span></a></td>
-                                    <td><a class="btn btn-default" href="<c:url value="/workOrder/removeBatch/${oneBatch.id}"/>" onclick="return confirm('<s:message code="confirm.delete.message" />');" ><s:message code="delete.label"/> <span class="glyphicon glyphicon-trash"></span></a></td>
                                 </tr>
                             </c:forEach>
                         </tbody>

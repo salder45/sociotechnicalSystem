@@ -102,6 +102,7 @@ public class Constants {
     STATUS
      */
     public static final String STATUS_WORKING_AT = "W_AT";
+    public static final String STATUS_CREATED = "NC";
     public static final String STATUS_PAUSED = "P";
     public static final String STATUS_IDLE = "ID";
     public static final String STATUS_ACTIVE = "A";

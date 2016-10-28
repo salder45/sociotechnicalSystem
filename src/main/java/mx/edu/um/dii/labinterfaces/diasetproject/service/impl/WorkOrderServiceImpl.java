@@ -74,7 +74,7 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
     public WorkOrder create(WorkOrder workOrder) {
         workOrder.setEstimatedReleaseDate(ProjectUtils.getDefaultDate());
         workOrder.setReleaseDate(ProjectUtils.getDefaultDate());
-        workOrder.setStatus(Constants.STATUS_ACTIVE);
+        workOrder.setStatus(Constants.STATUS_CREATED);
         workOrder.setAreaActual(areaDao.getByName(Constants.DEFAULT_AREA_SELLING));
         //Customer
         if (workOrder.getCustomer() != null && workOrder.getCustomer().getId() != null && workOrder.getCustomer().getId() != 0L) {
@@ -163,9 +163,15 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
     @Override
     public WorkOrder sendToArea(Long newAreaId, Long workOrderId) {
         WorkOrder workOrder = getById(workOrderId);
+        Area area = areaDao.get(newAreaId);
+        //check status by area
+        if(area.getName().equals(Constants.DEFAULT_AREA_SELLING)){
+            workOrder.setStatus(Constants.STATUS_CREATED);
+        }else{
+            workOrder.setStatus(Constants.STATUS_ACTIVE);
+        }
         //close TimeStoredArea
         timeStoredService.closeTimeStoredArea(workOrderId, workOrder.getAreaActual().getId());
-        Area area = areaDao.get(newAreaId);
         workOrder.setAreaActual(area);
         //createdTimeStoredArea
         workOrder = update(workOrder);
