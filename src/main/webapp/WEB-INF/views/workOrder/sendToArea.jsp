@@ -28,7 +28,7 @@
                     </div>
                 </c:if>
                 <c:url var="action" value="/workOrder/sendWorkOrder"/>
-                <form:form modelAttribute="workOrder" method="post" action="${action}" class="form-horizontal">
+                <form:form modelAttribute="workOrder" method="post" action="${action}" class="form-horizontal" data-parsley-validate="">
                     <form:errors path="*">
                         <c:forEach items="${messages}" var="message">
                             <div class="alert alert-danger alert-dismissible" role="alert">
@@ -85,6 +85,16 @@
                             </c:forEach>
                         </tbody>
                     </table>
+                    <s:bind path="workOrder.badPieces">
+                        <div class="form-group">
+                            <s:message code="scrap.label" var="scrapLabel"/>
+                            <label for="scrap" class="control-label col-xs-2">${scrapLabel}</label>    
+                            <div class="col-xs-5">
+                                <form:input path="badPieces" class="form-control" max="${workOrder.piecesNumber}"/>
+                            </div>                                
+                        </div>
+                    </s:bind>
+                            
                     <s:bind path="workOrder.areaActual.id">
                         <div class="form-group">
                             <s:message code="area.label" var="areaLabel"/>
@@ -111,6 +121,7 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#table-workOrders').DataTable();
+                 $('#workOrder').parsley();
             });
         </script>
     </content>

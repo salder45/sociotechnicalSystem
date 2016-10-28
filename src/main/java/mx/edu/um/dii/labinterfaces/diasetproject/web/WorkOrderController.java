@@ -182,6 +182,8 @@ public class WorkOrderController extends BaseController {
     @RequestMapping(value = "/sendWorkOrder", method = RequestMethod.POST)
     public String sendWorkOrder(HttpServletRequest request, @Valid WorkOrder workOrder, BindingResult bindingResult, Errors errors, Model model, RedirectAttributes redirectAttributes) {
         log.debug("Send Work Order...");
+        //scrap
+        Integer scrap=workOrder.getBadPieces();
         WorkOrder w = workOrderService.getById(workOrder.getId());
         Long areaId = w.getAreaActual().getId();
         if (bindingResult.hasErrors()) {
@@ -192,7 +194,7 @@ public class WorkOrderController extends BaseController {
             model.addAttribute(Constants.AREA_LIST_UI, areasList);
             return "/workOrder/sendToArea";
         }
-        workOrder = workOrderService.sendToArea(workOrder.getAreaActual().getId(), workOrder.getId());
+        workOrder = workOrderService.sendToArea(workOrder.getAreaActual().getId(), workOrder.getId(),scrap);
         //messagesHere
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI,
                 "workorder.sent.message");

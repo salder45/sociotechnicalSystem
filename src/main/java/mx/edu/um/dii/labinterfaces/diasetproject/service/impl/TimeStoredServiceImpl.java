@@ -76,11 +76,13 @@ public class TimeStoredServiceImpl extends BaseService implements TimeStoredServ
     }
 
     @Override
-    public TimeStoredArea createTimeStoredArea(Long workOrderId, Long areaId) {
+    public TimeStoredArea createTimeStoredArea(Long workOrderId, Long areaId,Integer scrap) {
         log.debug("createTimeStoredArea");
         //get data
         WorkOrder workOrder = workOrderService.getById(workOrderId);
         Area area = areaService.get(areaId);
+        //
+        Integer pieces=workOrder.getPiecesNumber();
         //create
         TimeStoredArea timeStoredArea = new TimeStoredArea();
         timeStoredArea.setWorkOrder(workOrder);
@@ -88,6 +90,9 @@ public class TimeStoredServiceImpl extends BaseService implements TimeStoredServ
         timeStoredArea.setFinishTime(ProjectUtils.getDefaultDate());
         timeStoredArea.setStatus(Constants.STATUS_ACTIVE);
         timeStoredArea.setArea(area);
+        //
+        timeStoredArea.setGoodPieces(pieces-scrap);
+        timeStoredArea.setScrap(scrap);
         //
         timeStoredDao.save(timeStoredArea);
 

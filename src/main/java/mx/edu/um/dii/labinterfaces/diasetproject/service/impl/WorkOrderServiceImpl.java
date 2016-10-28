@@ -90,7 +90,7 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
         //open timeStored
         timeStoredService.createTimeStored(workOrder);
         //set timeStoredArea
-        timeStoredService.createTimeStoredArea(workOrder.getId(),workOrder.getAreaActual().getId());
+        timeStoredService.createTimeStoredArea(workOrder.getId(),workOrder.getAreaActual().getId(),0);
         return workOrder;
     }
 
@@ -161,7 +161,7 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
     }
 
     @Override
-    public WorkOrder sendToArea(Long newAreaId, Long workOrderId) {
+    public WorkOrder sendToArea(Long newAreaId, Long workOrderId,Integer scrap) {
         WorkOrder workOrder = getById(workOrderId);
         Area area = areaDao.get(newAreaId);
         //check status by area
@@ -175,7 +175,7 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
         workOrder.setAreaActual(area);
         //createdTimeStoredArea
         workOrder = update(workOrder);
-        timeStoredService.createTimeStoredArea(workOrderId, newAreaId);
+        timeStoredService.createTimeStoredArea(workOrderId, newAreaId,scrap);
         return workOrder;
     }
 

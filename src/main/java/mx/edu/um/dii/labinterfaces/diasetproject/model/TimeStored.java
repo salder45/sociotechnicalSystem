@@ -66,6 +66,10 @@ public class TimeStored implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "work_order_id")
     private WorkOrder workOrder;
+    @Column
+    private Integer scrap;
+    @Column
+    private Integer goodPieces;
 
     /**
      * @return the Id
@@ -178,7 +182,36 @@ public class TimeStored implements Serializable {
     public void setWorkOrder(WorkOrder workOrder) {
         this.workOrder = workOrder;
     }
+    
+    
+    /**
+     * @return the scrap
+     */
+    public Integer getScrap() {
+        return scrap;
+    }
 
+    /**
+     * @param scrap the scrap to set
+     */
+    public void setScrap(Integer scrap) {
+        this.scrap = scrap;
+    }
+
+    /**
+     * @return the goodPieces
+     */
+    public Integer getGoodPieces() {
+        return goodPieces;
+    }
+
+    /**
+     * @param goodPieces the goodPieces to set
+     */
+    public void setGoodPieces(Integer goodPieces) {
+        this.goodPieces = goodPieces;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;

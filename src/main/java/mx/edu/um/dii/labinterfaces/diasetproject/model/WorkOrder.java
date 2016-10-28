@@ -21,6 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -57,7 +58,7 @@ public class WorkOrder implements Serializable{
     @Column(name = "release_date", nullable = false)
     @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm")
     private Date releaseDate;
-    private Integer piecesNumber;
+    private Integer piecesNumber=0;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private Customer customer;
@@ -79,6 +80,10 @@ public class WorkOrder implements Serializable{
     @Fetch(FetchMode.SELECT)
     @OneToMany(mappedBy = "workOrder",fetch = FetchType.EAGER)
     private List<TimeStored> timesStored;
+    //Transient fields
+    @Transient
+    private Integer badPieces;
+    
 
     /**
      * @return the Id
@@ -315,4 +320,18 @@ public class WorkOrder implements Serializable{
     public String toString() {
         return "{WorkOrder{Id:"+this.Id+", code:"+this.code+"}}";
     }    
+
+    /**
+     * @return the badPieces
+     */
+    public Integer getBadPieces() {
+        return badPieces;
+    }
+
+    /**
+     * @param badPieces the badPieces to set
+     */
+    public void setBadPieces(Integer badPieces) {
+        this.badPieces = badPieces;
+    }
 }
