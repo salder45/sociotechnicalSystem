@@ -27,7 +27,15 @@
                         </strong>
                     </div>
                 </c:if>
-                <c:url var="action" value="/workOrder/putInMachine"/>
+                <c:choose>                    
+                    <c:when test="${origin=='PULL'}">
+                        <c:url var="action" value="/workOrder/pullOutMachine"/>
+                    </c:when>
+                    <c:otherwise>
+                        <c:url var="action" value="/workOrder/putInMachine"/>
+                    </c:otherwise>
+                </c:choose>
+
                 <form:form modelAttribute="workOrder" method="post" action="${action}" class="form-horizontal">
                     <form:errors path="*">
                         <c:forEach items="${messages}" var="message">
@@ -104,6 +112,17 @@
                             </div>                                
                         </div>
                     </s:bind>
+                    <c:if test="${origin=='PULL'}">                        
+                        <s:bind path="workOrder.badPieces">
+                            <div class="form-group">
+                                <s:message code="scrap.label" var="scrapLabel"/>
+                                <label for="scrap" class="control-label col-xs-2">${scrapLabel}</label>    
+                                <div class="col-xs-5">
+                                    <form:input path="badPieces" class="form-control" max="${workOrder.piecesNumber}"/>
+                                </div>                                
+                            </div>
+                        </s:bind>
+                    </c:if>
 
                     <div class="form-group">
                         <div class="col-xs-10">

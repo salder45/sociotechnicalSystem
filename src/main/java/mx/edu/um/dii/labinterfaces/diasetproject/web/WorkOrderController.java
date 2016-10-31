@@ -91,12 +91,12 @@ public class WorkOrderController extends BaseController {
     }
 
     @RequestMapping("/close/{id}")
-    public String close(@PathVariable Long id, Model model,RedirectAttributes redirectAttributes) {
+    public String close(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
         WorkOrder workOrder = workOrderService.getById(id);
         Long areaId = workOrder.getAreaActual().getId();
 
         workOrderService.close(workOrder);
-        
+
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI, "workorder.closed.message");
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI, new String[]{workOrder.getCode()});
 
@@ -183,7 +183,7 @@ public class WorkOrderController extends BaseController {
     public String sendWorkOrder(HttpServletRequest request, @Valid WorkOrder workOrder, BindingResult bindingResult, Errors errors, Model model, RedirectAttributes redirectAttributes) {
         log.debug("Send Work Order...");
         //scrap
-        Integer scrap=workOrder.getBadPieces();
+        Integer scrap = workOrder.getBadPieces();
         WorkOrder w = workOrderService.getById(workOrder.getId());
         Long areaId = w.getAreaActual().getId();
         if (bindingResult.hasErrors()) {
@@ -194,7 +194,7 @@ public class WorkOrderController extends BaseController {
             model.addAttribute(Constants.AREA_LIST_UI, areasList);
             return "/workOrder/sendToArea";
         }
-        workOrder = workOrderService.sendToArea(workOrder.getAreaActual().getId(), workOrder.getId(),scrap);
+        workOrder = workOrderService.sendToArea(workOrder.getAreaActual().getId(), workOrder.getId(), scrap);
         //messagesHere
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI,
                 "workorder.sent.message");
@@ -329,11 +329,12 @@ public class WorkOrderController extends BaseController {
         WorkOrder workOrder = workOrderService.getById(id);
         List<Machine> machineList = machineService.getByArea(workOrder.getAreaActual().getId());
         //getBatchList
-        List<Batch> batchsList=batchService.getBatchsListByWorkOrderAndStatus(id, Constants.STATUS_ACTIVE);
+        List<Batch> batchsList = batchService.getBatchsListByWorkOrderAndStatus(id, Constants.STATUS_ACTIVE);
 
         model.addAttribute(Constants.WORK_ORDER_UI, workOrder);
         model.addAttribute(Constants.MACHINE_LIST_UI, machineList);
-        model.addAttribute(Constants.BATCH_LIST_UI,batchsList);
+        model.addAttribute(Constants.BATCH_LIST_UI, batchsList);
+        model.addAttribute(Constants.ORIGIN, Constants.ORIGIN_PUT);
 
         return "/workOrder/selectMachine";
     }
@@ -345,13 +346,17 @@ public class WorkOrderController extends BaseController {
         if (bindingResult.hasErrors()) {
             log.error("Error detected in workOrder form...");
             List<Machine> machineList = machineService.getByArea(workOrder.getAreaActual().getId());
+            List<Batch> batchsList = batchService.getBatchsListByWorkOrderAndStatus(workOrder.getId(), Constants.STATUS_ACTIVE);
 
             model.addAttribute(Constants.WORK_ORDER_UI, workOrder);
             model.addAttribute(Constants.MACHINE_LIST_UI, machineList);
+            model.addAttribute(Constants.BATCH_LIST_UI, batchsList);
+            model.addAttribute(Constants.ORIGIN, Constants.ORIGIN_PUT);
+
             return "/workOrder/selectMachine";
         }
-        
-        workOrderService.setToMachine(workOrder.getMachineActual().getId(), workOrder.getId(),workOrder.getBatch().getId());
+
+        workOrderService.setToMachine(workOrder.getMachineActual().getId(), workOrder.getId(), workOrder.getBatch().getId());
         //
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI, "workorder.process.message");
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI, new String[]{w.getCode()});
@@ -359,17 +364,48 @@ public class WorkOrderController extends BaseController {
         return "redirect:/workOrder/listOrders/" + w.getAreaActual().getId();
     }
 
-    @RequestMapping("/pullOutMachine/{id}")
-    public String pullOutMachine(@PathVariable Long id,RedirectAttributes redirectAttributes) {
+    @RequestMapping("/selectMachineToPullOut/{id}")
+    public String selectMachineToPullOut(@PathVariable Long id, Model model) {
         log.debug("pullOutMachine Work Order...");
-        
-        WorkOrder workOrder=workOrderService.getById(id);
-        
-        workOrderService.pullOutMachine(workOrder.getMachineActual().getId(), id);
+
+        WorkOrder workOrder = workOrderService.getById(id);
+
+        List<Machine> machineList = machineService.getByArea(workOrder.getAreaActual().getId());
+        //getBatchList
+        List<Batch> batchsList = batchService.getBatchsListByWorkOrderAndStatus(id, Constants.STATUS_WORKING_AT);
+
+        model.addAttribute(Constants.WORK_ORDER_UI, workOrder);
+        model.addAttribute(Constants.MACHINE_LIST_UI, machineList);
+        model.addAttribute(Constants.BATCH_LIST_UI, batchsList);
+        model.addAttribute(Constants.ORIGIN, Constants.ORIGIN_PULL);
+
+        return "/workOrder/selectMachine";
+    }
+
+    @RequestMapping("/pullOutMachine")
+    public String pullOutMachine(HttpServletRequest request, @Valid WorkOrder workOrder, BindingResult bindingResult, Errors errors, Model model, RedirectAttributes redirectAttributes) {
+        log.debug("pullOutMachine Work Order...");
+        WorkOrder w = workOrderService.getById(workOrder.getId());
+        if (bindingResult.hasErrors()) {
+            log.error("Error detected in workOrder form...");
+            List<Machine> machineList = machineService.getByArea(workOrder.getAreaActual().getId());
+            List<Batch> batchsList = batchService.getBatchsListByWorkOrderAndStatus(workOrder.getId(), Constants.STATUS_ACTIVE);
+
+            model.addAttribute(Constants.WORK_ORDER_UI, w);
+            model.addAttribute(Constants.MACHINE_LIST_UI, machineList);
+            model.addAttribute(Constants.BATCH_LIST_UI, batchsList);
+            model.addAttribute(Constants.ORIGIN, Constants.ORIGIN_PULL);
+
+            return "/workOrder/selectMachine";
+        }
+
+        workOrderService.pullOutMachine(w.getMachineActual().getId(), w.getId(), workOrder.getBatch().getId(), workOrder.getBadPieces());
+        log.debug("Pass save data");
         //
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI, "workorder.stopped.message");
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI, new String[]{workOrder.getCode()});
-        
-        return "redirect:/workOrder/listOrders/" + workOrder.getAreaActual().getId();
+        log.debug("Pass attribute redirect");
+
+        return "redirect:/workOrder/listOrders/" + w.getAreaActual().getId();
     }
 }

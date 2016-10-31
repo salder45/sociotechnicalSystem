@@ -82,7 +82,7 @@ public class WorkOrder implements Serializable{
     private List<TimeStored> timesStored;
     //Transient fields
     @Transient
-    private Integer badPieces;
+    private Integer badPieces=0;
     @Transient
     private Batch batch;
     

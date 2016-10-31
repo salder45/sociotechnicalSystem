@@ -113,4 +113,8 @@ public class Constants {
     public static final String TYPE_TIMESTORED = "TimeStored";
     public static final String TYPE_TIMESTORED_AREA = "TimeStoredArea";
     public static final String TYPE_TIMESTORED_MACHINE = "TimeStoredMachine";
+    
+    public static final String ORIGIN="origin";
+    public static final String ORIGIN_PUT="PUT";
+    public static final String ORIGIN_PULL="PULL";
 }

@@ -201,7 +201,7 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
     }
 
     @Override
-    public WorkOrder pullOutMachine(Long machineId, Long workOrderId) {
+    public WorkOrder pullOutMachine(Long machineId, Long workOrderId,Long batchId,Integer badPieces) {
         Machine machine = machineService.getById(machineId);
         WorkOrder workOrder = getById(workOrderId);
         //set machineActual at order
@@ -211,6 +211,10 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
         machineService.setAvalaibleStatus(machine);
 
         update(workOrder);
+        //
+        Batch batch=batchDao.get(batchId);
+        batch.setStatus(Constants.STATUS_ACTIVE);
+        batchDao.update(batch);
         //
         timeStoredService.closeTimeStoredMachine(workOrderId, machineId);
 

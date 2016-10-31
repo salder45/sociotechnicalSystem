@@ -26,5 +26,5 @@ public interface WorkOrderService {
     public WorkOrder setEstimatedReleaseDate(Date releaseDate,Long workOrderId);
     public WorkOrder sendToArea(Long newAreaId,Long workOrderId, Integer scrap);
     public WorkOrder setToMachine(Long machineId,Long workOrderId,Long batchId);
-    public WorkOrder pullOutMachine(Long machineId,Long workOrderId);
+    public WorkOrder pullOutMachine(Long machineId,Long workOrderId,Long batchId,Integer badPieces);
 }

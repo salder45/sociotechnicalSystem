@@ -101,7 +101,7 @@
                                             <c:choose>
                                                 <c:when test="${workOrder.status=='W_AT'}">
                                                     <!--CHECK IF ORDER IS BEING WORKING ON-->
-                                                    <th><a class="btn btn-default" href="<c:url value="/workOrder/pullOutMachine/${workOrder.id}"/>"><s:message code="processing.label"/> <span class="glyphicon glyphicon-stop"></span></a></th>
+                                                    <th><a class="btn btn-default" href="<c:url value="/workOrder/selectMachineToPullOut/${workOrder.id}"/>"><s:message code="processing.label"/> <span class="glyphicon glyphicon-stop"></span></a></th>
                                                         </c:when>
                                                         <c:otherwise>
                                                     <th><a class="btn btn-default" href="<c:url value="/workOrder/selectMachineToPutIn/${workOrder.id}"/>"><s:message code="process.label"/> <span class="glyphicon glyphicon-play"></span></a></th>
@@ -117,7 +117,7 @@
                                             <c:choose>
                                                 <c:when test="${workOrder.status=='W_AT'}">
                                                     <!--CHECK IF ORDER IS BEING WORKING ON-->
-                                                    <th><a class="btn btn-default" href="<c:url value="/workOrder/pullOutMachine/${workOrder.id}"/>"><s:message code="processing.label"/> <span class="glyphicon glyphicon-stop"></span></a></th>
+                                                    <th><a class="btn btn-default" href="<c:url value="/workOrder/selectMachineToPullOut/${workOrder.id}"/>"><s:message code="processing.label"/> <span class="glyphicon glyphicon-stop"></span></a></th>
                                                         </c:when>
                                                         <c:otherwise>
                                                     <th><a class="btn btn-default" href="<c:url value="/workOrder/selectMachineToPutIn/${workOrder.id}"/>"><s:message code="process.label"/> <span class="glyphicon glyphicon-play"></span></a></th>
