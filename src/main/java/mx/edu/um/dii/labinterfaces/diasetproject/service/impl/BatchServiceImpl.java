@@ -8,6 +8,7 @@ package mx.edu.um.dii.labinterfaces.diasetproject.service.impl;
 import java.util.List;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.BatchDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Batch;
+import mx.edu.um.dii.labinterfaces.diasetproject.model.WorkOrder;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.BaseService;
 import mx.edu.um.dii.labinterfaces.diasetproject.service.BatchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,18 @@ public class BatchServiceImpl extends BaseService implements BatchService {
     }
 
     @Override
+    public List<Batch> getBatchsListByWorkOrderAndStatus(Long workOrderId, String status) {
+        WorkOrder workOrder=new WorkOrder();
+        workOrder.setId(workOrderId);
+        
+        Batch batch=new Batch();
+        batch.setWorkOrder(workOrder);
+        batch.setStatus(status);
+        
+        return batchDao.get(batch);
+    }
+    
+    @Override
     public Batch getById(Long id) {
         return batchDao.get(id);
     }
@@ -47,6 +60,7 @@ public class BatchServiceImpl extends BaseService implements BatchService {
     public String delete(Long id) {
         return batchDao.delete(id);
     }
+
     
     
 }

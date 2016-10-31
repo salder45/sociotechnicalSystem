@@ -48,6 +48,11 @@ public class BatchDaoHibernate extends BaseDao implements BatchDao {
             criteriaList.add(predicate);
         }
         
+        if(!batch.getStatus().equals(Constants.EMPTY_STRING)){
+            log.debug("Filter by status");
+            Predicate predicate=criteriaBuilder.equal(batchRoot.get("status"), batch.getStatus());
+            criteriaList.add(predicate);
+        }       
         
         //convert list to predicate array
         Predicate[] criteriaArray=new Predicate[criteriaList.size()];

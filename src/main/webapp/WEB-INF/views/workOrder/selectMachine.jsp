@@ -95,6 +95,15 @@
                             </div>                                
                         </div>
                     </s:bind>
+                    <s:bind path="workOrder.batch.id">
+                        <div class="form-group">
+                            <s:message code="batch.label" var="batchLabel"/>
+                            <label for="name" class="control-label col-xs-2">${batchLabel}</label>    
+                            <div class="col-xs-5">
+                                <form:select path="batch.id" items="${batchList}" itemValue="id" itemLabel="description" class="form-control"/>
+                            </div>                                
+                        </div>
+                    </s:bind>
 
                     <div class="form-group">
                         <div class="col-xs-10">

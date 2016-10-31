@@ -180,7 +180,7 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
     }
 
     @Override
-    public WorkOrder setToMachine(Long machineId, Long workOrderId) {
+    public WorkOrder setToMachine(Long machineId, Long workOrderId,Long batchId) {
         Machine machine = machineService.getById(machineId);
         WorkOrder workOrder = getById(workOrderId);
         //set machineActual at order
@@ -188,8 +188,12 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
         workOrder.setStatus(Constants.STATUS_WORKING_AT);
         //set status working at machine
         machineService.setWorkingStatus(machine);
-
+        
         update(workOrder);
+        
+        Batch batch=batchDao.get(batchId);
+        batch.setStatus(Constants.STATUS_WORKING_AT);
+        batchDao.update(batch);        
         //
         timeStoredService.createTimeStoredMachine(workOrderId, machineId);
 

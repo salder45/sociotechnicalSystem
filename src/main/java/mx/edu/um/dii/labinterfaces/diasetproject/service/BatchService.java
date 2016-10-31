@@ -14,6 +14,7 @@ import mx.edu.um.dii.labinterfaces.diasetproject.model.Batch;
  */
 public interface BatchService {
     public List<Batch> getAll();
+    public List<Batch> getBatchsListByWorkOrderAndStatus(Long workOrderId,String status);
     public Batch getById(Long id);
     public Batch save(Batch batch);
     public Batch update(Batch batch);

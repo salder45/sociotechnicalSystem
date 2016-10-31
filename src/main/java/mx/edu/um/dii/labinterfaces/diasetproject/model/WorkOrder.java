@@ -83,6 +83,8 @@ public class WorkOrder implements Serializable{
     //Transient fields
     @Transient
     private Integer badPieces;
+    @Transient
+    private Batch batch;
     
 
     /**
@@ -333,5 +335,19 @@ public class WorkOrder implements Serializable{
      */
     public void setBadPieces(Integer badPieces) {
         this.badPieces = badPieces;
+    }
+
+    /**
+     * @return the batch
+     */
+    public Batch getBatch() {
+        return batch;
+    }
+
+    /**
+     * @param batch the batch to set
+     */
+    public void setBatch(Batch batch) {
+        this.batch = batch;
     }
 }

@@ -328,9 +328,12 @@ public class WorkOrderController extends BaseController {
         log.debug("selectMachineToPutIn");
         WorkOrder workOrder = workOrderService.getById(id);
         List<Machine> machineList = machineService.getByArea(workOrder.getAreaActual().getId());
+        //getBatchList
+        List<Batch> batchsList=batchService.getBatchsListByWorkOrderAndStatus(id, Constants.STATUS_ACTIVE);
 
         model.addAttribute(Constants.WORK_ORDER_UI, workOrder);
         model.addAttribute(Constants.MACHINE_LIST_UI, machineList);
+        model.addAttribute(Constants.BATCH_LIST_UI,batchsList);
 
         return "/workOrder/selectMachine";
     }
@@ -348,7 +351,7 @@ public class WorkOrderController extends BaseController {
             return "/workOrder/selectMachine";
         }
         
-        workOrderService.setToMachine(workOrder.getMachineActual().getId(), workOrder.getId());
+        workOrderService.setToMachine(workOrder.getMachineActual().getId(), workOrder.getId(),workOrder.getBatch().getId());
         //
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI, "workorder.process.message");
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI, new String[]{w.getCode()});
