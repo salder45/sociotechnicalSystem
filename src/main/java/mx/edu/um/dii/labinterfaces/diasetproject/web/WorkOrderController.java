@@ -89,13 +89,22 @@ public class WorkOrderController extends BaseController {
 
         return "redirect:/workOrder/addWorkOrderDetails/" + w.getId();
     }
-
-    @RequestMapping("/close/{id}")
-    public String close(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+    
+    @RequestMapping("/loadClose/{id}")
+    public String loadClose(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes){
         WorkOrder workOrder = workOrderService.getById(id);
-        Long areaId = workOrder.getAreaActual().getId();
+        
+        model.addAttribute(Constants.WORK_ORDER_UI,workOrder);
+        
+        return "/workOrder/closeWorkOrder";
+    }
 
-        workOrderService.close(workOrder);
+    @RequestMapping("/close")
+    public String close(HttpServletRequest request, @Valid WorkOrder workOrder, BindingResult bindingResult, Errors errors, Model model, RedirectAttributes redirectAttributes) {
+        WorkOrder w = workOrderService.getById(workOrder.getId());
+        Long areaId = w.getAreaActual().getId();
+
+        workOrderService.close(workOrder,workOrder.getBadPieces());
 
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_UI, "workorder.closed.message");
         redirectAttributes.addFlashAttribute(Constants.MESSAGE_ATTRS_UI, new String[]{workOrder.getCode()});

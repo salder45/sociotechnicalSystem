@@ -90,12 +90,12 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
         //open timeStored
         timeStoredService.createTimeStored(workOrder);
         //set timeStoredArea
-        timeStoredService.createTimeStoredArea(workOrder.getId(),workOrder.getAreaActual().getId(),0);
+        timeStoredService.createTimeStoredArea(workOrder.getId(),workOrder.getAreaActual().getId());
         return workOrder;
     }
 
     @Override
-    public WorkOrder close(WorkOrder workOrder) {
+    public WorkOrder close(WorkOrder workOrder,Integer scrap) {
         workOrder = getById(workOrder.getId());
         
         Area areaTmp=workOrder.getAreaActual();
@@ -107,7 +107,7 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
         //close TimeStored
         timeStoredService.closeTimeStored(workOrder);
         //close TimeStoredArea       
-        timeStoredService.closeTimeStoredArea(workOrder.getId(),areaTmp.getId());
+        timeStoredService.closeTimeStoredArea(workOrder.getId(),areaTmp.getId(),scrap);
         
         return workOrder;
     }
@@ -171,11 +171,11 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
             workOrder.setStatus(Constants.STATUS_ACTIVE);
         }
         //close TimeStoredArea
-        timeStoredService.closeTimeStoredArea(workOrderId, workOrder.getAreaActual().getId());
+        timeStoredService.closeTimeStoredArea(workOrderId, workOrder.getAreaActual().getId(),scrap);
         workOrder.setAreaActual(area);
         //createdTimeStoredArea
         workOrder = update(workOrder);
-        timeStoredService.createTimeStoredArea(workOrderId, newAreaId,scrap);
+        timeStoredService.createTimeStoredArea(workOrderId, newAreaId);
         return workOrder;
     }
 
@@ -216,7 +216,7 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
         batch.setStatus(Constants.STATUS_ACTIVE);
         batchDao.update(batch);
         //
-        timeStoredService.closeTimeStoredMachine(workOrderId, machineId);
+        timeStoredService.closeTimeStoredMachine(workOrderId, machineId,batchId,badPieces);
 
         return workOrder;
     }

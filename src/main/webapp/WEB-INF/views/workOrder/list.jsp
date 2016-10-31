@@ -71,7 +71,6 @@
                                     <c:choose>
                                         <c:when test="${area.name=='Calidad'}">
                                         <th><s:message code="area.quality.label"/> <s:message code="workorder.label"/> </th>
-                                        <th><s:message code="check.label"/> <s:message code="workorder.label"/> </th>
                                         <th><s:message code="finish.label"/> <s:message code="workorder.label"/> </th>
                                         </c:when>
                                     </c:choose>
@@ -123,8 +122,7 @@
                                                     <th><a class="btn btn-default" href="<c:url value="/workOrder/selectMachineToPutIn/${workOrder.id}"/>"><s:message code="process.label"/> <span class="glyphicon glyphicon-play"></span></a></th>
                                                         </c:otherwise>
                                                     </c:choose>
-                                            <th><a class="btn btn-default" href="<c:url value="/workOrder/check/${workOrder.id}"/>"><s:message code="check.label"/> <span class="glyphicon glyphicon-ok-circle"></span></a></th>
-                                            <th><a class="btn btn-default" href="<c:url value="/workOrder/close/${workOrder.id}"/>"><s:message code="finish.label"/> <span class="glyphicon glyphicon-lock"></span></a></th>
+                                            <th><a class="btn btn-default" href="<c:url value="/workOrder/loadClose/${workOrder.id}"/>"><s:message code="finish.label"/> <span class="glyphicon glyphicon-lock"></span></a></th>
                                                 </c:when>
                                             </c:choose>
                                         </sec:authorize>

@@ -8,8 +8,10 @@ package mx.edu.um.dii.labinterfaces.diasetproject.service.impl;
 import java.util.Date;
 import java.util.List;
 import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
+import mx.edu.um.dii.labinterfaces.diasetproject.dao.BatchDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.dao.TimeStoredDao;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Area;
+import mx.edu.um.dii.labinterfaces.diasetproject.model.Batch;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.Machine;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.TimeStored;
 import mx.edu.um.dii.labinterfaces.diasetproject.model.TimeStoredArea;
@@ -40,6 +42,9 @@ public class TimeStoredServiceImpl extends BaseService implements TimeStoredServ
     private AreaService areaService;
     @Autowired
     private MachineService machineService;
+
+    @Autowired
+    private BatchDao batchDao;
 
     @Override
     public TimeStored createTimeStored(WorkOrder workOrder) {
@@ -76,13 +81,11 @@ public class TimeStoredServiceImpl extends BaseService implements TimeStoredServ
     }
 
     @Override
-    public TimeStoredArea createTimeStoredArea(Long workOrderId, Long areaId,Integer scrap) {
+    public TimeStoredArea createTimeStoredArea(Long workOrderId, Long areaId) {
         log.debug("createTimeStoredArea");
         //get data
         WorkOrder workOrder = workOrderService.getById(workOrderId);
         Area area = areaService.get(areaId);
-        //
-        Integer pieces=workOrder.getPiecesNumber();
         //create
         TimeStoredArea timeStoredArea = new TimeStoredArea();
         timeStoredArea.setWorkOrder(workOrder);
@@ -90,10 +93,7 @@ public class TimeStoredServiceImpl extends BaseService implements TimeStoredServ
         timeStoredArea.setFinishTime(ProjectUtils.getDefaultDate());
         timeStoredArea.setStatus(Constants.STATUS_ACTIVE);
         timeStoredArea.setArea(area);
-        //
-        timeStoredArea.setGoodPieces(pieces-scrap);
-        timeStoredArea.setScrap(scrap);
-        //
+
         timeStoredDao.save(timeStoredArea);
 
         return timeStoredArea;
@@ -101,11 +101,12 @@ public class TimeStoredServiceImpl extends BaseService implements TimeStoredServ
     }
 
     @Override
-    public TimeStoredArea closeTimeStoredArea(Long workOrderId, Long areaId) {
+    public TimeStoredArea closeTimeStoredArea(Long workOrderId, Long areaId, Integer scrap) {
         log.debug("closeTimeStoredArea");
         WorkOrder workOrder = workOrderService.getById(workOrderId);
         Area area = areaService.get(areaId);
-        
+        Integer pieces = workOrder.getPiecesNumber();
+
         TimeStoredArea timeStoredArea = new TimeStoredArea();
         for (TimeStored ts : workOrder.getTimesStored()) {
             if (Constants.TYPE_TIMESTORED_AREA.equals(ts.getType())) {
@@ -120,18 +121,23 @@ public class TimeStoredServiceImpl extends BaseService implements TimeStoredServ
         timeStoredArea.setFinishTime(new Date());
         timeStoredArea.setStatus(Constants.STATUS_CLOSED);
 
+        //
+        timeStoredArea.setGoodPieces(pieces - scrap);
+        timeStoredArea.setScrap(scrap);
+        //
+
         timeStoredDao.update(timeStoredArea);
 
         return timeStoredArea;
     }
 
     @Override
-    public TimeStoredMachine createTimeStoredMachine(Long workOrderId,Long machineId) {
+    public TimeStoredMachine createTimeStoredMachine(Long workOrderId, Long machineId) {
         log.debug("createTimeStoredMachine");
-        Machine machine=machineService.getById(machineId);
-        WorkOrder workOrder=workOrderService.getById(workOrderId);
-        Area area=areaService.get(machine.getArea().getId());
-        
+        Machine machine = machineService.getById(machineId);
+        WorkOrder workOrder = workOrderService.getById(workOrderId);
+        Area area = areaService.get(machine.getArea().getId());
+
         TimeStoredMachine timeStoredMachine = new TimeStoredMachine();
         timeStoredMachine.setWorkOrder(workOrder);
         timeStoredMachine.setStartTime(new Date());
@@ -139,37 +145,42 @@ public class TimeStoredServiceImpl extends BaseService implements TimeStoredServ
         timeStoredMachine.setStatus(Constants.STATUS_ACTIVE);
         timeStoredMachine.setMachine(machine);
         timeStoredMachine.setArea(area);
-        
+
         timeStoredDao.save(timeStoredMachine);
-        
-        return timeStoredMachine;        
+
+        return timeStoredMachine;
     }
 
     @Override
-    public TimeStoredMachine closeTimeStoredMachine(Long workOrderId,Long machineId) {
+    public TimeStoredMachine closeTimeStoredMachine(Long workOrderId, Long machineId, Long batchId, Integer scrap) {
         log.debug("closeTimeStoredMachine");
-        Machine machine=machineService.getById(machineId);
-        WorkOrder workOrder=workOrderService.getById(workOrderId);
-        
-        TimeStoredMachine timeStoredMachine=new TimeStoredMachine();
-        
+        Machine machine = machineService.getById(machineId);
+        WorkOrder workOrder = workOrderService.getById(workOrderId);
+        Batch batch = batchDao.get(batchId);
+        Integer pieces = batch.getBatchPieces();
+
+        TimeStoredMachine timeStoredMachine = new TimeStoredMachine();
+
         for (TimeStored ts : workOrder.getTimesStored()) {
             if (Constants.TYPE_TIMESTORED_MACHINE.equals(ts.getType())) {
-                TimeStoredMachine tmp=(TimeStoredMachine)ts;
+                TimeStoredMachine tmp = (TimeStoredMachine) ts;
                 if (tmp.getStatus().equals(Constants.STATUS_ACTIVE) && tmp.getMachine().getId().equals(machine.getId())) {
-                    timeStoredMachine=tmp;
+                    timeStoredMachine = tmp;
                 }
             }
         }
-        
-        timeStoredMachine=(TimeStoredMachine)timeStoredDao.getTimeStored(timeStoredMachine.getId());
-        
+
+        timeStoredMachine = (TimeStoredMachine) timeStoredDao.getTimeStored(timeStoredMachine.getId());
+
         timeStoredMachine.setFinishTime(new Date());
         timeStoredMachine.setStatus(Constants.STATUS_CLOSED);
-        
+        timeStoredMachine.setBatch(batch);
+        timeStoredMachine.setGoodPieces(pieces - scrap);
+        timeStoredMachine.setScrap(scrap);
+
         timeStoredDao.update(timeStoredMachine);
-        
-        return timeStoredMachine;        
+
+        return timeStoredMachine;
     }
 
 }

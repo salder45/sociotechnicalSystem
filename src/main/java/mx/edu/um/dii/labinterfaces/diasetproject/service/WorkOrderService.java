@@ -19,7 +19,7 @@ public interface WorkOrderService {
     public WorkOrder getByCode(String code);
     public List<WorkOrder> getByArea(Long areaId);
     public WorkOrder create(WorkOrder workOrder);
-    public WorkOrder close(WorkOrder workOrder);
+    public WorkOrder close(WorkOrder workOrder,Integer scrap);
     public WorkOrder save(WorkOrder workOrder);
     public WorkOrder update(WorkOrder workOrder);
     public String delete(Long id);

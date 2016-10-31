@@ -11,6 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import mx.edu.um.dii.labinterfaces.diasetproject.config.Constants;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  *
@@ -25,6 +27,10 @@ public class TimeStoredMachine extends TimeStored{
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "area_id")
     private Area area;
+    @Fetch(FetchMode.SELECT)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "batch_id")
+    private Batch batch;
 
     /**
      * @return the machine
@@ -57,5 +63,19 @@ public class TimeStoredMachine extends TimeStored{
     @Override
     public String getType() {
         return Constants.TYPE_TIMESTORED_MACHINE;
+    }
+
+    /**
+     * @return the batch
+     */
+    public Batch getBatch() {
+        return batch;
+    }
+
+    /**
+     * @param batch the batch to set
+     */
+    public void setBatch(Batch batch) {
+        this.batch = batch;
     }
 }

@@ -19,8 +19,8 @@ public interface TimeStoredService {
 
     public TimeStored createTimeStored(WorkOrder workOrder);
     public TimeStored closeTimeStored(WorkOrder workOrder);
-    public TimeStoredArea createTimeStoredArea(Long workOrderId,Long areaId,Integer scrap);
-    public TimeStoredArea closeTimeStoredArea(Long workOrderId,Long areaId);
+    public TimeStoredArea createTimeStoredArea(Long workOrderId,Long areaId);
+    public TimeStoredArea closeTimeStoredArea(Long workOrderId,Long areaId,Integer scrap);
     public TimeStoredMachine createTimeStoredMachine(Long workOrderId,Long machineId);
-    public TimeStoredMachine closeTimeStoredMachine(Long workOrderId,Long machineId);
+    public TimeStoredMachine closeTimeStoredMachine(Long workOrderId,Long machineId,Long batchId,Integer scrap);
 }
