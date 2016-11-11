@@ -78,7 +78,6 @@
                                         <a tabindex="-1" href="#"><s:message code="workorder.label"/></a>
                                         <ul class="dropdown-menu">
                                             <li><a tabindex="-1" href="<c:url value="/workOrder/new"/>"><s:message code="workorder.new.label"/></a></li>
-                                            <li><a tabindex="-1" href="<c:url value="/workOrder/list"/>"><s:message code="workorder.list.label"/></a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -106,7 +105,7 @@
                                         <a tabindex="-1" href="#"><s:message code="workorder.label"/></a>
                                         <ul class="dropdown-menu">
                                             <li><a tabindex="-1" href="<c:url value="/workOrder/new"/>"><s:message code="workorder.new.label"/></a></li>
-                                            <li><a tabindex="-1" href="<c:url value="/workOrder/list"/>"><s:message code="workorder.list.label"/></a></li>
+                                            <li><a tabindex="-1" href="<c:url value="/workOrder/listOrders/1"/>"><s:message code="workorder.list.label"/></a></li>
                                         </ul>
                                     </li>
                                 </ul>
