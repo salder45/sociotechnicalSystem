@@ -78,6 +78,7 @@
                                         <a tabindex="-1" href="#"><s:message code="workorder.label"/></a>
                                         <ul class="dropdown-menu">
                                             <li><a tabindex="-1" href="<c:url value="/workOrder/new"/>"><s:message code="workorder.new.label"/></a></li>
+                                            <li><a tabindex="-1" href="<c:url value="/workOrder/closedOrdersList"/>"><s:message code="workorder.closed.list.label"/></a></li>
                                         </ul>
                                     </li>
                                 </ul>

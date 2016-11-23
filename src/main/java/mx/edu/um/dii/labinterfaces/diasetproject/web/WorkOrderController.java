@@ -417,4 +417,14 @@ public class WorkOrderController extends BaseController {
 
         return "redirect:/workOrder/listOrders/" + w.getAreaActual().getId();
     }
+    
+    @RequestMapping("/closedOrdersList")
+    public String closedOrdersList(Model model){
+        log.debug("closedOrdersList");
+        List<WorkOrder> workOrdersList=workOrderService.getClosedOrders();
+        
+        model.addAttribute(Constants.WORK_ORDER_LIST_UI, workOrdersList);
+        
+        return "/workOrder/closedOrders";
+    }
 }

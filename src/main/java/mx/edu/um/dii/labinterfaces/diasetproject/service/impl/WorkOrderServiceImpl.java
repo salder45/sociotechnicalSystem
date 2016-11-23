@@ -151,6 +151,14 @@ public class WorkOrderServiceImpl extends BaseService implements WorkOrderServic
         //
         return workOrderDao.get(workOrder);
     }
+    
+    @Override
+    public List<WorkOrder> getClosedOrders(){
+        WorkOrder workOrder=new WorkOrder();
+        workOrder.setStatus(Constants.STATUS_CLOSED);
+        
+        return workOrderDao.get(workOrder);
+    }
 
     @Override
     public WorkOrder setEstimatedReleaseDate(Date releaseDate, Long workOrderId) {
