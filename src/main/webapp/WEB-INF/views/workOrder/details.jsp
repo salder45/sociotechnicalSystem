@@ -51,7 +51,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label"><s:message code="area.code.label"/>:</label> 
                         <div class="col-sm-10">
-                            <p class="form-control-static">${workOrder.code}</p>
+                            <p class="form-control-static"><a href="<c:url value="/workOrder/edit/${workOrder.id}"/>">${workOrder.code}</a></p>
                         </div>
                     </div>
                     <div class="form-group">

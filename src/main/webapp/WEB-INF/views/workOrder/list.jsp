@@ -80,7 +80,16 @@
                     <tbody>
                         <c:forEach items="${workOrderList}" var="workOrder">
                             <tr>
-                                <th>${workOrder.code}</th>
+                                <c:choose>
+                                    <c:when test="${area.name=='Ventas'}">
+                                        <th>
+                                            <a href="<c:url value="/workOrder/addWorkOrderDetails/${workOrder.id}"/>">${workOrder.code}</a>
+                                        </th>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <th>${workOrder.code}</th>                                        
+                                        </c:otherwise>
+                                    </c:choose>
                                 <th>${workOrder.estimatedReleaseDate}</th>
                                 <th>${workOrder.piecesNumber}</th>
                                 <th>${workOrder.seller.name}</th>
