@@ -6,7 +6,10 @@
 package mx.edu.um.dii.labinterfaces.diasetproject.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -245,7 +248,19 @@ public class WorkOrder implements Serializable{
      * @return the batchs
      */
     public List<Batch> getBatchs() {
-        return batchs;
+        HashMap<Long,Batch> batchMap=new HashMap<Long,Batch>();
+        for(Batch batch : this.batchs){
+            batchMap.put(batch.getId(), batch);
+        }        
+        List<Long> sortedKeys=new ArrayList<>(batchMap.keySet());
+        Collections.sort(sortedKeys);
+        //
+        List<Batch> sortedBatchs=new ArrayList<>();
+        for(int i=0;i<sortedKeys.size();i++){
+            sortedBatchs.add(batchMap.get(sortedKeys.get(i)));
+        }
+        //
+        return sortedBatchs;
     }
 
     /**
