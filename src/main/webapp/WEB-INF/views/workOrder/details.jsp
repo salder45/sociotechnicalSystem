@@ -146,6 +146,7 @@
                     <table id="table-batchs" class="table table-striped table-hover">
                         <thead>
                             <tr>
+                                <th><s:message code="user.id.label"/></th>
                                 <th><s:message code="area.description.label"/></th>
                                 <th><s:message code="batch.pieces.label"/></th>
                                 <th><s:message code="batch.draw.exist.label"/></th>
@@ -162,6 +163,7 @@
                         <tbody>
                             <c:forEach items="${workOrder.batchs}" var="oneBatch">
                                 <tr>
+                                    <th>${oneBatch.id}</th>
                                     <th>${oneBatch.description}</th>
                                     <th>${oneBatch.batchPieces}</th>
                                     <th>${oneBatch.existDraw}</th>
@@ -180,7 +182,15 @@
     <content>
         <script type="text/javascript">
             $(document).ready(function () {
-                $('#table-batchs').DataTable();
+                $('#table-batchs').DataTable({
+                    "columnDefs": [
+                        {
+                            "targets": [0],
+                            "visible": false,
+                            "searchable": false
+                        }
+                    ]
+                });
             });
         </script>
     </content>
